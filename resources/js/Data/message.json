@@ -1,0 +1,11 @@
+{
+    "action": {
+        "update": "actualizar",
+        "delete": "eliminar",
+        "store": "registrar",
+        "include": "agregar",
+        "exclude": "excluir",
+        "change": "cambiar"
+    },
+    "confirm": "¿Estas seguro de :action  :registro ?"
+}

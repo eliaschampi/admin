@@ -1,0 +1,42 @@
+{
+  "ec": {
+    "code": "ec",
+    "name": "Enfermedad Crónico"
+  },
+  "ef": {
+    "code": "ef",
+    "name": "Enfermedad Frecuente"
+  },
+  "am": {
+    "code": "am",
+    "name": "Alergia a Medicamentos"
+  },
+  "ao": {
+    "code": "ao",
+    "name": "Alergia a Otros"
+  },
+  "dd": {
+    "code": "dd",
+    "name": "Deficiencia ó Discapacidad"
+  },
+  "aq": {
+    "code": "aq",
+    "name": "Antecedentes Quirúrgicos"
+  },
+  "ap": {
+    "code": "ap",
+    "name": "Antecedentes Psicológicos"
+  },
+  "as": {
+    "code": "as",
+    "name": "Secuelas"
+  },
+  "aa": {
+    "code": "aa",
+    "name": "Accidentes"
+  },
+  "oo": {
+    "code": "oo",
+    "name": "Otro"
+  }
+}

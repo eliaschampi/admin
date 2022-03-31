@@ -1,0 +1,124 @@
+.modal-dialog {
+  .modal-content {
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
+      0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
+      0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    border: 0;
+    -webkit-border-radius: 0.125rem;
+    border-radius: 0.125rem;
+
+    .modal-header {
+      border-radius: $card-border-radius;
+    }
+  }
+
+  &.cascading-modal {
+    margin-top: 10%;
+
+    .close {
+      opacity: 1;
+      text-shadow: none;
+      color: #fff;
+      outline: 0;
+    }
+
+    .modal-header {
+      -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
+        0 4px 15px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
+        0 4px 15px 0 rgba(0, 0, 0, 0.15);
+      margin: -2rem 1rem 1rem;
+      border: none;
+      padding: 1.3rem;
+      text-align: center;
+      background-color: $primary;
+
+      .close {
+        margin-right: 1rem;
+      }
+
+      .title {
+        width: 100%;
+        font-size: 1.25rem;
+        i {
+          margin-right: 9px;
+        }
+      }
+    }
+
+    .modal-body,
+    .modal-footer {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      color: #616161;
+    }
+  }
+}
+
+.modal {
+  padding-right: 0 !important;
+
+  &.fade {
+    &.top:not(.show) .modal-dialog {
+      -webkit-transform: translate3d(0, -25%, 0);
+      transform: translate3d(0, -25%, 0);
+    }
+
+    &.left:not(.show) .modal-dialog {
+      -webkit-transform: translate3d(-25%, 0, 0);
+      transform: translate3d(-25%, 0, 0);
+    }
+
+    &.right:not(.show) .modal-dialog {
+      -webkit-transform: translate3d(25%, 0, 0);
+      transform: translate3d(25%, 0, 0);
+    }
+
+    &.bottom:not(.show) .modal-dialog {
+      -webkit-transform: translate3d(0, 25%, 0);
+      transform: translate3d(0, 25%, 0);
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .modal .modal-dialog {
+    &.modal-top {
+      top: 0;
+    }
+
+    &.modal-left {
+      left: 0;
+    }
+
+    &.modal-right {
+      right: 0;
+    }
+
+    &.modal-bottom {
+      bottom: 0;
+    }
+
+    &.modal-top-left {
+      top: 10px;
+      left: 10px;
+    }
+
+    &.modal-top-right {
+      top: 10px;
+      right: 10px;
+    }
+
+    &.modal-bottom-left {
+      bottom: 10px;
+      left: 10px;
+    }
+
+    &.modal-bottom-right {
+      bottom: 10px;
+      right: 10px;
+    }
+  }
+}
+
