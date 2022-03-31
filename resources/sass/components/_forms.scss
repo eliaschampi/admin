@@ -1,0 +1,127 @@
+/* Forms */
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-group-append,
+.input-group-prepend {
+  color: $input-placeholder-color;
+  width: auto;
+  border: none;
+
+  button:not(.btn-sm), label.btn {
+    height: $input-height;
+  }
+
+  .input-group-text {
+    border-color: $border-color;
+    padding: $input-padding-y 0.75rem;
+    color: $input-placeholder-color;
+  }
+}
+.form-control {
+  border: 1px solid $border-color;
+  font-weight: 400;
+  font-size: $input-font-size;
+}
+.form-group {
+  label {
+    font-size: $default-font-size;
+    vertical-align: top;
+    margin-bottom: 0.2rem;
+  }
+  &.has-danger {
+    .form-control {
+      border-color: theme-color(danger);
+    }
+  }
+}
+
+.form-check {
+  input[type="radio"].form-check-input,
+  input[type="checkbox"].form-check-input {
+    transform: scale(1.6);
+  }
+  .form-check-label {
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+.form-group,
+.input-group {
+  label {
+    font-weight: 300;
+  }
+  input,
+  select {
+    &:disabled {
+      background-color: $content-bg;
+    }
+    &:read-only {
+      background-color: $content-bg;
+    }
+  }
+}
+
+.addon-group {
+  label {
+    font-weight: 300;
+    margin-bottom: 0.2rem;
+  }
+}
+
+.switch {
+  &.withmargin {
+    margin: 8px;
+  }
+  input[type="checkbox"] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+
+  label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 3rem;
+    height: 1.4rem;
+    background: grey;
+    border-radius: 100px;
+    position: relative;
+  }
+
+  label:after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    width: 1.3rem;
+    height: 1.3rem;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.3s;
+  }
+
+  input:checked + label.primary {
+    background: $primary;
+  }
+
+  input:checked + label.accent {
+    background: $accent;
+  }
+
+  input:checked + label.success {
+    background: $success;
+  }
+
+  input:checked + label:after {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+  }
+
+  label:active:after {
+    width: 2.7rem;
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Nombre",
+  "email": "Correo",
+  "surname": "Apellido",
+  "phone": "Celular",
+  "telephone": "Telefono",
+  "file": "Archivo",
+  "image": "Imagen",
+  "password": "Contraseña",
+  "dni": "DNI",
+  "year": "Año",
+  "birthdate": "Fecha",
+  "gender": "sexo",
+  "code": "Codigo",
+  "profile": "Perfil",
+  "description": "Descripcion",
+  "type": "Tipo",
+  "ubigeo": "Ubigeo",
+  "district": "Distrito",
+  "address": "Direccion",
+  "section_code": "Seccion"
+}

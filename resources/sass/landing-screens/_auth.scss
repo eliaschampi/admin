@@ -1,0 +1,37 @@
+/* Auth */
+
+.auth {
+	.login-half-bg {
+		background: url("/img/background/auth.jpg");
+		background-size: cover;
+	}
+	.register-half-bg {
+		background: url("/img/background/auth.jpg");
+		background-size: cover;
+	}
+	&.lock-full-bg {
+		background: url("/img/background/auth.jpg");
+		background-size: cover;
+	}
+	.lock-profile-img {
+		width: 90px;
+		height: 90px;
+		border-radius: 100%;
+	}
+
+	&.auth-img-bg {
+		padding: 0;
+		.auth-form-transparent {
+			@media (min-width:768px) {
+				width: 55%;
+				margin: auto;
+			}
+		}
+	}
+	.brand-logo {
+		margin-bottom: 2rem;
+		img {
+			width: 150px;
+		}
+	}
+}

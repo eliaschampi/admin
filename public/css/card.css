@@ -1,0 +1,92 @@
+@page {
+    size  : A4;
+    margin: 5mm 5mm 5mm 5mm;
+}
+
+body {
+    font-family   : "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size     : 21px;
+    margin        : 0;
+    padding-top   : 5mm;
+    padding-bottom: 5mm;
+}
+
+.container {
+    width: 100%;
+}
+
+.carnet {
+    overflow         : hidden;
+    margin-left      : 5mm;
+    margin-bottom    : 10mm;
+    width            : 8.7cm;
+    height           : 5.6cm;
+    display          : inline-block;
+    page-break-inside: auto;
+}
+
+.carnet>img {
+    position: absolute;
+    z-index : -100;
+    width   : 8.7cm;
+    height  : 5.6cm;
+}
+
+.carnet .qr-wrapper {
+    display    : block;
+    position   : absolute;
+    width      : 3.5cm;
+    height     : 3.5cm;
+    margin-top : 1.1cm;
+    margin-left: 0.1cm;
+    z-index    : 10;
+}
+
+.carnet .qr-wrapper img {
+    width: 100%;
+}
+
+.carnet .user {
+    display    : block;
+    position   : absolute;
+    overflow   : hidden;
+    width      : 2.6cm;
+    height     : 2.9cm;
+    margin-left: 5.43cm;
+    padding    : 0;
+}
+
+.carnet .user img {
+    width        : 2.6cm;
+    margin-top   : 0.5cm;
+    margin-left  : 0;
+    margin-right : 0;
+    margin-bottom: 0;
+}
+
+.carnet p.dni {
+    font-weight   : bold;
+    text-align    : center;
+    font-size     : 13px;
+    color         : #0B1C2E;
+    margin-left   : 0.2cm;
+    margin-top    : 2.5cm;
+    transform     : rotate(90deg);
+    letter-spacing: 1mm;
+}
+
+.carnet .data {
+    width      : 3.7cm;
+    height     : 2cm;
+    overflow   : hidden;
+    margin-top : -0.4cm;
+    margin-left: 4.85cm;
+    color      : #0B1C2E;
+    font-size  : 3mm;
+    text-align : center;
+}
+
+.carnet .data span {
+    color    : #de6134;
+    font-size: 2.5mm;
+}

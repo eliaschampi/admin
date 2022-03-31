@@ -1,0 +1,30 @@
+{
+  "0": {
+    "code": 0,
+    "day": "Lunes a Viernes"
+  },
+  "1": {
+    "code": 1,
+    "day": "Lunes"
+  },
+  "2": {
+    "code": 2,
+    "day": "Martes"
+  },
+  "3": {
+    "code": 3,
+    "day": "Miércoles"
+  },
+  "4": {
+    "code": 4,
+    "day": "Jueves"
+  },
+  "5": {
+    "code": 5,
+    "day": "Viernes"
+  },
+  "6": {
+    "code": 6,
+    "day": "Sábado"
+  }
+}

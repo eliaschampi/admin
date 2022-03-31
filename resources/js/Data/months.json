@@ -1,0 +1,50 @@
+[
+  {
+    "code": "01",
+    "month": "Enero"
+  },
+  {
+    "code": "02",
+    "month": "Febrero"
+  },
+  {
+    "code": "03",
+    "month": "Marzo"
+  },
+  {
+    "code": "04",
+    "month": "Abril"
+  },
+  {
+    "code": "05",
+    "month": "Mayo"
+  },
+  {
+    "code": "06",
+    "month": "Junio"
+  },
+  {
+    "code": "07",
+    "month": "Julio"
+  },
+  {
+    "code": "08",
+    "month": "Agosto"
+  },
+  {
+    "code": "09",
+    "month": "Setiembre"
+  },
+  {
+    "code": "10",
+    "month": "Octubre"
+  },
+  {
+    "code": "11",
+    "month": "Noviembre"
+  },
+  {
+    "code": "12",
+    "month": "Diciembre"
+  }
+]

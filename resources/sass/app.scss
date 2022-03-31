@@ -1,0 +1,50 @@
+
+/* === Import template variables === */
+@import "variables";
+@import "~bootstrap/scss/bootstrap";
+
+/*-------------------------------------------------------------------*/
+
+/*-------------------------------------------------------------------*/
+/* === Boostrap Main SCSS === */
+
+/*-------------------------------------------------------------------*/
+/* === Template mixins === */
+@import "mixins/misc";
+@import "mixins/animation";
+@import "mixins/buttons";
+@import "mixins/cards";
+/*-------------------------------------------------------------------*/
+/* === Core Styles === */
+@import "reset";
+@import "fonts";
+@import "functions";
+@import "background";
+@import "typography";
+@import "misc";
+@import "footer";
+@import "utilities";
+
+/*-------------------------------------------------------------------*/
+/* === Components === */
+@import "components/buttons";
+@import "components/cards";
+@import "components/forms";
+@import "components/badges";
+@import "components/group";
+@import "components/icons";
+@import "components/lists";
+@import "components/tables";
+@import "components/dropdown";
+@import "components/snackbar";
+@import "components/tabs";
+@import "modal";
+
+/* === Landing screens === */
+@import "landing-screens/auth";
+
+@import "vertical-wrapper";
+@import "sidebar";
+@import "navbar";
+@import "layouts";
+@import "my";

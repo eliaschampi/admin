@@ -1,0 +1,18 @@
+[
+  {
+    "code": "c",
+    "name": "Por Civil"
+  },
+  {
+    "code": "r",
+    "name": "Por Civil y Religion"
+  },
+  {
+    "code": "d",
+    "name": "Divorciado"
+  },
+  {
+    "code": "n",
+    "name": "No especificado"
+  }
+]

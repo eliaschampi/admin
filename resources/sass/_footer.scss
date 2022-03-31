@@ -1,0 +1,17 @@
+/* Footer */
+
+.footer {
+  background: $footer-bg;
+  font-size: calc(#{$default-font-size} - 0.05rem);
+  font-family: $type1;
+  font-weight: 400;
+  margin-bottom: 10px;
+  a {
+    color: $body-color;
+    font-size: inherit;
+  }
+  @include media-breakpoint-down(xs) {
+    margin-left: 0;
+    width: 100%;
+  }
+}
