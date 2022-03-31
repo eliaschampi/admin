@@ -13190,3 +13190,9 @@ dl li {
 .yearange input[type=radio]:not(:checked), .yearange input[type=radio]:checked {
   display: none;
 }
+
+.boli {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}

@@ -14,7 +14,7 @@
         <div class="col-md-4" v-if="teachers.length">
           <panel :title="teachers_title" class="border">
             <div
-              class="d-flex align-items-center"
+              class="d-flex align-items-center rounded"
               v-for="item in teachers"
               :key="item.dni"
             >
@@ -27,16 +27,24 @@
                 />
                 <img v-else src="/img/logo.png" />
               </div>
-              <div class="info ml-2">
+              <div class="info ml-1">
                 <router-link
                   :to="{
                     name: 't_schedule',
                     params: { dni: item.dni }
                   }"
                 >
-                  {{ `${item.person.name} ${item.person.lastname}` }}
+                  {{ item.person.name }}
                 </router-link>
-                <span class="text-small d-block">Docente</span>
+                <div class="d-flex align-items-center">
+                  <span class="text-small d-block">Color</span>
+                  <div
+                    class="boli ml-1"
+                    :style="{
+                      backgroundColor: `#${colors[item.dni]}`
+                    }"
+                  ></div>
+                </div>
               </div>
             </div>
           </panel>
@@ -72,12 +80,20 @@
           </ul>
           <hr />
           <m-table
-            :columns="['Curso', 'Desde', 'Hasta', 'Acciones']"
+            :columns="['#', 'Curso', 'Desde', 'Hasta', 'Acciones']"
             :data="filtered"
             :head="false"
           >
             <template slot="data">
               <tr :key="item.code" v-for="item in filtered">
+                <td>
+                  <div
+                    class="boli"
+                    :style="{
+                      backgroundColor: `#${colors[item.op.teacher_dni]}`
+                    }"
+                  ></div>
+                </td>
                 <td>{{ item.op.course.name }}</td>
                 <td>{{ item.from_time }}</td>
                 <td>{{ item.to_time }}</td>
@@ -119,6 +135,7 @@ export default {
       load: false,
       schedules: [],
       schedule: null,
+      colors: {},
       days,
       day: 1
     };
@@ -147,6 +164,11 @@ export default {
     fetchTech() {
       t_api.fetchByCycle(this.cycle_code).then((r) => {
         this.teachers = r.data.values;
+        r.data.values.forEach((item) => {
+          this.colors[item.dni] = Math.floor(Math.random() * 16777215).toString(
+            16
+          );
+        });
       });
     },
     edit(item) {
