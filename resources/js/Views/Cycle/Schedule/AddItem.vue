@@ -2,7 +2,7 @@
   <modal
     @sub="add"
     @closed="onClosed"
-    btnName="Agregar"
+    :btnName="isNew ? 'Agregar' : 'Modificar'"
     id="newSchedule"
     title="Agregar horario"
   >
@@ -34,7 +34,6 @@
         :error="errors.first('Hasta')"
       />
     </div>
-    <m-switch id="hfwerfd" text="Habilitar asistencia" v-model="sched.state" />
   </modal>
 </template>
 <script>
@@ -67,8 +66,8 @@ export default {
     onClosed() {
       this.sched = {
         day: 1,
-        from_time: "08:00",
-        to_time: "14:30",
+        from_time: this.sched.from_time || "08:00",
+        to_time: this.sched.to_time || "14:00",
         state: true
       };
     },

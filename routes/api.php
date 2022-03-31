@@ -156,13 +156,12 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::delete("/family_s/{family_dni}/{student_dni}", [FamilyController::class, "removeStudent"]);
 
     //op
-    Route::get("/op/section/{s_code}", [OpController::class, "fetchBySection"]);
     Route::post("/op", [OpController::class, "store"]);
     
     //schedule
     Route::resource("/schedule", ScheduleController::class)->only(["store", "update", "destroy"]);
     Route::get("/schedule/{section_code}", [ScheduleController::class, "fetchMain"]);
-    Route::get("/schedule/op/{op_code}", [ScheduleController::class, "fetchByOp"]);
+    Route::get("/schedule/teacher/{teacher_dni}", [ScheduleController::class, "fetchByTeacher"]);
 
     Route::resource("/customer", CustomerController::class)->except(["edit", "create", "show"]);
     Route::resource("/cat", CashActionTypeController::class)->only(["show", "store", "update"]);

@@ -8,13 +8,6 @@ use Illuminate\Support\Facades\DB;
 class OpRepository
 {
 
-    public function fetchBySection($s_code)
-    {
-        return Op::with(["course", "teacher", "teacher.person" => function ($query) {
-            return $query->select("dni", "name", "lastname");
-        }])->where("section_code", $s_code)->get();
-    }
-
     public function store(array $data): void
     {
         try {

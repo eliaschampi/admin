@@ -15,13 +15,6 @@ class OpController extends Controller
         $this->instance = $instance;
     }
 
-    public function fetchBySection($s_code)
-    {
-        return response()->json([
-            "values" => $this->instance->fetchBySection($s_code)
-        ]);
-    }
-
     public function store(OpRequest $request)
     {
         $this->instance->store($request->all());
