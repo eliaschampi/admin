@@ -14,9 +14,13 @@ class ScheduleRepository extends BaseRepository
             })->orderBy("day")->get();
     }
 
-    public function fetchByOp(string $op_code)
+    public function fetchByTeacher(string $teacher_dni)
     {
-        return Schedule::where("op_code", $op_code)->get();
+        return Schedule::with(["op", "op.course"])
+            ->whereHas("op", function ($query) use ($teacher_dni) {
+                return $query->where("teacher_dni", $teacher_dni)
+                             ->where("section_code", "like", "2022%");
+            })->orderBy("day")->get();
     }
 
     public function store(array $data): Schedule

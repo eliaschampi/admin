@@ -22,10 +22,10 @@ class ScheduleController extends Controller
         ]);
     }
 
-    public function fetchByOp(string $op_code)
+    public function fetchByTeacher(string $teacher_dni)
     {
         return response()->json([
-            "values" => $this->instance->fetchByOp($op_code)
+            "values" => $this->instance->fetchByTeacher($teacher_dni)
         ]);
     }
 

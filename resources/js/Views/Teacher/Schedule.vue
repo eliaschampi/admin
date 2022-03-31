@@ -1,22 +1,32 @@
 <template>
   <div class="mt-3">
-    <m-table :columns="columns" :data="schedules" :head="false">
+    <ul class="nav nav-pills">
+      <li class="nav-item pointer" @click="day = 1">
+        <div class="nav-link" :class="{ active: day === 1 }">Lunes</div>
+      </li>
+      <li class="nav-item pointer" @click="day = 2">
+        <div class="nav-link" :class="{ active: day === 2 }">Martes</div>
+      </li>
+      <li class="nav-item pointer" @click="day = 3">
+        <div class="nav-link" :class="{ active: day === 3 }">Miercoles</div>
+      </li>
+      <li class="nav-item pointer" @click="day = 4">
+        <div class="nav-link" :class="{ active: day === 4 }">Jueves</div>
+      </li>
+      <li class="nav-item pointer" @click="day = 5">
+        <div class="nav-link" :class="{ active: day === 5 }">Viernes</div>
+      </li>
+    </ul>
+    <hr />
+    <m-table :columns="columns" :data="filtered" :head="false">
       <template slot="data">
-        <tr :key="item.code" v-for="item in schedules">
+        <tr :key="item.code" v-for="item in filtered">
           <td>
             {{ item.op.section_code | full }}
           </td>
           <td>{{ item.op.course.name }}</td>
-          <td>{{ days[item.day].day }}</td>
           <td>{{ item.from_time }}</td>
           <td>{{ item.to_time }}</td>
-          <td>
-            <i
-              class="icon ion-ios-checkmark-circle icon-sm text-success"
-              v-if="item.state"
-            >
-            </i>
-          </td>
           <td v-can="'S'">
             <m-action @action="edit(item)" />
             <m-action
@@ -29,21 +39,16 @@
         </tr>
       </template>
     </m-table>
-    <div class="d-flex justify-content-between">
-      <div class="button-group">
-        <m-router
-          color="btn-light"
-          size="btn-sm"
-          slot="rb"
-          :to="{
-            name: 'schedule',
-            params: { degree_code: $store.getters['degree/code'] }
-          }"
-        >
-          Ir a horarios
-        </m-router>
-      </div>
-    </div>
+    <m-router
+      color="btn-outline-secondary"
+      size="btn-sm"
+      :to="{
+        name: 'schedule',
+        params: { degree_code: $store.getters['degree/code'] }
+      }"
+    >
+      Horarios por sección
+    </m-router>
     <add-item :schedule="schedule" :days="days" @save="save" :is-new="false" />
   </div>
 </template>
@@ -60,21 +65,19 @@ export default {
   mixins: [fetchData, deleteSH],
   data() {
     return {
-      columns: [
-        "Sección",
-        "Curso",
-        "Dia",
-        "Desde",
-        "Hasta",
-        "Asis.",
-        "Acciones"
-      ],
+      columns: ["Grado y Sec.", "Curso", "Desde", "Hasta", "Acciones"],
+      day: 1,
       schedules: [],
       schedule: null,
       days
     };
   },
-  computed: mapState("teacher", ["teacher"]),
+  computed: {
+    ...mapState("teacher", ["teacher"]),
+    filtered() {
+      return this.schedules.filter((item) => item.day === this.day);
+    }
+  },
   methods: {
     fetchData() {
       api.fetchByTeacher(this.teacher.dni).then((r) => {

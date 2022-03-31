@@ -106,7 +106,7 @@ import File from "../../Components/Ui/File";
 import api from "../../Api/incidence";
 import { EventBus } from "../../Helpers/bus";
 import cache from "../../Helpers/cache";
-import day from '../../Helpers/day';
+import day from "../../Helpers/day";
 export default {
   components: {
     File
