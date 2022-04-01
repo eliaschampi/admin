@@ -1,6 +1,8 @@
 {
     "PRI": "Primaria",
     "SEC": "Secundaria",
-    "SE5": "Quinto Excelencia",
-    "GE5": "Quinto Carrion"
+    "GE5": "Quinto Carrión",
+    "OP1": "Primera Oportunidad",
+    "OR1": "Ordinaria 1",
+    "OR2": "Ordinaria 2"
 }

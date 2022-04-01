@@ -12611,6 +12611,10 @@ dl li {
   background: url(/img/background/user-info2.jpg) center center no-repeat;
   background-size: cover;
 }
+.navbar.bg3 {
+  background: url(/img/background/user-info3.jpg) center center no-repeat;
+  background-size: cover;
+}
 .navbar .navbar-menu-wrapper {
   transition: width 0.25s ease;
   -webkit-transition: width 0.25s ease;

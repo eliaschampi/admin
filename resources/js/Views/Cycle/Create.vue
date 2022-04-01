@@ -85,8 +85,9 @@
         type="button"
         v-show="isNew"
         @click="isOpenMode = false"
-        >Cancelar y Volver atras</a
       >
+        Cancelar y Volver atras
+      </a>
     </template>
   </modal>
 </template>
