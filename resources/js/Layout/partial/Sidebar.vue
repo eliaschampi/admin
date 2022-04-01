@@ -241,7 +241,7 @@
               }"
               class="nav-link"
             >
-              Asistencia diaria
+              Carnet Aeduca
             </router-link>
           </li>
           <li class="nav-item">
@@ -252,7 +252,7 @@
               }"
               class="nav-link"
             >
-              Listado por fecha
+              Por sección
             </router-link>
           </li>
           <li class="nav-item">
@@ -262,7 +262,7 @@
               }"
               class="nav-link"
             >
-              Asistencia del docente
+              Docentes
             </router-link>
           </li>
           <li class="nav-item">
@@ -273,7 +273,7 @@
               }"
               class="nav-link"
             >
-              Reporte por Estudiante
+              Por Estudiante
             </router-link>
           </li>
           <li class="nav-item">
@@ -284,7 +284,7 @@
               }"
               class="nav-link"
             >
-              Reporte por Docente
+              Por Docente
             </router-link>
           </li>
           <li class="nav-item" v-can="'PN'">
