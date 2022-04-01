@@ -106,15 +106,7 @@
               <i
                 class="icon ion-ios-information-circle icon-sm text-success"
               ></i>
-              Mantener solamente 1 docente de aula para cada sección de
-              Primaria.
-            </p>
-            <p class="my-0">
-              <i
-                class="icon ion-ios-information-circle icon-sm text-success"
-              ></i>
-              Evita duplicar el horario de un docente, ya que podría traer
-              problemas a la hora de registrar la asistencia
+              Evita duplicar el horario de un docente.
             </p>
             <p class="text-accent">{{ errorMessage }}</p>
           </alert>

@@ -13,9 +13,10 @@ return [
         "PRI" => "Primaria",
         "SEC" => "Secundaria",
         "GE5" => "Quinto Carrion",
-        "SE5" => "Quinto Excelencia",
         "ADM" => "Administración",
-        "ACA" => "Academia",
+        "OP1" => "Primera Oportunidad",
+        "OR1" => "Ordinaria 1",
+        "OR2" => "Ordinaria 2"
     ],
 
     "ins" => [

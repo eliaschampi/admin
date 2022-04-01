@@ -10,7 +10,12 @@
       </div>
     </div>
     <template slot="profile-foot">
-      <m-button color="btn-inverse-primary" @pum="reAuthenticate" size="btn-sm">
+      <m-button
+        v-can="'APN'"
+        color="btn-inverse-primary"
+        @pum="reAuthenticate"
+        size="btn-sm"
+      >
         Acceder a otra sede
       </m-button>
     </template>

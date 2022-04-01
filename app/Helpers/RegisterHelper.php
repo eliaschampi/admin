@@ -24,11 +24,20 @@ class RegisterHelper
             $modular_code = "1639277";
         }
 
+        $degree =  intval(substr($section_code, -2, 1));
+        $fulldegree = $degree . "ro";
+
+        if ($degree > 3) {
+            $fulldegree =  $degree . "to";
+        } else if ($degree === 2) {
+            $fulldegree =  $degree . "do";
+        }
+
         $data = [
             "name"  => "CARRIÓN - CUSCO",
             "student" => $student_name,
             "full_cycle" => $cyclename,
-            "full_degree" => self::degree($section_code),
+            "full_degree" => $fulldegree,
             "modular_code" => $modular_code,
             "section" => substr($section_code, -1)
         ];
@@ -36,15 +45,5 @@ class RegisterHelper
         $pdf = \PDF::loadView("pdf.consv", compact("data"));
         return $pdf->download("consv.pdf");
     }
-
-    public static function degree(string $section_code)
-    {
-        $code =  intval(substr($section_code, -2, 1));
-        if ($code > 3) {
-            return $code . "to";
-        } else if ($code === 2) {
-            return $code . "do";
-        }
-        return $code . "ro";
-    }
+    
 }
