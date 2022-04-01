@@ -154,6 +154,9 @@ export default {
     EventBus.$on("afterSelectPerson", this.afterSelectPerson);
   },
   mounted() {
+    if (this.$route.params.level) {
+      this.buscado = this.$route.params.level;
+    }
     this.fetchCycles(this.fetchSumary);
   },
   computed: {

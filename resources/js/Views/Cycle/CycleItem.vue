@@ -7,7 +7,10 @@
         :style="{ width: value + '%', height: '25px' }"
         aria-valuemax="100"
         aria-valuemin="0"
-        class="progress-bar progress-bar-striped progress-bar-animate bg-success"
+        class="
+          progress-bar progress-bar-striped progress-bar-animate
+          bg-success
+        "
         role="progressbar"
       >
         <b>{{ value + "%" }}</b>
@@ -38,21 +41,14 @@
         color="btn-inverse-accent"
         icon="icon ion-md-create"
       >
-      </m-button>
-      <m-button
-        @pum="$emit('onTeacher', cycle.code)"
-        color="btn-inverse-primary"
-        size="btn-sm"
-        icon="icon ion-md-calendar"
-      >
-        Horario
+        Modificar
       </m-button>
       <m-router
-        :to="{ name: 'sumary' }"
-        color="btn-inverse-secondary"
+        :to="{ name: 'sumary', params: { level: cycle.type } }"
+        color="btn-inverse-primary"
         size="btn-sm"
       >
-        Secciones
+        Reporte anual
       </m-router>
     </template>
   </card>
