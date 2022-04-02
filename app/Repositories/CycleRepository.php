@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Helpers\MainHelper;
 use App\Models\Cycle;
-use App\Models\Register;
 
 class CycleRepository extends BaseRepository
 {
@@ -16,9 +15,13 @@ class CycleRepository extends BaseRepository
 
     public static function fetchAttendaceVariablesByCode(string $code)
     {
-        $cycle = Cycle::select("entry_time", "tolerance")->find($code);
-        //serialize
-        return MainHelper::serializeYourModel($cycle);
+        $cycle = Cycle::select("attendance")->find($code);
+
+        if (!empty($cycle)) {
+            $items = $cycle->attendance;
+            return MainHelper::serializeYourModel($cycle);
+        }
+        return [];
     }
 
     public function fetchCurrentCycles()
@@ -40,20 +43,10 @@ class CycleRepository extends BaseRepository
     {
         $cycle = $this->fetchByCode($code);
 
-        if (now()->lte(\Carbon\Carbon::parse($cycle->to))) {
-
-            $cycle->from = $cycledata["from"];
-            $cycle->to = $cycledata["to"];
-            $cycle->entry_time = $cycledata["entry_time"];
-            $cycle->tolerance = $cycledata["tolerance"];
-            $cycle->monthly = $cycledata["monthly"];
-            return $cycle->save();
-        } else {
-
-            $cycle_code = $cycle->code;
-            return Register::whereHas("section.degree", function ($query) use ($cycle_code) {
-                $query->where("cycle_code", $cycle_code);
-            })->update(array("state" => "f"));
-        }
+        $cycle->from = $cycledata["from"];
+        $cycle->to = $cycledata["to"];
+        $cycle->monthly = $cycledata["monthly"];
+        $cycle->attendance = $cycledata["attendance"];
+        return $cycle->save();
     }
 }

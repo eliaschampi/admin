@@ -27,8 +27,7 @@ class CycleRequest extends FormRequest
             "type" => "required|min:3|max:3",
             "from" => "required|date",
             "to" => "required|date",
-            "entry_time" => "required",
-            "tolerance" => "required|integer",
+            "attendance" => "required",
             "monthly" => "required",
         ];
     }

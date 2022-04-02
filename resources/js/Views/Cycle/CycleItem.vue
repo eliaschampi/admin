@@ -28,10 +28,24 @@
       <b>Mensualidad:</b>
       {{ cycle.monthly | currency }}
     </div>
-    <div class="card-text">
-      <b>Horario de Ingreso:</b>
-      {{ cycle.entry_time | time }} con {{ cycle.tolerance }} minutos de
-      tolerancia
+    <hr />
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th class="font-weight-bold">Prioridad</th>
+            <th class="font-weight-bold">Ingreso</th>
+            <th class="font-weight-bold">Tolerancia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="att in cycle.attendance" :key="att.order">
+            <td>{{ att.order }}</td>
+            <td>{{ att.entry_time | time }}</td>
+            <td>{{ att.tolerance }} mins</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <template slot="foot">
       <m-button

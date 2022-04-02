@@ -18,6 +18,10 @@ class Cycle extends Model
 
     protected $appends = ['full_name'];
 
+    protected $casts = [
+        "attendance" => "array"
+    ];
+
     public function branch()
     {
         return $this->belongsTo(Branch::class, "branch_code");
