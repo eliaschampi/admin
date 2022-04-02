@@ -49,7 +49,7 @@ class CycleController extends Controller
 
             DB::commit();
             return response()->json("Nivel Académico correctamente aperturado");
-        } catch (\Exception$ex) {
+        } catch (\Exception $ex) {
             DB::rollBack();
             return response()->json([
                 "res" => $ex->getMessage(),
