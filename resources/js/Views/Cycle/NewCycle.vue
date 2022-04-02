@@ -1,7 +1,10 @@
 <template>
   <modal
-    title="Niveles Académicos"
+    :title="
+      isOpenMode && isNew ? 'Aperturando ' + type.name : 'Niveles Académicos'
+    "
     @sub="save"
+    @closed="onClosed"
     id="newCycle"
     btn-name="Finalizar"
     :disabled="!isOpenMode"
@@ -34,12 +37,11 @@
     </template>
     <template v-else>
       <div class="form-row">
-        <h5 v-show="isNew" class="col-md-12">Aperturando {{ type.name }}</h5>
         <m-input
           type="date"
           id="Desde"
           class="col-md-6"
-          v-model="$store.state.cycle.cycle.from"
+          v-model="cycle.from"
           v-validate="fromVali"
           :error="errors.first('Desde')"
         />
@@ -47,47 +49,72 @@
           type="date"
           id="Hasta"
           class="col-md-6"
-          v-model="$store.state.cycle.cycle.to"
+          v-model="cycle.to"
           v-validate="toVali"
           :error="errors.first('Hasta')"
         />
       </div>
       <div class="form-row">
         <m-input
-          class="col-md-4"
-          id="horaIngreso"
-          type="time"
-          v-validate="'required'"
-          v-model="$store.state.cycle.cycle.entry_time"
-          label="Hora de Ingreso"
-          :error="errors.first('horaIngreso')"
-        />
-        <m-input
-          class="col-md-4"
-          id="Tolerancia"
-          type="number"
-          v-validate="'required|numeric|max_value:20'"
-          v-model="$store.state.cycle.cycle.tolerance"
-          :error="errors.first('Tolerancia')"
-        />
-        <m-input
-          class="col-md-4"
+          class="col-md-6"
           id="Mensualidad"
           type="number"
           v-validate="'required|decimal'"
-          v-model="$store.state.cycle.cycle.monthly"
+          v-model="cycle.monthly"
           :error="errors.first('Mensualidad')"
         />
       </div>
-      <p class="text-accent">{{ fin_message }}</p>
-      <a
-        class="text-accent"
-        type="button"
-        v-show="isNew"
-        @click="isOpenMode = false"
-      >
-        Cancelar y Volver atras
-      </a>
+      <template v-for="att in cycle.attendance">
+        <div class="form-row" :key="att.order">
+          <m-input
+            class="col-md-4"
+            id="horaIngreso"
+            issm
+            type="time"
+            v-model="att.entry_time"
+            label="Hora de Ingreso"
+          />
+          <m-input
+            class="col-md-4"
+            id="Tolerancia"
+            issm
+            type="number"
+            v-model="att.tolerance"
+          />
+          <span
+            @click="addAttendance"
+            v-show="
+              att.order === cycle.attendance.length &&
+              cycle.attendance.length < 3
+            "
+            class="
+              icon
+              ion-md-add
+              icon-md
+              align-self-center
+              ml-1
+              pointer
+              text-success
+            "
+          ></span>
+          <span
+            @click="removeAttendance"
+            v-show="
+              att.order === cycle.attendance.length &&
+              cycle.attendance.length > 1
+            "
+            class="
+              icon
+              ion-md-remove
+              icon-md
+              align-self-center
+              ml-1
+              pointer
+              text-danger
+            "
+          ></span>
+        </div>
+      </template>
     </template>
   </modal>
 </template>
@@ -107,15 +134,21 @@ export default {
   data() {
     return {
       isOpenMode: !this.isNew,
-      type: {}
+      type: {},
+      cycle: {}
     };
+  },
+  watch: {
+    isNew(val) {
+      this.isOpenMode = !val;
+    }
   },
   computed: {
     fromVali() {
       return {
         required: true,
         date_format: "yyyy-MM-dd",
-        before: this.$store.state.cycle.cycle.to,
+        before: this.cycle.to,
         after: `${this.$store.getters["fullyear"]}-01-01`
       };
     },
@@ -124,7 +157,7 @@ export default {
         required: true,
         date_format: "yyyy-MM-dd",
         before: `${parseInt(this.$store.getters["fullyear"]) + 1}-01-01`,
-        after: this.$store.state.cycle.cycle.from
+        after: this.cycle.from
       };
     },
     filtered() {
@@ -136,23 +169,30 @@ export default {
       return Object.keys(types).map((key) => {
         return { code: key, name: types[key] };
       });
-    },
-    fin_message() {
-      if (!this.isNew) {
-        if (new Date() > new Date(this.$store.state.cycle.cycle.to)) {
-          return "Al finalizar actualizará a sus estudiantes como [finalizado]";
-        }
-      }
-      return "";
-    }
-  },
-  watch: {
-    isNew(val) {
-      this.isOpenMode = !val;
     }
   },
   methods: {
     ...mapActions("cycle", ["set", "update"]),
+    updateMyCycle(value) {
+      this.cycle = value;
+    },
+    addAttendance() {
+      this.cycle.attendance.push({
+        order: this.cycle.attendance.length + 1,
+        entry_time: "07:00",
+        tolerance: 5
+      });
+    },
+    removeAttendance() {
+      this.cycle.attendance.pop();
+    },
+    onClosed() {
+      if (this.isNew) {
+        this.isOpenMode = false;
+      }
+
+      this.$emit("close");
+    },
     store(data) {
       if (this.isNew) {
         data.type = this.type.code;
@@ -164,7 +204,7 @@ export default {
     save() {
       this.$validator.validateAll().then((r) => {
         if (r) {
-          this.store(this.$store.state.cycle.cycle).then((r) => {
+          this.store(this.cycle).then((r) => {
             this.$store.commit("cycle/FETCH_CYCLES", {
               cycles: []
             });

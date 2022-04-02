@@ -22,17 +22,22 @@
           :key="item.code"
           :cycle="item"
           @edit="show(item)"
-          @onTeacher="goToTeachers"
           :cycle-types="cycleTypes"
         />
       </template>
     </div>
-    <new-cycle @after="refresh" :ctypes="cycleTypes" :is-new="isNew" />
+    <new-cycle
+      ref="myNewCycle"
+      @after="fetchAll"
+      :ctypes="cycleTypes"
+      :is-new="isNew"
+      @close="isNew = true"
+    />
   </section>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import NewCycle from "./Create";
+import NewCycle from "./NewCycle";
 import CycleItem from "./CycleItem";
 import mainApi from "../../Api/main";
 export default {
@@ -48,7 +53,7 @@ export default {
     };
   },
   created() {
-    this.refresh();
+    this.fetchAll();
     this.fetchTypes();
   },
   computed: {
@@ -57,16 +62,13 @@ export default {
   methods: {
     ...mapActions("cycle", ["fetchAll"]),
     newCycle() {
-      this.$store.commit("cycle/FETCH_CYCLE", {
-        cycle: {
-          from: "",
-          to: "",
-          entry_time: "07:45:00",
-          tolerance: 5,
-          monthly: "0.00"
-        }
-      });
       this.isNew = true;
+      this.$refs.myNewCycle.updateMyCycle({
+        from: "",
+        to: "",
+        attendance: [{ order: 1, entry_time: "07:45:00", tolerance: 5 }],
+        monthly: "0.00"
+      });
       $("#newCycle").modal("show");
     },
     async fetchTypes() {
@@ -74,19 +76,9 @@ export default {
       this.cycleTypes = data.configs;
     },
     show(value) {
-      this.$store.commit("cycle/FETCH_CYCLE", { cycle: value });
       this.isNew = false;
+      this.$refs.myNewCycle.updateMyCycle(value);
       $("#newCycle").modal("show");
-    },
-    goToTeachers(code) {
-      this.$store.commit("cycle/SET_CURRENT", { current: code });
-      this.$router.push({ name: "schedule" });
-    },
-    refresh() {
-      this.load = true;
-      this.fetchAll().then(() => {
-        this.load = false;
-      });
     }
   }
 };
