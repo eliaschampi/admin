@@ -16,6 +16,7 @@ class Attendance extends Model
         "state",
         "entity_identifier",
         "entity_type",
+        "priority",
     ];
 
     public function person()

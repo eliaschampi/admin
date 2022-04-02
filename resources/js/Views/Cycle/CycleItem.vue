@@ -41,7 +41,7 @@
         <tbody>
           <tr v-for="att in cycle.attendance" :key="att.order">
             <td>{{ att.order }}</td>
-            <td>{{ att.entry_time | time }}</td>
+            <td>{{ att.entry_time }}</td>
             <td>{{ att.tolerance }} mins</td>
           </tr>
         </tbody>

@@ -5,7 +5,6 @@
 export const SET_USER_INFO = "SET_USER_INFO";
 // cycles
 export const FETCH_CYCLES = "FETCH_CYCLES";
-export const FETCH_CYCLE = "FETCH_CYCLE";
 export const SET_CURRENT = "SET_CURRENT";
 export const SET_RANGE = "SET_RANGE";
 // degree

@@ -1,27 +1,15 @@
 import cycle from "@/Api/cycle";
-import { FETCH_CYCLE, FETCH_CYCLES, SET_CURRENT } from "../types";
+import { FETCH_CYCLES, SET_CURRENT } from "../types";
 
 export default {
   namespaced: true,
   state: {
     cycles: [],
-    cycle: {
-      type: "",
-      title: "",
-      from: "",
-      to: "",
-      entry_time: "07:45:00",
-      tolerance: 5,
-      monthly: ""
-    },
     current: ""
   },
   mutations: {
     [FETCH_CYCLES](state, { cycles }) {
       state.cycles = cycles;
-    },
-    [FETCH_CYCLE](state, { cycle }) {
-      state.cycle = cycle;
     },
     [SET_CURRENT](state, { current }) {
       state.current = current;
