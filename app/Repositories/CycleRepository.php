@@ -19,7 +19,7 @@ class CycleRepository extends BaseRepository
 
         if (!empty($cycle)) {
             $items = $cycle->attendance;
-            return MainHelper::serializeYourModel($cycle);
+            return $items;
         }
         return [];
     }

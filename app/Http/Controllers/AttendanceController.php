@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Cache\CycleCache;
 use App\Exports\AttendanceExport;
-use Illuminate\Http\Request;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\PersonRepository;
 use App\Repositories\RegisterRepository;
 use App\Repositories\TeacherRepository;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
@@ -23,28 +23,28 @@ class AttendanceController extends Controller
     public function fetchBySection(string $section_code, string $date)
     {
         return response()->json([
-            "values" => $this->instance->fetchBySectionAndDate($section_code, $date)
+            "values" => $this->instance->fetchBySectionAndDate($section_code, $date),
         ]);
     }
 
     public function fetchForTeacherByDate(string $date)
     {
         return response()->json([
-            "values" => $this->instance->fetchForTeacherByDate($date)
+            "values" => $this->instance->fetchForTeacherByDate($date),
         ]);
     }
 
     public function fetchByEntity(string $entity_identifier, string $from_date, string $to_date)
     {
         return response()->json([
-            "values" => $this->instance->fetchByEntity($entity_identifier, $from_date, $to_date)
+            "values" => $this->instance->fetchByEntity($entity_identifier, $from_date, $to_date),
         ]);
     }
 
     public function fetchAbsences(string $date)
     {
         return response()->json([
-            "values" => $this->instance->absences($date)
+            "values" => $this->instance->absences($date),
         ]);
     }
 
@@ -73,7 +73,7 @@ class AttendanceController extends Controller
         if ($this->instance->todayIsAlreadyRegistered($entity_identifier, $priority)) {
             return response()->json("Su asistencia ya ha sido registrado", 402);
         }
-        $this->instance->store($entity_identifier, $entity_type, $state, $time);
+        $this->instance->store($entity_identifier, $entity_type, $state, $time, $priority);
         if ($state === "tarde" || $state === "falta") {
             //dispatch(new \App\Jobs\SendEmailToFamily($code, $state, $time));
         }
@@ -91,7 +91,7 @@ class AttendanceController extends Controller
         if (empty($dni)) {
             return response()->json([
                 "status" => false,
-                "error" => "Su dni es incorrecto"
+                "error" => "Su dni es incorrecto",
             ], 422);
         }
 
@@ -100,7 +100,7 @@ class AttendanceController extends Controller
         if (empty($person)) {
             return response()->json([
                 "status" => false,
-                "message" => "Usuario no encontrado"
+                "message" => "Usuario no encontrado",
             ], 422);
         }
 
@@ -114,7 +114,7 @@ class AttendanceController extends Controller
             if (empty($register)) {
                 return response()->json([
                     "status" => false,
-                    "message" => "Este año no está matrículado"
+                    "message" => "Este año no está matrículado",
                 ], 422);
             }
 
@@ -123,16 +123,24 @@ class AttendanceController extends Controller
 
             $cacheds = CycleCache::attendanceVariablesShouldBeCached($cycle_code);
 
-            $cyclevariables = array_first($cacheds, function($query) use ($priority) {
-                $query->order === $priority;
+            $cyclevariables = array_first($cacheds, function ($query) use ($priority) {
+                return $query['order'] === $priority;
             });
+
+            if (is_null($cyclevariables)) {
+                return response()->json([
+                    "status" => false,
+                    "status" => $priority,
+                    "message" => "Horario de ingreso no habilitado",
+                ], 422);
+            }
 
         } else {
 
             if (!(new TeacherRepository)->teacherIsActive($dni)) {
                 return response()->json([
                     "status" => false,
-                    "message" => "Docente no habilitado"
+                    "message" => "Docente no habilitado",
                 ], 422);
             }
 
@@ -148,7 +156,7 @@ class AttendanceController extends Controller
                 "status" => "yet.mp3",
                 "register" => $register,
                 "person" => $person,
-                "message" => "Su asistencia ya ha sido registrado"
+                "message" => "Su asistencia ya ha sido registrado",
             ]);
         }
 
@@ -156,16 +164,15 @@ class AttendanceController extends Controller
 
         $state = "presente";
 
-        // set state according to the time and entry_time 
-        $entry_time = Carbon::createFromFormat("H:i:s", $cyclevariables["entry_time"]);
+        // set state according to the time and entry_time
+        $entry_time = Carbon::createFromFormat("H:i", $cyclevariables["entry_time"]);
 
         if (now()->greaterThanOrEqualTo($entry_time->addMinutes($cyclevariables["tolerance"]))) {
             $state = "tarde";
         }
 
         // store attendance
-        $this->instance->store($dni, $type, $state, date('H:i:s'));
-
+        $this->instance->store($dni, $type, $state, date('H:i:s'), $priority);
 
         if ($state === "tarde") {
             // send late notification here
@@ -177,7 +184,7 @@ class AttendanceController extends Controller
             "status" => "ok.mp3",
             "message" => $message,
             "register" => $register,
-            "person" => $person
+            "person" => $person,
         ]);
     }
 

@@ -52,7 +52,16 @@
       </div>
     </div>
     <div class="card-footer text-center">
-      <m-button @pum="showFinder">Se olvidó su carnet</m-button>
+      <m-button
+        v-show="isStudent"
+        @pum="handleChangePriority"
+        color="btn-inverse-info"
+      >
+        Ingreso {{ priority }}
+      </m-button>
+      <m-button @pum="showFinder" color="btn-inverse-warning">
+        Sin carnet
+      </m-button>
     </div>
   </section>
 </template>
@@ -75,6 +84,7 @@ export default {
         section_code: ""
       },
       person: {},
+      priority: 1,
       isStudent: true
     };
   },
@@ -97,6 +107,10 @@ export default {
       $("#finderModal").modal("hide");
       this.save(dni);
     },
+    handleChangePriority() {
+      this.priority = this.priority < 3 ? this.priority + 1 : 1;
+      this.$snack.show(`Ingreso Nro ${this.priority} ha sido seleccionado`);
+    },
     updateCurrentTime() {
       this.currentTime = dformat(new Date(), "h:mm:ss A");
     },
@@ -113,7 +127,11 @@ export default {
     async save(dni) {
       this.state = "l";
       api
-        .auto({ dni, type: this.isStudent ? "s" : "t" })
+        .auto({
+          dni,
+          type: this.isStudent ? "s" : "t",
+          priority: this.priority
+        })
         .then(({ data }) => {
           this.message = data.message;
           this.register = data.register;
