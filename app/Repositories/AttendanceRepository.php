@@ -36,9 +36,10 @@ class AttendanceRepository extends BaseRepository
             ->orderBy("entry_time", "DESC")->get();
     }
 
-    public function todayIsAlreadyRegistered(string $entity_identifier): bool
+    public function todayIsAlreadyRegistered(string $entity_identifier, $priority): bool
     {
         return Attendance::where("entity_identifier", $entity_identifier)
+            ->where("priority", $priority)
             ->whereDate("created_at", now())
             ->exists();
     }
@@ -75,13 +76,14 @@ class AttendanceRepository extends BaseRepository
             ->get();
     }
 
-    public function store(string $entity_identifier, string $entity_type, string $state, string | null $time): Attendance
+    public function store(string $entity_identifier, string $entity_type, string $state, string | null $time, int $priority): Attendance
     {
         return Attendance::create([
             "entity_identifier" => $entity_identifier,
             "entity_type" => $entity_type,
             "state" => $state,
             "entry_time" => $time,
+            "priority" => $priority,
         ]);
     }
 

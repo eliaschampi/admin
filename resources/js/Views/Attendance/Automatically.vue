@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="card-footer text-center">
-      <m-button @pum="showFinder">Se olvidó su Carnet de Asistencia</m-button>
+      <m-button @pum="showFinder">Se olvidó su carnet</m-button>
     </div>
   </section>
 </template>
