@@ -33,7 +33,7 @@ export const FETCH_TEACHER = "FETCH_TEACHER";
 export const FETCH_FAMILY = "FETCH_FAMILY";
 // warning
 export const FETCH_MAIN = "FETCH_MAIN";
-// yup!!!!
+
 export const FETCH_INCOME_DETAIL = "FETCH_INCOME_DETAIL";
 export const FETCH_INCOME = "FETCH_INCOME";
 export const CHANGE_CAT_TYPE = "CHANGE_CAT_TYPE";

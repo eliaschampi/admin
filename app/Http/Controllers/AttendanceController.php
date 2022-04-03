@@ -68,8 +68,9 @@ class AttendanceController extends Controller
         $state = $request->input("state");
         $entity_identifier = $request->input("entity_identifier");
         $entity_type = $request->input("entity_type");
+        $priority = $request->input("priority");
         $time = $state === "falta" || $state === "permiso" ? null : $request->input("entry_time");
-        if ($this->instance->todayIsAlreadyRegistered($entity_identifier)) {
+        if ($this->instance->todayIsAlreadyRegistered($entity_identifier, $priority)) {
             return response()->json("Su asistencia ya ha sido registrado", 402);
         }
         $this->instance->store($entity_identifier, $entity_type, $state, $time);
@@ -84,10 +85,10 @@ class AttendanceController extends Controller
         // param is dni
         $dni = $request->input("dni");
         $type = $request->input("type");
+        $priority = $request->input("priority");
 
         // validate dni
         if (empty($dni)) {
-
             return response()->json([
                 "status" => false,
                 "error" => "Su dni es incorrecto"
@@ -106,7 +107,6 @@ class AttendanceController extends Controller
         $cyclevariables = [];
         $register = null;
 
-
         if ($type === "s") {
             // fetch current by dni
             $register = (new RegisterRepository)->fetchSingle($request->input("dni"));
@@ -114,14 +114,19 @@ class AttendanceController extends Controller
             if (empty($register)) {
                 return response()->json([
                     "status" => false,
-                    "message" => "Este año no está matriculado"
+                    "message" => "Este año no está matrículado"
                 ], 422);
             }
 
             // entry time is obtained from the cycle table cached
             $cycle_code = substr($register->section_code, 0, 8);
 
-            $cyclevariables = CycleCache::attendanceVariablesShouldBeCached($cycle_code);
+            $cacheds = CycleCache::attendanceVariablesShouldBeCached($cycle_code);
+
+            $cyclevariables = array_first($cacheds, function($query) use ($priority) {
+                $query->order === $priority;
+            });
+
         } else {
 
             if (!(new TeacherRepository)->teacherIsActive($dni)) {
@@ -138,7 +143,7 @@ class AttendanceController extends Controller
         }
 
         // check if today is already registered
-        if ($this->instance->todayIsAlreadyRegistered($dni)) {
+        if ($this->instance->todayIsAlreadyRegistered($dni, $priority)) {
             return response()->json([
                 "status" => "yet.mp3",
                 "register" => $register,
@@ -169,7 +174,6 @@ class AttendanceController extends Controller
         $message .= $state;
 
         return response()->json([
-            "yup" => "K.E-seps",
             "status" => "ok.mp3",
             "message" => $message,
             "register" => $register,
