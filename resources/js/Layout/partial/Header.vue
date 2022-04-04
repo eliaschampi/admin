@@ -161,7 +161,7 @@ export default {
     title() {
       const branch = this.$store.getters["user/branch"];
       const user_year = this.$store.getters["fullyear"];
-      return `${window.Laravel.INS} Sede ${branch} - ${user_year}`;
+      return `Sede ${branch} - ${user_year}`;
     }
   },
   methods: {

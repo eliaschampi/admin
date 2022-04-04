@@ -8,7 +8,7 @@
   */
 
 /*!
- * ApexCharts v3.33.2
+ * ApexCharts v3.34.0
  * (c) 2018-2022 ApexCharts
  * Released under the MIT License.
  */

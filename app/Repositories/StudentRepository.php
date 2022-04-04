@@ -27,7 +27,7 @@ class StudentRepository extends BaseRepository
 
         if ($only_current_reg) {
             $student->whereHas("registers", function ($query) {
-                return $query->where("section_code", "like", $this->current_year . "%");
+                return $query->where("state", "a");
             });
         }
 
