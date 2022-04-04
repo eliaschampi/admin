@@ -39,8 +39,8 @@ Route::group(["prefix" => "auth"], function () {
 });
 
 Route::group(["middleware" => ["withkey"]], function () {
-    Route::get("/attendance/{section_code}/{date}", [AttendanceController::class, "fetchBySection"]);
-    Route::get("/attendance/{entity_identifier}/{from_date}/{to_date}", [AttendanceController::class, "fetchByEntity"]);
+    Route::get("/attendance/{section_code}/{date}/{priority}", [AttendanceController::class, "fetchBySection"]);
+    Route::get("/attendance/{entity_identifier}/{from}/{to}/{priority}", [AttendanceController::class, "fetchByEntity"]);
     Route::get("/payments/{register_code}", [IncomeDetailController::class, "fetchStudentPayments"]);
     Route::get("/register_all/{dni}", [RegisterController::class, "fetchByStudent"]);
 });
@@ -199,7 +199,7 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     //attendance
     Route::get("/attendance_t/{date}", [AttendanceController::class, "fetchForTeacherByDate"]);
     Route::get("/attendance_dw/{entity_identifier}/{from_date}/{to_date}", [AttendanceController::class, "exportToExcel"]);
-    Route::get("/attendance_ab/{date}", [AttendanceController::class, "fetchAbsences"]);
+    Route::get("/attendance_ab/{date}/{priority}", [AttendanceController::class, "fetchAbsences"]);
     Route::get("/attendance_chart", [AttendanceController::class, "fetchForChart"]);
     Route::post("/attendance", [AttendanceController::class, "store"]);
     Route::post("/attendance_auto", [AttendanceController::class, "auto"]);

@@ -1,20 +1,20 @@
 <template>
   <section class="card left-panel" id="automatically">
     <div class="card-body">
-      <div class="card-header">
-        <div class="tootle float-right">
-          <m-button
-            class="btn-rounded"
-            :color="isStudent ? 'btn-inverse-secondary' : 'btn-inverse-primary'"
-            @pum="isStudent = !isStudent"
-          >
-            {{ isStudent ? "Estudiante" : "Docente" }}
-          </m-button>
-        </div>
+      <div
+        class="card-header d-flex justify-content-between align-items-center"
+      >
         <h4 class="card-title">
           {{ currentTime }} -
           <small class="text-muted">{{ subtitle }}</small>
         </h4>
+        <m-button
+          class="btn-rounded btn-sm"
+          :color="isStudent ? 'btn-inverse-secondary' : 'btn-inverse-primary'"
+          @pum="isStudent = !isStudent"
+        >
+          {{ isStudent ? "Estudiante" : "Docente" }}
+        </m-button>
       </div>
       <div class="row">
         <div class="col-md-4">
@@ -57,7 +57,7 @@
         @pum="handleChangePriority"
         color="btn-inverse-info"
       >
-        Ingreso {{ priority }}
+        <b>i</b>({{ priority }})
       </m-button>
       <m-button @pum="showFinder" color="btn-inverse-warning">
         Sin carnet

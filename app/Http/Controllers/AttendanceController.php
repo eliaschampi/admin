@@ -13,17 +13,17 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    protected AttendanceRepository $instance;
+    protected  AttendanceRepository $instance;
 
     public function __construct(AttendanceRepository $instance)
     {
         $this->instance = $instance;
     }
 
-    public function fetchBySection(string $section_code, string $date)
+    public function fetchBySection(string $section_code, string $date, string $priority)
     {
         return response()->json([
-            "values" => $this->instance->fetchBySectionAndDate($section_code, $date),
+            "values" => $this->instance->fetchBySectionAndDate($section_code, $date, (int) $priority),
         ]);
     }
 
@@ -34,17 +34,17 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function fetchByEntity(string $entity_identifier, string $from_date, string $to_date)
+    public function fetchByEntity(string $entity_identifier, string $from, string $to, string $priority)
     {
         return response()->json([
-            "values" => $this->instance->fetchByEntity($entity_identifier, $from_date, $to_date),
+            "values" => $this->instance->fetchByEntity($entity_identifier, $from, $to, (int) $priority),
         ]);
     }
 
-    public function fetchAbsences(string $date)
+    public function fetchAbsences(string $date, string $priority)
     {
         return response()->json([
-            "values" => $this->instance->absences($date),
+            "values" => $this->instance->absences($date, (int) $priority),
         ]);
     }
 
@@ -73,7 +73,8 @@ class AttendanceController extends Controller
         if ($this->instance->todayIsAlreadyRegistered($entity_identifier, $priority)) {
             return response()->json("Su asistencia ya ha sido registrado", 402);
         }
-        $this->instance->store($entity_identifier, $entity_type, $state, $time, $priority);
+        $this->instance->store($entity_identifier, $entity_type, $state, $time, $priority
+        );
         if ($state === "tarde" || $state === "falta") {
             //dispatch(new \App\Jobs\SendEmailToFamily($code, $state, $time));
         }
