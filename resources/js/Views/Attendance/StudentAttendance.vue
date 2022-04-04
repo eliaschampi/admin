@@ -3,7 +3,7 @@
     <m-button
       @pum="handleChangePriority"
       slot="rb"
-      color="btn-inverse-info  btn-sm"
+      color="btn-inverse-info btn-sm"
     >
       <b>i</b>({{ priority }})
     </m-button>
@@ -57,7 +57,7 @@
   </card>
 </template>
 <script>
-import { edit } from "@/Mixins/attendance";
+import { edit, priority } from "@/Mixins/attendance";
 import mySection from "@/Components/Views/mySection";
 import Justification from "./Justification.vue";
 import AttendanceRow from "./AttendanceRow.vue";
@@ -65,7 +65,7 @@ import Datepick from "@/Components/Views/Datepick";
 import api from "@/Api/attendance";
 import PersonLink from "./PersonLink.vue";
 export default {
-  mixins: [edit],
+  mixins: [edit, priority],
   components: {
     AttendanceRow,
     Justification,
@@ -83,8 +83,7 @@ export default {
         "Estado",
         "Acciones"
       ],
-      load: false,
-      priority: 1
+      load: false
     };
   },
   computed: {
@@ -97,10 +96,6 @@ export default {
     }
   },
   methods: {
-    handleChangePriority() {
-      this.priority = this.priority < 3 ? this.priority + 1 : 1;
-      this.$snack.show(`Ingreso Nro ${this.priority} ha sido seleccionado`);
-    },
     fetchData() {
       this.load = true;
       return api

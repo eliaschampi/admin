@@ -38,14 +38,14 @@ export default {
     set(context, data) {
       return new Promise((resolve) => {
         cycle.set(data).then((r) => {
-          resolve(r.data);
+          resolve(r.data.message);
         });
       });
     },
     update(context, data) {
       return new Promise((resolve) => {
         cycle.update(data).then((r) => {
-          resolve(r.data);
+          resolve(r.data.message);
         });
       });
     }

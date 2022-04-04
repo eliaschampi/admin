@@ -1,5 +1,12 @@
 <template>
   <card title="Registrar asistencia del día de hoy">
+    <m-button
+      @pum="handleChangePriority"
+      slot="rb"
+      color="btn-inverse-info btn-sm"
+    >
+      <b>i</b>({{ priority }})
+    </m-button>
     <alert class="alert alert-info" :dismisable="false">
       Listado de Estudiantes que aún no han registrado su asistencia. Para ver a
       los estudiantes que registrarón sus asistencia
@@ -74,9 +81,11 @@
 import api from "../../Api/attendance";
 import regApi from "../../Api/register";
 import mySection from "@/Components/Views/mySection";
+import { priority } from "../../Mixins/attendance";
 import _ from "lodash";
 export default {
   components: { mySection },
+  mixins: [priority],
   data() {
     return {
       load: false,
@@ -112,7 +121,7 @@ export default {
     },
     add(item) {
       api
-        .store({ ...item, entity_type: "s" })
+        .store({ ...item, entity_type: "s", priority: this.priority })
         .then(() => {
           this.students.splice(this.students.indexOf(item), 1);
         })

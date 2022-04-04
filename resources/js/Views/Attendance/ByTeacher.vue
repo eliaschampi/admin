@@ -79,7 +79,8 @@ export default {
       ],
       entry_time: window.Laravel.entry_time,
       tolerance: window.Laravel.tolerance,
-      total_delay: 0
+      total_delay: 0,
+      priority: 1
     };
   },
   computed: {
@@ -92,7 +93,8 @@ export default {
       return api
         .fetchByEntity({
           ...this.range,
-          entity_identifier: this.dni
+          entity_identifier: this.dni,
+          priority: this.priority
         })
         .then((r) => {
           const values = r.data.values;

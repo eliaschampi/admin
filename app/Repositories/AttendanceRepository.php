@@ -14,12 +14,13 @@ class AttendanceRepository extends BaseRepository
         return Attendance::find($code);
     }
 
-    public function fetchBySectionAndDate(string $section_code, string $date)
+    public function fetchBySectionAndDate(string $section_code, string $date, int $priority)
     {
         return Attendance::whereDate("created_at", $date)
             ->with(["justification", "person" => function ($query) {
                 $query->select("dni", "name", "lastname", "phone");
             }])
+            ->where("priority", $priority)
             ->whereHas("person.student.registers", function ($query) use ($section_code) {
                 $query->where("section_code", $section_code);
             })
@@ -32,6 +33,7 @@ class AttendanceRepository extends BaseRepository
             ->with(["justification", "person" => function ($query) {
                 $query->select("dni", "name", "lastname", "phone");
             }])
+            ->where("priority", 1)
             ->where("entity_type", "t")
             ->orderBy("entry_time", "DESC")->get();
     }
@@ -44,9 +46,10 @@ class AttendanceRepository extends BaseRepository
             ->exists();
     }
 
-    public function fetchByEntity(string $entity_identifier, string $from_date, string $to_date)
+    public function fetchByEntity(string $entity_identifier, string $from, string $to, int $priority)
     {
-        return Attendance::whereBetween("created_at", [$from_date, $to_date])
+        return Attendance::whereBetween("created_at", [$from, $to])
+            ->where("priority", $priority)
             ->where("entity_identifier", $entity_identifier)
             ->orderBy("created_at", "desc")
             ->with("justification")->get();
@@ -64,7 +67,7 @@ class AttendanceRepository extends BaseRepository
             ->groupBy("mday", "entity_type")->get();
     }
 
-    public function absences(string $date)
+    public function absences(string $date, int $priority)
     {
         return Attendance::with(["justification", "person" => function ($query) {
             $query->select("dni", "name", "lastname", "phone");
@@ -72,6 +75,7 @@ class AttendanceRepository extends BaseRepository
             $query->where("branch_code", $this->branch_code);
         })->whereIn("state", ["tarde", "falta"])
             ->whereDate("created_at", $date)
+            ->where("priority", $priority)
             ->orderBy("entry_time", "DESC")
             ->get();
     }

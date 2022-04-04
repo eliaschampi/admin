@@ -14,4 +14,10 @@ class CycleCache
             return call_user_func("\App\Repositories\CycleRepository::fetchAttendaceVariablesByCode", $cycle_code);
         });
     }
+
+    public static function forgetAttendanceVariables(string $cycle_code) {
+
+        $key = "cycle_att_" . $cycle_code;
+        return Cache::forget($key);
+    }
 }
