@@ -42,7 +42,6 @@ class CycleRepository extends BaseRepository
     public function update(array $cycledata, string $code)
     {
         $cycle = $this->fetchByCode($code);
-
         $cycle->from = $cycledata["from"];
         $cycle->to = $cycledata["to"];
         $cycle->monthly = $cycledata["monthly"];

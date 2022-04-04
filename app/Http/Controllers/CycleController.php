@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cache\CycleCache;
 use App\Http\Requests\CycleRequest;
 use App\Repositories\CycleRepository;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ class CycleController extends Controller
 
             if ($cycle->type === "SEC") {
                 $X = 4;
-            } else if (in_array($cycle->type, ["GE5", "OP1", "OR1", "OR2"])) {
+            } else if (in_array($cycle->type, ["GE5", "OP1", "OR1", "OR2", "IN1", "IN2"])) {
                 $s = 5;
                 $x = 5;
             } else if ($cycle->type === "ADM") {
@@ -49,7 +50,7 @@ class CycleController extends Controller
 
             DB::commit();
             return response()->json("Nivel Académico correctamente aperturado");
-        } catch (\Exception $ex) {
+        } catch (\Exception$ex) {
             DB::rollBack();
             return response()->json([
                 "res" => $ex->getMessage(),
@@ -59,12 +60,10 @@ class CycleController extends Controller
 
     public function update(Request $request, $code)
     {
-        $updated = $this->instance->update($request->all(), $code);
-        $code = 200;
-        $message = "Nivel educativo ha sido modificado";
-        if (is_numeric($updated)) {
-            $message = "se finalizó a $updated estudiantes matriculados del nivel";
-        }
-        return response()->json($message, $code);
+        $this->instance->update($request->all(), $code);
+        CycleCache::forgetAttendanceVariables($code);
+        return response()->json([
+            "message" => "Nivel educativo ha sido modificado",
+        ], 200);
     }
 }

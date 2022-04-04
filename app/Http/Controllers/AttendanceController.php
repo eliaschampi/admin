@@ -131,7 +131,6 @@ class AttendanceController extends Controller
             if (is_null($cyclevariables)) {
                 return response()->json([
                     "status" => false,
-                    "status" => $priority,
                     "message" => "Horario de ingreso no habilitado",
                 ], 422);
             }

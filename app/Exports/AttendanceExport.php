@@ -51,7 +51,7 @@ WithCustomStartCell
 
     public function collection()
     {
-        return (new AttendanceRepository())->fetchByEntity($this->dni, $this->from, $this->to);
+        return (new AttendanceRepository())->fetchByEntity($this->dni, $this->from, $this->to, 1);
     }
 
     public function headings(): array

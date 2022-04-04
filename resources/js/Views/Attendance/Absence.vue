@@ -1,14 +1,21 @@
 <template>
   <card title="Registro Tardanzas e Inasistencias">
-    <m-button
-      @pum="print"
-      :disabled="!attendances.length"
-      color="btn-inverse-accent btn-icon"
-      size="btn-sm"
-      class="px-2"
-      icon="icon ion-ios-cloud-download icon-md"
-      slot="rb"
-    />
+    <template #rb>
+      <m-button
+        @pum="handleChangePriority"
+        color="btn-inverse-info btn-sm"
+      >
+        <b>i</b>({{ priority }})
+      </m-button>
+      <m-button
+        @pum="print"
+        :disabled="!attendances.length"
+        color="btn-inverse-accent btn-icon"
+        size="btn-sm"
+        class="px-2"
+        icon="icon ion-ios-cloud-download icon-md"
+      />
+    </template>
     <alert :dismisable="false">
       Este panel muestra a los estudiantes, que han asistido tarde ó que han
       faltado el dia seleccionado.
@@ -60,13 +67,13 @@
 </template>
 <script>
 import api from "@/Api/attendance.js";
-import { edit } from "@/Mixins/attendance.js";
+import { edit, priority } from "@/Mixins/attendance.js";
 import Datepick from "@/Components/Views/Datepick.vue";
 import PersonLink from "./PersonLink.vue";
 import Justification from "./Justification";
 import AttendanceRow from "./AttendanceRow.vue";
 export default {
-  mixins: [edit],
+  mixins: [edit, priority],
   components: { Justification, PersonLink, AttendanceRow, Datepick },
   data() {
     return {
@@ -77,7 +84,7 @@ export default {
         "Ingreso Registrado",
         "Estado",
         "Aciones"
-      ]
+      ],
     };
   },
   computed: {

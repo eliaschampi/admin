@@ -1,13 +1,21 @@
 <template>
   <card id="stuatt" title="Reporte de asistencia">
-    <m-button
-      :disabled="!attendances.length"
-      @pum="exportToExcel"
-      color="btn-inverse-primary"
-      class="btn-icon"
-      slot="rb"
-      icon="icon ion-md-cloud-download"
-    />
+    <template #rb>
+      <m-button
+        @pum="handleChangePriority"
+        color="btn-inverse-info btn-sm"
+      >
+        <b>i</b>({{ priority }})
+      </m-button>
+      <m-button
+        :disabled="!attendances.length"
+        @pum="exportToExcel"
+        color="btn-inverse-primary"
+        class="btn-icon"
+        icon="icon ion-md-cloud-download"
+      />
+    </template>
+
     <m-table :columns="columns" :data="attendances" :fetch="fetchData">
       <range @fetch="fetchData" />
       <template slot="data">
@@ -27,6 +35,7 @@
         </attendance-row>
       </template>
     </m-table>
+
     <p class="text-center text-primary" slot="foot">
       {{ attendances.length }} Asistencias
     </p>
@@ -44,12 +53,12 @@
 import { mapGetters } from "vuex";
 import api from "@/Api/attendance";
 import Range from "@/Components/Ui/Range";
-import { edit } from "@/Mixins/attendance";
+import { edit, priority } from "@/Mixins/attendance";
 import AttendanceRow from "./AttendanceRow.vue";
 import Justification from "./Justification.vue";
 import { fetchOnWatch } from "../../Mixins";
 export default {
-  mixins: [edit, fetchOnWatch],
+  mixins: [edit, fetchOnWatch, priority],
   components: {
     Justification,
     Range,
@@ -74,8 +83,9 @@ export default {
     fetchData() {
       return api
         .fetchByEntity({
+          ...this.range,
           entity_identifier: this.dni,
-          ...this.range
+          priority: this.priority
         })
         .then((r) => {
           this.attendances = r.data.values;

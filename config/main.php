@@ -6,7 +6,7 @@ return [
         "a" => "Activo",
         "i" => "Inactivo",
         "f" => "Finalizó",
-        "p" => "Pendiente"
+        "p" => "Pendiente",
     ],
 
     "cycle" => [
@@ -16,7 +16,9 @@ return [
         "ADM" => "Administración",
         "OP1" => "Primera Oportunidad",
         "OR1" => "Ordinaria 1",
-        "OR2" => "Ordinaria 2"
+        "OR2" => "Ordinaria 2",
+        "IN1" => "Intensivo 1",
+        "IN2" => "Intensivo 2",
     ],
 
     "ins" => [

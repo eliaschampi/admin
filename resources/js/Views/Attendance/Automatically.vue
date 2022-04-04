@@ -84,6 +84,7 @@ export default {
         section_code: ""
       },
       person: {},
+      cycle: "",
       priority: 1,
       isStudent: true
     };
@@ -92,15 +93,6 @@ export default {
     this.currentTime = dformat(new Date(), "h:mm:ss A");
     setInterval(() => this.updateCurrentTime(), 1 * 1000);
     EventBus.$on("afterSelectPerson", this.afterEvent);
-  },
-  computed: {
-    cycle() {
-      if (this.type === "s" && this.register !== null) {
-        const { section_code, level } = this.register;
-        return `${section_code.substr(-2)} de ${level}`;
-      }
-      return `Docente ${new Date().getFullYear()}`;
-    }
   },
   methods: {
     afterEvent({ dni }) {
@@ -134,7 +126,12 @@ export default {
         })
         .then(({ data }) => {
           this.message = data.message;
-          this.register = data.register;
+          if (this.isStudent && data.register !== null) {
+            const { section_code, level } = data.register;
+            this.cycle = `${section_code.substr(-2)} de ${level}`;
+          } else {
+            this.cycle = `Docente ${new Date().getFullYear()}`;
+          }
           this.person = data.person;
           if (!data.person.profile) {
             this.person.profile = {
