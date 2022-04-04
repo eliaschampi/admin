@@ -1,8 +1,12 @@
 <template>
   <card title="Asistencia por sección y fecha">
-    <alert :dismisable="false">
-      Dar Click en el nombre del estudiante para ir a ver mas Información
-    </alert>
+    <m-button
+      @pum="handleChangePriority"
+      slot="rb"
+      color="btn-inverse-info  btn-sm"
+    >
+      <b>i</b>({{ priority }})
+    </m-button>
     <div class="row">
       <m-table
         class="col-md-12"
@@ -13,8 +17,8 @@
         v-model="buscado"
       >
         <div class="d-flex">
-          <my-section class="mr-3" @done="fetchData" />
-          <datepick issm="true" @fetch="fetchData" />
+          <my-section @done="fetchData" />
+          <datepick issm="true" class="ml-2" @fetch="fetchData" />
         </div>
         <template slot="data">
           <attendance-row
@@ -79,7 +83,8 @@ export default {
         "Estado",
         "Acciones"
       ],
-      load: false
+      load: false,
+      priority: 1
     };
   },
   computed: {
@@ -92,12 +97,17 @@ export default {
     }
   },
   methods: {
+    handleChangePriority() {
+      this.priority = this.priority < 3 ? this.priority + 1 : 1;
+      this.$snack.show(`Ingreso Nro ${this.priority} ha sido seleccionado`);
+    },
     fetchData() {
       this.load = true;
       return api
         .fetchBySection({
           section_code: this.$store.getters["section/code"],
-          date: this.$store.state.date
+          date: this.$store.state.date,
+          priority: this.priority
         })
         .then((r) => {
           this.attendances = r.data.values;

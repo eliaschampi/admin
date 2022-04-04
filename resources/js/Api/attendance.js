@@ -1,16 +1,16 @@
 import request from "../Http";
 
 export default {
-  fetchBySection: (data) =>
-    request.get(`/attendance/${data.section_code}/${data.date}`, {
+  fetchBySection: ({ section_code, date, priority }) =>
+    request.get(`/attendance/${section_code}/${date}/${priority}`, {
       headers: {
         "iam-trust": "E_75keseps77_K"
       }
     }),
 
-  fetchByEntity: (data) =>
+  fetchByEntity: ({ entity_identifier, from, to, priority }) =>
     request.get(
-      `/attendance/${data.entity_identifier}/${data.from}/${data.to}`,
+      `/attendance/${entity_identifier}/${from}/${to}/${priority}`,
       {
         headers: {
           "iam-trust": "E_75keseps77_K"
@@ -20,7 +20,7 @@ export default {
 
   fetchForTeacherByDate: (date) => request.get(`/attendance_t/${date}`),
 
-  absences: (date) => request.get(`/attendance_ab/${date}`),
+  absences: (date, priority) => request.get(`/attendance_ab/${date}/${priority}`),
 
   fetchForChart: () => request.get("/attendance_chart"),
 
