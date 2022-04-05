@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     fetchData() {
-      return api.absences(this.$store.state.date).then((r) => {
+      return api.absences(this.$store.state.date, this.priority).then((r) => {
         this.attendances = r.data.values;
       });
     },

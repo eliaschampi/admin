@@ -8,7 +8,7 @@
       </p>
       <p>
         <span class="font-weight-bold"> Versión de la aplicación: </span>
-        <b class="badge badge-warning p-2"> {{ $store.state.version }}</b>
+        <b class="badge badge-warning p-2"> {{ $store.state.version }} </b> Aurora
       </p>
       <p>
         <span class="font-weight-bold"> Año: </span>

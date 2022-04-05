@@ -37,7 +37,7 @@ class MainHelper
         if ($type === "SEC" && $degree === "1") {
             $type = "PRI";
             $degree = "6";
-        } else if ($type === "SE5" || $type === "GE5") {
+        } else if ($type === "GE5") {
             $type = "SEC";
             $degree = "4";
         } else {
