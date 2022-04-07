@@ -52,23 +52,28 @@
 </div>
 
 <table class="table printable table-bordered" style="margin-top: 1cm">
+  <thead>
+    <tr>
+      <th style="width: 5cm">
+        {{$attention->user->name .' '. $attention->user->lastname}}
+        <br/>
+        <small>Psicólogo</small>
+      </th>
+      <th style="width: 5cm">
+        {{$attention->person->name ." ". $attention->person->lastname}}
+        <br/>
+        <small>{{config("main.atype.$attention->person_type")}}</small>
+      </th>
+      <th></th>
+      <th></th>
+    </td>
+  </thead>
   <tbody>
     <tr>
-      <td style="width: 10cm">Psicólogo: {{$attention->user->name .' '. $attention->user->lastname}}</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td style="width: 10cm">{{config("main.atype.$attention->person_type") . ": ". $attention->person->name ." ".
-        $attention->person->lastname}}</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td style="width: 10cm">&nbsp;</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td style="width: 10cm">&nbsp;</td>
-      <td></td>
+      <td style="width: 5cm">&nbsp;</td>
+      <td style="width: 5cm">&nbsp;</td>
+      <td style="width: 3cm">&nbsp;</td>
+      <td style="width: 3cm">&nbsp;</td>
     </tr>
   </tbody>
 </table>

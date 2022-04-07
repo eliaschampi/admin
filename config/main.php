@@ -15,6 +15,8 @@ return [
         "GE5" => "Quinto Carrion",
         "ADM" => "Administración",
         "OP1" => "Primera Oportunidad",
+        "OP2" => "Primera Oportunidad 2",
+        "REF" => "Reforzamiento",
         "OR1" => "Ordinaria 1",
         "OR2" => "Ordinaria 2",
         "IN1" => "Intensivo 1",

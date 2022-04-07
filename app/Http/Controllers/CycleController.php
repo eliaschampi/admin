@@ -34,10 +34,10 @@ class CycleController extends Controller
 
             if ($cycle->type === "SEC") {
                 $X = 4;
-            } else if (in_array($cycle->type, ["GE5", "OP1", "OR1", "OR2", "IN1", "IN2"])) {
+            } else if (in_array($cycle->type, ["GE5", "OP1", "OP2", "OR1", "OR2", "IN1", "IN2"])) {
                 $s = 5;
                 $x = 5;
-            } else if ($cycle->type === "ADM") {
+            } else if (is_array($cycle->type, ["ADM", "REF"])) {
                 $x = 1;
             }
 

@@ -48,7 +48,7 @@ class RegisterController extends Controller
                 "entity_identifier" => $query["student_dni"],
                 "phone" => $query["student"]["person"]["phone"],
                 "state" => "presente",
-                "entry_time" => "08:00:00",
+                "entry_time" => date('H:i'),
                 "full_name" => $query["student"]["person"]["name"] . " " . $query["student"]["person"]["lastname"],
             ];
         });

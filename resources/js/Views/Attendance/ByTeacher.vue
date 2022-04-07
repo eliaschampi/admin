@@ -102,7 +102,7 @@ export default {
           values.forEach((item) => {
             let delay = 0;
             if (item.entry_time) {
-              const from = dparseFromFormat(this.entry_time, "HH:mm:ss");
+              const from = dparseFromFormat(this.entry_time, "HH:mm");
               const d = dparseFromFormat(item.entry_time, "HH:mm:ss");
               delay = diffToDate(from, d, "m") - Number(this.tolerance);
             }

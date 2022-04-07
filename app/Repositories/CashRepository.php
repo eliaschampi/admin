@@ -34,7 +34,6 @@ class CashRepository extends BaseRepository implements CashInterface
 
     public function fetchChart()
     {
-
         return Cash::select(
             DB::raw("date_part('year', created_at) as myear, date_part('month', created_at) as month, sum(surrendered.amount)")
         )
