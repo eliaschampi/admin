@@ -114,7 +114,7 @@ export default {
   methods: {
     fetchData() {
       regApi
-        .fetchForAttendance(this.$store.getters["section/code"])
+        .fetchForAttendance(this.$store.getters["section/code"], this.priority)
         .then((r) => {
           this.students = r.data.values;
         });

@@ -49,11 +49,11 @@ class RegisterRepository extends BaseRepository
             ->whereIn("state", $states)->get();
     }
 
-    public function fetchForAttendance(string $section_code)
+    public function fetchForAttendance(string $section_code, int $priority)
     {
         return Register::where("state", "a")->where("section_code", $section_code)
-            ->whereDoesntHave("student.person.attendances", function ($query) {
-                $query->whereDate("created_at", now());
+            ->whereDoesntHave("student.person.attendances", function ($query) use($priority) {
+                $query->whereDate("created_at", now())->where("priority", $priority);
             })->get();
     }
 

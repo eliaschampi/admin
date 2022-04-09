@@ -116,7 +116,7 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::post("/register_m", [RegisterController::class, "storeMany"]);
 
     //attendace
-    Route::get("/register_asis/{section_code}", [RegisterController::class, "fetchForAttendance"]);
+    Route::get("/register_asis/{section_code}/{priority}", [RegisterController::class, "fetchForAttendance"]);
 
     //teacher (usar index para imprimir)
     Route::resource("/teacher", TeacherController::class)->except(["edit", "create", "destroy"]);
@@ -157,7 +157,7 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
 
     //op
     Route::post("/op", [OpController::class, "store"]);
-    
+
     //schedule
     Route::resource("/schedule", ScheduleController::class)->only(["store", "update", "destroy"]);
     Route::get("/schedule/{section_code}", [ScheduleController::class, "fetchMain"]);

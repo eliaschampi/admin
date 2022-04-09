@@ -18,8 +18,8 @@ export default {
       responseType: "blob"
     });
   },
-  // where the code is section code
-  fetchForAttendance: (code) => request.get(`/register_asis/${code}`),
+
+  fetchForAttendance: (code, priority) => request.get(`/register_asis/${code}/${priority}`),
 
   fetchBySection: (s_code, inactives) =>
     request.get(`/register/${s_code}/${inactives}`),

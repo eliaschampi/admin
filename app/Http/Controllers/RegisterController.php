@@ -39,9 +39,9 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function fetchForAttendance(string $section_code)
+    public function fetchForAttendance(string $section_code, string $priority)
     {
-        $response = $this->instance->fetchForAttendance($section_code);
+        $response = $this->instance->fetchForAttendance($section_code, (int)$priority);
 
         $mapped = $response->map(function ($query) {
             return [
