@@ -60,6 +60,7 @@ WithCustomStartCell
             "Fecha",
             "Hora de ingreso",
             "Estado",
+            "Ingreso nro",
             "Justificación",
         ];
     }
@@ -70,6 +71,7 @@ WithCustomStartCell
             $row->created_at->formatLocalized("%d de %B"),
             $row->entry_time,
             $row->state,
+            $row->priority,
             empty($row->justification) ? "" : "Envió justificación",
         ];
     }
@@ -92,5 +94,4 @@ WithCustomStartCell
     {
         return "B2";
     }
-
 }

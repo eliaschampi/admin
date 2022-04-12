@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    protected  AttendanceRepository $instance;
+    protected AttendanceRepository $instance;
 
     public function __construct(AttendanceRepository $instance)
     {
@@ -167,7 +167,7 @@ class AttendanceController extends Controller
         // set state according to the time and entry_time
         $entry_time = Carbon::createFromFormat("H:i", $cyclevariables["entry_time"]);
 
-        if (now()->greaterThanOrEqualTo($entry_time->addMinutes($cyclevariables["tolerance"]))) {
+        if (now()->greaterThanOrEqualTo($entry_time->addMinutes(intval(cyclevariables["tolerance"]) + 1))) {
             $state = "tarde";
         }
 

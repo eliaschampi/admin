@@ -42,7 +42,7 @@
       <m-button
         @pum="excel"
         :disabled="!attendances.length"
-        color="btn-light btn-icon"
+        color="btn-inverse-accent btn-icon"
         icon="icon ion-ios-cloud-download"
       />
     </div>
@@ -116,13 +116,11 @@ export default {
         });
     },
     excel() {
+      const { from, to } = this.range;
       api
-        .exportToExcel({
-          ...this.range,
-          entity_identifier: this.dni
-        })
+        .exportToExcel(this.dni, from, to)
         .then((r) => {
-          const name = `Asistencia ${this.fullname} ${this.range.from} Hasta ${this.range.to}`;
+          const name = `Asistencia ${this.fullname} ${from} Hasta ${to}`;
           this.$downl(r.data, name, ".xlsx");
         });
     }
