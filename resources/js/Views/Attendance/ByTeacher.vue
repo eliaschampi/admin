@@ -43,7 +43,7 @@
         @pum="excel"
         :disabled="!attendances.length"
         color="btn-inverse-accent btn-icon"
-        icon="icon ion-ios-cloud-download"
+        icon="icon ion-md-cloud-download"
       />
     </div>
     <justification
@@ -117,12 +117,10 @@ export default {
     },
     excel() {
       const { from, to } = this.range;
-      api
-        .exportToExcel(this.dni, from, to)
-        .then((r) => {
-          const name = `Asistencia ${this.fullname} ${from} Hasta ${to}`;
-          this.$downl(r.data, name, ".xlsx");
-        });
+      api.exportToExcel(this.dni, from, to).then((r) => {
+        const name = `Asistencia ${this.fullname} ${from} Hasta ${to}`;
+        this.$downl(r.data, name, ".xlsx");
+      });
     }
   }
 };

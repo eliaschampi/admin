@@ -1,12 +1,16 @@
 <template>
   <card title="Asistencia por sección y fecha">
-    <m-button
-      @pum="handleChangePriority"
-      slot="rb"
-      color="btn-inverse-info btn-sm"
-    >
-      <b>i</b>({{ priority }})
-    </m-button>
+    <template #rb>
+      <m-button @pum="handleChangePriority" color="btn-inverse-info btn-sm">
+        <b>i</b>({{ priority }})
+      </m-button>
+      <m-button
+        @pum="excel"
+        :disabled="!attendances.length"
+        color="btn-inverse-accent btn-icon"
+        icon="icon ion-md-cloud-download"
+      />
+    </template>
     <div class="row">
       <m-table
         class="col-md-12"
@@ -108,6 +112,14 @@ export default {
           this.attendances = r.data.values;
           this.load = false;
         });
+    },
+    excel() {
+      const s_code = this.$store.getters["section/code"];
+      const date = this.$store.state.date;
+      api.exportToExcelBySection(s_code, date, this.priority).then((r) => {
+        const name = `Asistencia ${s_code} fecha ${date}`;
+        this.$downl(r.data, name, ".xlsx");
+      });
     }
   }
 };

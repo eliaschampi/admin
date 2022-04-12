@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cache\CycleCache;
-use App\Exports\AttendanceExport;
+use App\Exports\AttendanceBySectionExport;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\PersonRepository;
 use App\Repositories\RegisterRepository;
@@ -197,5 +197,10 @@ class AttendanceController extends Controller
     public function exportToExcel(string $entity_identifier, string $from, string $to)
     {
         return new AttendanceExport($entity_identifier, $from, $to);
+    }
+
+    public function exportToExcelBySection(string $section_code, string $date, string $priority)
+    {
+        return new AttendanceBySectionExport($section_code, $date, intval($priority));
     }
 }

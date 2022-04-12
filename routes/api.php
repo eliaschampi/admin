@@ -199,6 +199,7 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     //attendance
     Route::get("/attendance_t/{date}", [AttendanceController::class, "fetchForTeacherByDate"]);
     Route::get("/attendance_dw/{entity_identifier}/{from_date}/{to_date}", [AttendanceController::class, "exportToExcel"]);
+    Route::get("/attendance_sw/{section_code}/{date}/{priority}", [AttendanceController::class, "exportToExcelBySection"]);
     Route::get("/attendance_ab/{date}/{priority}", [AttendanceController::class, "fetchAbsences"]);
     Route::get("/attendance_chart", [AttendanceController::class, "fetchForChart"]);
     Route::post("/attendance", [AttendanceController::class, "store"]);

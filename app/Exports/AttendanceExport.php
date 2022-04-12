@@ -2,18 +2,18 @@
 
 namespace App\Exports;
 
+use Maatwebsite\Excel\Excel;
 use App\Repositories\AttendanceRepository;
-use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
-use Maatwebsite\Excel\Concerns\WithCustomStartCell;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
 class AttendanceExport implements
 FromCollection,
@@ -42,7 +42,7 @@ WithCustomStartCell
 
     private $to;
 
-    public function __construct($dni, $from, $to)
+    public function __construct(string $dni, string $from, string $to)
     {
         $this->dni = $dni;
         $this->from = $from;
@@ -58,9 +58,9 @@ WithCustomStartCell
     {
         return [
             "Fecha",
+            "Ingreso nro",
             "Hora de ingreso",
             "Estado",
-            "Ingreso nro",
             "Justificación",
         ];
     }
@@ -86,7 +86,7 @@ WithCustomStartCell
     public function columnFormats(): array
     {
         return [
-            "C" => NumberFormat::FORMAT_DATE_TIME1,
+            "D" => NumberFormat::FORMAT_DATE_TIME1,
         ];
     }
 

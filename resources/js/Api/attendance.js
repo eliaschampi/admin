@@ -33,5 +33,10 @@ export default {
   exportToExcel: (entity_identifier, from, to) =>
     request.get(`/attendance_dw/${entity_identifier}/${from}/${to}`, {
       responseType: "blob"
-    })
+    }),
+
+  exportToExcelBySection: (section_code, date, priority) =>
+    request.get(`/attendance_sw/${section_code}/${date}/${priority}`, {
+      responseType: "blob"
+    }),
 };
