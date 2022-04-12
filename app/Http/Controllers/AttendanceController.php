@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Cache\CycleCache;
+use Illuminate\Http\Request;
+use App\Repositories\PersonRepository;
+use App\Repositories\TeacherRepository;
+use App\Repositories\RegisterRepository;
 use App\Exports\AttendanceBySectionExport;
 use App\Repositories\AttendanceRepository;
-use App\Repositories\PersonRepository;
-use App\Repositories\RegisterRepository;
-use App\Repositories\TeacherRepository;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
@@ -167,7 +167,7 @@ class AttendanceController extends Controller
         // set state according to the time and entry_time
         $entry_time = Carbon::createFromFormat("H:i", $cyclevariables["entry_time"]);
 
-        if (now()->greaterThanOrEqualTo($entry_time->addMinutes(intval(cyclevariables["tolerance"]) + 1))) {
+        if (now()->greaterThanOrEqualTo($entry_time->addMinutes(intval($cyclevariables["tolerance"]) + 1))) {
             $state = "tarde";
         }
 
