@@ -18,7 +18,7 @@
         :fetch="fetchData"
         v-model="buscado"
       >
-        <month slot="tablefilter" @monthchange="fetchData" />
+        <month @monthchange="fetchData" />
         <template slot="data">
           <tr :key="item.code" v-for="item in filtered">
             <td>{{ item.code }}</td>

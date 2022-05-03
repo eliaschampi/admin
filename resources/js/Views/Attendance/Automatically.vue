@@ -91,7 +91,7 @@ export default {
   },
   created() {
     this.currentTime = dformat(new Date(), "h:mm:ss A");
-    setInterval(() => this.updateCurrentTime(), 1 * 1000);
+    setInterval(() => this.updateCurrentTime(), 1000);
     EventBus.$on("afterSelectPerson", this.afterEvent);
   },
   methods: {
