@@ -356,25 +356,7 @@ const routes = [
           iratyc: true
         }
       },
-      {
-        path: "/atenciones",
-        name: "main_attention",
-        component: Attention,
-        meta: {
-          roles: "AP",
-          title: "Atenciones",
-          iratyc: true
-        }
-      },
-      {
-        path: "atenciones/create/:code?",
-        name: "new_attention",
-        component: NewAttention,
-        meta: {
-          roles: "AP",
-          title: "Registro de Atención"
-        }
-      },
+
       /**
        * ciclo
        */
@@ -497,9 +479,26 @@ const routes = [
           title: "Registro de Incidencia"
         }
       },
-      /**
-       * Asistencias
-       */
+      {
+        path: "/atenciones",
+        name: "main_attention",
+        component: Attention,
+        meta: {
+          roles: "APN",
+          title: "Atenciones",
+          iratyc: true
+        }
+      },
+      {
+        path: "atenciones/create/:code?",
+        name: "new_attention",
+        component: NewAttention,
+        meta: {
+          roles: "APN",
+          title: "Registro de Atención"
+        }
+      },
+ 
       {
         path: "inasistencias/:dni?",
         name: "absence",

@@ -320,7 +320,7 @@
           id="sideaten"
           icon="icon ion-ios-chatbubbles"
           name="Atenciones"
-          v-can="'P'"
+          v-can="'PN'"
         >
           <li class="nav-item">
             <router-link :to="{ name: 'new_attention' }" class="nav-link">
