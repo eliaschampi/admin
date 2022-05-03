@@ -73,7 +73,7 @@ class StudentRepository extends BaseRepository
         });
     }
 
-    public function fetchCountByBranch()
+    public function fetchCountByBranch(): int
     {
         return Student::where("branch_code", $this->branch_code)->count();
     }

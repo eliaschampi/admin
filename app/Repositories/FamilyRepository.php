@@ -103,7 +103,7 @@ class FamilyRepository
         }
     }
 
-    public function fetchCountByBranch()
+    public function fetchCountByBranch(): int
     {
         return Family::count();
     }

@@ -55,11 +55,7 @@ class MainHelper
         $path = env("PROFILE_PATH");
         $disk = env("PROFILE_DISK");
         if (Str::contains($previmg, 'default') === false) {
-            $prevfull = $path . $previmg;
-            if (Storage::disk($disk)->exists($prevfull)) {
-                return Storage::disk($disk)->delete($prevfull);
-            }
-            return true;
+            return Storage::disk($disk)->delete($path . $previmg);
         }
         return true;
     }

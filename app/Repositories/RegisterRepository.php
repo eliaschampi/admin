@@ -79,7 +79,7 @@ class RegisterRepository extends BaseRepository
         return $register->save() ? $code : false;
     }
 
-    public function fetchCountByBranch()
+    public function fetchCountByBranch(): int
     {
         return Register::where("section_code", "like", $this->herelike())->count();
     }
