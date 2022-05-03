@@ -16,9 +16,8 @@
     <m-plain label="Modificado el:" :value="person.updated_at | largeDate" />
     <m-plain label="Observaciones:" :value="person.obs" />
     <slot></slot>
-    <div class="button-group">
+    <div class="button-group" v-can="'S'">
       <m-router
-        v-can="'AS'"
         color="btn-inverse-primary"
         class="btn-icon"
         :to="{ name: route, params: { dni: person.dni } }"

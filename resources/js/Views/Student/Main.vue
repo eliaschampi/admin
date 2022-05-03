@@ -12,6 +12,7 @@
         <nav-item
           icon="ion-md-people"
           title="Apoderados"
+          v-can="'NPS'"
           route="es_family"
           :dni="dni"
         />

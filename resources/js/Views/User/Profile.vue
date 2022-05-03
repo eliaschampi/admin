@@ -11,7 +11,7 @@
     </div>
     <template slot="profile-foot">
       <m-button
-        v-can="'APN'"
+        v-can="'APYN'"
         color="btn-inverse-primary"
         @pum="reAuthenticate"
         size="btn-sm"
@@ -19,7 +19,7 @@
         Acceder a otra sede
       </m-button>
     </template>
-    <form slot="room" @submit.prevent="savePassword">
+    <form v-can="'NPS'" slot="room" @submit.prevent="savePassword">
       <panel title="Seguridad" :f="true">
         <m-input
           id="Contraseña"
@@ -60,6 +60,7 @@
       <m-router
         slot="foot"
         size="btn-sm"
+        v-can="'NSP'"
         :to="{
           name: 'update_user',
           params: { code: user.code }

@@ -60,7 +60,7 @@
       <div class="row">
         <div class="col-md-4">
           <panel class="head-panel bg-light">
-            <m-button @pum="newPay" :block="true" size="btn-sm">
+            <m-button @pum="newPay" :block="true" size="btn-sm" v-can="'S'">
               Registrar un Pago
             </m-button>
             <register
@@ -83,7 +83,13 @@
           </panel>
         </div>
         <div
-          class="col-md-8 mt-4 mt-md-0 d-flex flex-row flex-wrap align-content-start"
+          class="
+            col-md-8
+            mt-4 mt-md-0
+            d-flex
+            flex-row flex-wrap
+            align-content-start
+          "
         >
           <div
             class="topay bg-light pointer"
@@ -237,6 +243,10 @@ export default {
       this.showDetailModal();
     },
     monthPay(month) {
+      if (!this.$store.getters["can"]("SA")) {
+        this.$snack.show("Actualiza el año académico");
+        return;
+      }
       this.$store.commit("SET_DETAIL", {
         detail: {
           actiontype: {

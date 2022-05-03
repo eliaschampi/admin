@@ -1,7 +1,7 @@
 <template>
   <card title="Plataforma Aeduca" :f="false">
     <template v-if="person.profile">
-      <div slot="rb" class="button-group">
+      <div slot="rb" class="button-group" v-can="'NS'">
         <m-button
           size="btn-sm"
           color="btn-inverse-secondary btn-icon"

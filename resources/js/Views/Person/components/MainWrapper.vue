@@ -37,7 +37,7 @@
         </div>
       </div>
       <slot name="room">
-        <profile :ptype="ptype" />
+        <aeduca :ptype="ptype" />
       </slot>
     </div>
     <div class="col-lg-8 col-md-7 col-xlg-9 mt-5 mt-md-0">
@@ -75,10 +75,10 @@
 <script>
 import request from "../../../Http";
 import File from "../../../Components/Ui/File.vue";
-import Profile from "./Profile.vue";
+import Aeduca from "./Aeduca.vue";
 export default {
   name: "MainWrapper",
-  components: { File, Profile },
+  components: { File, Aeduca },
   props: {
     ptype: {
       type: String,

@@ -3,9 +3,13 @@
     <info route="new_s" :person="student">
       <div class="d-flex align-items-center">
         <div class="font-weight-bold text-primary">Sede al que pertenece:</div>
-        <div class="d-flex ml-2">
+        <div class="ml-2">
           <b>{{ $store.getters["user/branch"] }}</b>
-          <span class="ml-2 text-accent pointer" @click="showAdvanceModal">
+          <span
+            v-can="'S'"
+            class="ml-2 text-accent pointer"
+            @click="showAdvanceModal"
+          >
             Cambiar de sede
           </span>
         </div>
@@ -15,12 +19,6 @@
         @click="handleRoute('payment')"
       >
         Pagos y mensualidades
-      </div>
-      <div
-        class="pointer font-weight-bold text-primary mt-2"
-        @click="handleRoute('notifications')"
-      >
-        Notificaciones
       </div>
       <div
         class="pointer font-weight-bold text-primary mt-2"

@@ -5,6 +5,7 @@
     <template slot="rb">
       <slot name="report"></slot>
       <m-router
+        v-can="'NP'"
         :to="{ name: 'new_incidence' }"
         color="btn-inverse-accent btn-icon"
         icon="icon ion-md-add icon-md"

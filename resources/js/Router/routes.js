@@ -162,7 +162,8 @@ const routes = [
         name: "user_profile",
         component: UserProfile,
         meta: {
-          title: "Mi perfil"
+          title: "Mi perfil",
+          iratyc: true,
         }
       },
       {
@@ -321,7 +322,8 @@ const routes = [
                 meta: {
                   roles: "AN",
                   ptype: "teacher",
-                  title: "Docente"
+                  title: "Docente",
+                  iratyc: true
                 }
               },
               {

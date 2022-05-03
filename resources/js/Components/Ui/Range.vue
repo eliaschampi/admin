@@ -35,8 +35,17 @@ export default {
   name: "Range",
   created() {
     if (this.range.from === "") {
-      const today = new Date();
-      const tom = new Date();
+      const curr = new Date();
+      const today = new Date(
+        this.$store.getters["fullyear"],
+        curr.getMonth(),
+        curr.getDate()
+      );
+      const tom = new Date(
+        this.$store.getters["fullyear"],
+        curr.getMonth(),
+        curr.getDate()
+      );
       tom.setDate(today.getDate() + 1);
       this.$store.commit("SET_RANGE", {
         from: iso(today),

@@ -13,7 +13,7 @@
         </router-link>
       </li>
       <menu-side id="sidesis" icon="icon ion-md-desktop" name="Sistema">
-        <li class="nav-item">
+        <li class="nav-item" v-can="'ANPS'">
           <router-link :to="{ name: 'about' }" class="nav-link">
             Acerca de
           </router-link>
@@ -33,12 +33,12 @@
             Sedes
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-can="'ANPS'">
           <router-link :to="{ name: 'main_user' }" class="nav-link">
             Usuarios
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-can="'ANPS'">
           <router-link :to="{ name: 'company' }" class="nav-link">
             Información general
           </router-link>
@@ -72,7 +72,12 @@
           </router-link>
         </li>
       </menu-side>
-      <menu-side id="sidedoc" icon="icon ion-ios-people" name="Docente">
+      <menu-side
+        id="sidedoc"
+        v-can="'NPS'"
+        icon="icon ion-ios-people"
+        name="Docente"
+      >
         <li class="nav-item">
           <router-link
             :to="{
@@ -102,7 +107,7 @@
             Perfil del apoderado
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-can="'S'">
           <router-link :to="{ name: 'new_f' }" class="nav-link">
             Registrar Nuevo
           </router-link>
@@ -234,7 +239,7 @@
           icon="icon ion-md-checkmark-circle-outline"
           name="Asistencia"
         >
-          <li class="nav-item">
+          <li class="nav-item" v-can="'PN'">
             <router-link
               :to="{
                 name: 'automatically'
