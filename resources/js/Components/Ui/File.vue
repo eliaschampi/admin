@@ -10,11 +10,11 @@
         placeholder="Click para seleccionar"
       />
       <span class="input-group-append">
-        <label class="btn btn-primary" for="file">
+        <label class="btn btn-primary" :for="id">
           <input
             @change="upload"
             :accept="accept"
-            id="file"
+            :id="id"
             name="adjunto"
             type="file"
             class="d-none"
@@ -41,6 +41,10 @@ export default {
     event: "input"
   },
   props: {
+    id: {
+      type: String,
+      default: "file"
+    },
     files: {
       type: Array,
       default: () => []
@@ -51,7 +55,7 @@ export default {
     },
     accept: {
       type: String,
-      default: "application/pdf"
+      default: "application/pdf,images/*"
     },
     placeholder: {
       type: String,

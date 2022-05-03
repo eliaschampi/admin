@@ -54,12 +54,12 @@
         Elija una foto cuadrada de tamaño pasaporte, (peso maximo 500kb)
       </div>
       <file
-        id="adjunto"
+        id="userimage"
         @input="upload"
         v-model="images"
-        accept="image/*"
+        accept="image/jpeg,image/png"
         v-validate="'ext:png,jpg|size:512'"
-        :error="errors.first('adjunto')"
+        :error="errors.first('userimage')"
       />
       <div class="avatar white mt-0 d-flex" v-if="imagePreview">
         <img
