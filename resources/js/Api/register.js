@@ -19,7 +19,8 @@ export default {
     });
   },
 
-  fetchForAttendance: (code, priority) => request.get(`/register_asis/${code}/${priority}`),
+  fetchForAttendance: (code, priority) =>
+    request.get(`/register_asis/${code}/${priority}`),
 
   fetchBySection: (s_code, inactives) =>
     request.get(`/register/${s_code}/${inactives}`),

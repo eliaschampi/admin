@@ -1,10 +1,7 @@
 <template>
   <card id="stuatt" title="Reporte de asistencia">
     <template #rb>
-      <m-button
-        @pum="handleChangePriority"
-        color="btn-inverse-info btn-sm"
-      >
+      <m-button @pum="handleChangePriority" color="btn-inverse-info btn-sm">
         <b>i</b>({{ priority }})
       </m-button>
       <m-button

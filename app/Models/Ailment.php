@@ -8,7 +8,7 @@ class Ailment extends Model
 {
     protected $table = "ailment";
 
-    protected $primaryKey = 'code';
+    protected $primaryKey = "code";
 
     public $timestamps = false;
 

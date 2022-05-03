@@ -87,15 +87,7 @@
               att.order === cycle.attendance.length &&
               cycle.attendance.length < 3
             "
-            class="
-              icon
-              ion-md-add
-              icon-md
-              align-self-center
-              ml-1
-              pointer
-              text-success
-            "
+            class="icon ion-md-add icon-md align-self-center ml-1 pointer text-success"
           ></span>
           <span
             @click="removeAttendance"
@@ -103,15 +95,7 @@
               att.order === cycle.attendance.length &&
               cycle.attendance.length > 1
             "
-            class="
-              icon
-              ion-md-remove
-              icon-md
-              align-self-center
-              ml-1
-              pointer
-              text-danger
-            "
+            class="icon ion-md-remove icon-md align-self-center ml-1 pointer text-danger"
           ></span>
         </div>
       </template>

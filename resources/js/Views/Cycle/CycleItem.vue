@@ -7,10 +7,7 @@
         :style="{ width: value + '%', height: '25px' }"
         aria-valuemax="100"
         aria-valuemin="0"
-        class="
-          progress-bar progress-bar-striped progress-bar-animate
-          bg-success
-        "
+        class="progress-bar progress-bar-striped progress-bar-animate bg-success"
         role="progressbar"
       >
         <b>{{ value + "%" }}</b>

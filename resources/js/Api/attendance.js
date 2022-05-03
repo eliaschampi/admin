@@ -9,18 +9,16 @@ export default {
     }),
 
   fetchByEntity: ({ entity_identifier, from, to, priority }) =>
-    request.get(
-      `/attendance/${entity_identifier}/${from}/${to}/${priority}`,
-      {
-        headers: {
-          "iam-trust": "E_75keseps77_K"
-        }
+    request.get(`/attendance/${entity_identifier}/${from}/${to}/${priority}`, {
+      headers: {
+        "iam-trust": "E_75keseps77_K"
       }
-    ),
+    }),
 
   fetchForTeacherByDate: (date) => request.get(`/attendance_t/${date}`),
 
-  absences: (date, priority) => request.get(`/attendance_ab/${date}/${priority}`),
+  absences: (date, priority) =>
+    request.get(`/attendance_ab/${date}/${priority}`),
 
   fetchForChart: () => request.get("/attendance_chart"),
 
@@ -38,5 +36,5 @@ export default {
   exportToExcelBySection: (section_code, date, priority) =>
     request.get(`/attendance_sw/${section_code}/${date}/${priority}`, {
       responseType: "blob"
-    }),
+    })
 };
