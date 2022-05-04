@@ -45,9 +45,9 @@
               who="student"
               :only_current_reg="false"
               :only_current_branch="false"
-              :fullname="student.fullname"
+              :fullname="student_name"
             />
-            <div class="form-group col-md-6" v-if="student.dni">
+            <div class="form-group col-md-6" v-if="student_name">
               <label for="mats">Matriculas del estudiante</label>
               <select
                 class="form-control"
@@ -88,7 +88,7 @@
             <span
               class="text-primary pointer"
               @click="onClearCustomer"
-              v-show="$defined(customer.code)"
+              v-show="customer.code"
             >
               Quitar Cliente frecuente
             </span>
@@ -212,9 +212,7 @@ export default {
   data() {
     return {
       load: false,
-      student: {
-        fullname: "Buscar estudiante"
-      },
+      student_name: "Buscar estudiante",
       cachedRegister: null,
       customers: [],
       registers: [],
@@ -245,7 +243,6 @@ export default {
     };
   },
   mounted() {
-    // obtener invoicenumber
     this.fetchInvoiceNumber();
 
     this.$store.dispatch("getCash").then((r) => {
@@ -268,10 +265,7 @@ export default {
         if (dni) {
           const reg = this.$store.state.register.register;
           if (dni === reg.student_dni) {
-            this.student = {
-              dni,
-              fullname: this.$store.getters["student/fullname"]
-            };
+            this.student_name = this.$store.getters["student/fullname"];
             regApi.fetchRegisters(dni).then(({ data }) => {
               this.registers = data.values;
               this.invoice.customer_identifier = reg.code;
@@ -279,7 +273,6 @@ export default {
           }
         }
       }
-      // obtener cash
     });
 
     EventBus.$on("afterSelectPerson", this.onRegisterSelected);
@@ -315,10 +308,8 @@ export default {
       return `${year} - ${section_code.substr(-2)} de ${level}`;
     },
     onRegisterSelected({ dni, name, lastname }) {
-      this.student = {
-        dni,
-        fullname: `${name} ${lastname}`
-      };
+      this.invoice.customer_identifier = "";
+      this.student_name = `${name} ${lastname}`;
       regApi.fetchRegisters(dni).then(({ data }) => {
         this.registers = data.values;
       });
@@ -353,13 +344,12 @@ export default {
       this.invoice.total = this.paid;
       const client = { name: "" };
       // identifier
-
       if (this.invoice.mod === "customer") {
         this.invoice.customer_identifier = this.customer;
         client.name = this.customer.name;
       } else {
         client.name = !this.cachedRegister
-          ? this.student.fullname
+          ? this.student_name
           : this.cachedRegister.student_name;
       }
 
@@ -421,6 +411,8 @@ export default {
     },
     cleanAfter() {
       cache.removeItem(`in_${this.invoice.type}`);
+      this.$store.commit("register/FETCH_REGISTER", null);
+      this.$store.commit("student/FETCH_STUDENT", null);
     },
     cancel() {
       this.$snack.show({

@@ -91,7 +91,7 @@ class AttendanceRepository extends BaseRepository
         ]);
     }
 
-    public function update(string $entry_time, string $state, $code): bool
+    public function update(string | null $entry_time, string $state, $code): bool
     {
         $attendance = Attendance::find($code);
         $attendance->state = $state;
