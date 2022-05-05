@@ -19,6 +19,7 @@ use App\Http\Controllers\FamilyworkController;
 use App\Http\Controllers\IncidenceController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\IncomeDetailController;
+use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\JustificationController;
 use App\Http\Controllers\OpController;
 use App\Http\Controllers\PersonController;
@@ -43,6 +44,7 @@ Route::group(["middleware" => ["withkey"]], function () {
     Route::get("/attendance/{entity_identifier}/{from}/{to}/{priority}", [AttendanceController::class, "fetchByEntity"]);
     Route::get("/payments/{register_code}", [IncomeDetailController::class, "fetchStudentPayments"]);
     Route::get("/register_all/{dni}", [RegisterController::class, "fetchByStudent"]);
+    Route::get("/inspection/entity/{entity_identifier}", [InspectionController::class], "fetchByEntity");
 });
 
 Route::group(["middleware" => ["jwt.auth"]], function () {
@@ -226,4 +228,10 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::delete("/attention/{code}", [AttentionController::class, "destroy"]);
     Route::get("/attention_dw/{code}", [AttentionController::class, "downloadAttached"]);
     Route::get("/attention_print/{code}", [AttentionController::class, "print"]);
+
+    Route::get("/inspection/{type}", [InspectionController::class], "fetchByType");
+    Route::get("/inspection/show/{code}", [InspectionController::class], "fetchByCode");
+    Route::post("/inspection", [InspectionController::class], "store");
+    Route::put("/inspection/{code}", [InspectionController::class], "update");
+    Route::delete("/inspection/{code}", [InspectionController::class], "destroy");
 });

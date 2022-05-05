@@ -9,7 +9,7 @@ class Income extends Model
 {
     protected $table = "income";
 
-    protected $primaryKey = 'code';
+    protected $primaryKey = "code";
 
     protected $guarded = ["code"];
 

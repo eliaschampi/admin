@@ -8,7 +8,7 @@ class Register extends Model
 {
     protected $table = "register";
 
-    protected $primaryKey = 'code';
+    protected $primaryKey = "code";
 
     public $incrementing = false;
 

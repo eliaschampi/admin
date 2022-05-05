@@ -28,6 +28,6 @@ class BaseRepository
 
     protected function paginateNumber()
     {
-        return 40;
+        return 30;
     }
 }
