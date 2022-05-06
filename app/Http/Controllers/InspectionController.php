@@ -23,6 +23,14 @@ class InspectionController extends Controller
         ]);
     }
 
+    public function fetchStates()
+    {
+        $states = config("main.inspection");
+        return response()->json([
+            "values" => $states,
+        ]);
+    }
+
     public function fetchByEntity(string $entity_identifier)
     {
         return response()->json([
@@ -48,7 +56,7 @@ class InspectionController extends Controller
     public function update(Request $request, int $code)
     {
         $validated = $request->validate([
-            'successfully_completed' => 'required',
+            'state' => 'required',
             'description' => 'required|max:400',
             'additional' => 'required|max:150',
         ]);

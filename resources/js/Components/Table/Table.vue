@@ -32,7 +32,7 @@
         </thead>
         <template>
           <tbody>
-            <slot name="data"></slot>
+            <slot name="data" v-bind:rows="data"></slot>
           </tbody>
         </template>
         <tfoot>

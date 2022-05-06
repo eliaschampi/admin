@@ -9,6 +9,8 @@ export default {
 
     fetchByCode: (code) => request.get(`/inspection/show/${code}`),
 
+    fetchStates: () => request.get("/inspection"),
+
     store: (data) => request.post("/inspection", data),
 
     update: (data, code) => request.put(`/inspection/${code}`, data),

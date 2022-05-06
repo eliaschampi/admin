@@ -48,9 +48,40 @@ return [
         "teacher" => "Docente",
     ],
 
+    "inspection" => [
+        "a" => [
+            "label" => "Aprobado",
+            "color" => "success",
+        ],
+        "i" => [
+            "label" => "Rechazado",
+            "color" => "danger",
+        ],
+        "p" => [
+            "label" => "Pendiente",
+            "color" => "warning",
+        ],
+        "e" => [
+            "label" => "Entregado",
+            "color" => "success",
+        ],
+        "r" => [
+            "label" => "Requizado",
+            "color" => "info",
+        ],
+        "c" => [
+            "label" => "Contestado",
+            "color" => "primary",
+        ],
+        "n" => [
+            "label" => "No contestado",
+            "color" => "warning",
+        ],
+    ],
+
     "ins_name" => env('INS', 'Aeduca'),
 
-    "entry_time" => env('ENTRY_TIME', '07:75:00'),
+    "entry_time" => env('ENTRY_TIME', '07:75'),
 
     "tolerance" => env('TOLERANCE', 5),
 ];

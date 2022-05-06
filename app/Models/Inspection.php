@@ -19,7 +19,17 @@ class Inspection extends Model
         "entity_type",
         "entity_identifier",
         "description",
-        "successfully_completed",
+        "state",
         "additional",
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, "user_code");
+    }
+
+    public function person()
+    {
+        return $this->belongsTo(Person::class, "entity_identifier");
+    }
 }
