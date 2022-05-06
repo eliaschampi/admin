@@ -63,6 +63,8 @@ import NewIncidence from "../Views/Incidence/Create";
 // attention
 import Attention from "../Views/Attention/Index";
 import NewAttention from "../Views/Attention/Create";
+// inspection
+import Inspection from "../Views/Inspection/Index";
 
 // attendance student
 import AttendanceSection from "../Views/Attendance/StudentAttendance";
@@ -86,6 +88,7 @@ import NewExpense from "../Views/Expense/Create";
 import Customer from "../Views/Customer/Index";
 import Types from "../Views/Types/Index";
 import Payment from "../Views/Student/Payment";
+
 
 /**
  * iratyc  = it remains although the year changes
@@ -500,7 +503,15 @@ const routes = [
           title: "Registro de Atención"
         }
       },
- 
+      {
+        path: "cedp",
+        name: "cedp",
+        component: Inspection,
+        meta: {
+          title: "Registros normativos",
+          roles: "APN",
+        }
+      },
       {
         path: "inasistencias/:dni?",
         name: "absence",

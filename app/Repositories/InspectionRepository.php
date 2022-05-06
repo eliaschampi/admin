@@ -9,7 +9,7 @@ class InspectionRepository extends BaseRepository
 
     public function fetchByType(string $type)
     {
-        return Inspection::where("type", $type)
+        return Inspection::where("inspection_type", $type)
             ->where("branch_code", $this->branch_code)
             ->whereYear("created_at", $this->current_year)
             ->orderBy("created_at", "DESC")

@@ -92,7 +92,6 @@
 <script>
 import UserCard from "@/Components/Views/UserCard";
 import { mapActions, mapGetters, mapState } from "vuex";
-
 export default {
   components: {
     UserCard

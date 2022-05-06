@@ -229,9 +229,9 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::get("/attention_dw/{code}", [AttentionController::class, "downloadAttached"]);
     Route::get("/attention_print/{code}", [AttentionController::class, "print"]);
 
-    Route::get("/inspection/{type}", [InspectionController::class], "fetchByType");
-    Route::get("/inspection/show/{code}", [InspectionController::class], "fetchByCode");
-    Route::post("/inspection", [InspectionController::class], "store");
-    Route::put("/inspection/{code}", [InspectionController::class], "update");
-    Route::delete("/inspection/{code}", [InspectionController::class], "destroy");
+    Route::get("/inspection/{type}", [InspectionController::class, "fetchByType"]);
+    Route::get("/inspection/show/{code}", [InspectionController::class, "fetchByCode"]);
+    Route::post("/inspection", [InspectionController::class, "store"]);
+    Route::put("/inspection/{code}", [InspectionController::class, "update"]);
+    Route::delete("/inspection/{code}", [InspectionController::class, "destroy"]);
 });
