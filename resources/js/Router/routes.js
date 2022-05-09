@@ -65,6 +65,7 @@ import Attention from "../Views/Attention/Index";
 import NewAttention from "../Views/Attention/Create";
 // inspection
 import Inspection from "../Views/Inspection/Index";
+import NewInspection from "../Views/Inspection/Create";
 
 // attendance student
 import AttendanceSection from "../Views/Attendance/StudentAttendance";
@@ -507,6 +508,15 @@ const routes = [
         path: "cedp",
         name: "cedp",
         component: Inspection,
+        meta: {
+          title: "Registros normativos",
+          roles: "APN",
+        }
+      },
+      {
+        path: "cedp/create",
+        name: "new_inspection",
+        component: NewInspection,
         meta: {
           title: "Registros normativos",
           roles: "APN",

@@ -343,6 +343,28 @@
             </router-link>
           </li>
         </menu-side>
+        <menu-side
+          id="sidenorma"
+          icon="icon ion-md-hammer"
+          name="Normativos"
+          v-can="'PN'"
+        >
+          <li class="nav-item">
+            <router-link :to="{ name: 'new_inspection' }" class="nav-link">
+              Registrar nuevo
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link
+              :to="{
+                name: 'cedp'
+              }"
+              class="nav-link"
+            >
+              Listado
+            </router-link>
+          </li>
+        </menu-side>
       </template>
     </ul>
   </nav>

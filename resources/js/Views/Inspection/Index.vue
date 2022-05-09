@@ -61,17 +61,17 @@
               </template>
             </td>
             <td>
-              {{ dest_types[item.entity_type] }}
+              {{ dest_types[item.entity_type].label }}
             </td>
             <td>
               <router-link
                 class="font-weight-bold"
                 :to="{
-                  name: 'student_profile',
+                  name: dest_types[item.entity_type].route,
                   params: { dni: item.person.dni }
                 }"
               >
-                {{ `${item.person.name} ${item.person.name}` }}
+                {{ `${item.person.name} ${item.person.lastname}` }}
               </router-link>
             </td>
             <td>
@@ -125,9 +125,18 @@ export default {
         r: "requisas"
       },
       dest_types: {
-        s: "Estudiante",
-        t: "Docente",
-        f: "Apoderado"
+        s: {
+          label: "Estudiante",
+          route: "student_profile"
+        },
+        t: {
+          label: "Docente",
+          route: "teacher_profile"
+        },
+        f: {
+          label: "Apoderado",
+          route: "family_profile"
+        }
       },
       loading: false,
       decorated_states: []
@@ -135,7 +144,7 @@ export default {
   },
   watch: {
     i_type(val) {
-      console.log(val);
+      this.fetchData();
     }
   },
   mounted() {
@@ -160,6 +169,7 @@ export default {
   },
   methods: {
     async fetchData() {
+      this.inspections = [];
       this.loading = true;
       const { data } = await api.fetchByType(this.i_type);
       this.inspections = data.values;
