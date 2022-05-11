@@ -1,6 +1,9 @@
 <template>
   <section id="inspection-form">
-    <m-form :title="`${title} ${dec_types[inspection.inspection_type].label}`">
+    <m-form
+      :title="`${title} ${dec_types[inspection.inspection_type].label}`"
+      @save="save"
+    >
       <div class="form-row">
         <div class="col-md-6">
           <inspection-type v-model="inspection.inspection_type" />
@@ -28,15 +31,14 @@
           <hr />
           <div>Selecciona</div>
           <input-finder :fullname="person_name" :who="inspection.entity_type" />
+          
           <div class="form-group mt-3">
             <label for="myadditional">
               {{ dec_types[inspection.inspection_type].additional }}
             </label>
             <input
               id="myadditional"
-              :type="
-                inspection.inspection_type === 'p' ? 'datetime-local' : 'text'
-              "
+              :type="inspection.inspection_type === 'p' ? 'date' : 'text'"
               required
               placeholder="Campo obligatorio"
               class="form-control"
@@ -93,7 +95,7 @@ export default {
     },
     "inspection.entity_type"() {
       this.person_name = "";
-      this.attention.entity_identifier = null;
+      this.inspection.entity_identifier = null;
     }
   },
   computed: {
@@ -113,17 +115,22 @@ export default {
       $("#finderModal").modal("hide");
     },
     store(data) {
-      if (this.isedit) {
+      if (data.code) {
         return api.update(data, data.code);
       }
       return api.store(data);
     },
     async save() {
-      // validate
-      if (this.inspection.entity_identifier) {
+      if (!this.inspection.entity_identifier) {
         this.$snack.show("Falta seleccionar estudiante o apoderado");
         return;
       }
+
+      const { data } = await this.store(this.inspection);
+
+      this.$snack.success(data.message);
+
+      this.$router.push({ name: "cedp" });
     }
   }
 };
