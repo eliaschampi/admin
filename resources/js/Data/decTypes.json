@@ -1,0 +1,47 @@
+{
+    "p": {
+        "label": "un permiso",
+        "additional": "Fecha de permiso",
+        "state_op": {
+            "title": "del permiso",
+            "first": [
+                "a",
+                "Aprobado"
+            ],
+            "second": [
+                "i",
+                "Rechazado"
+            ]
+        }
+    },
+    "l": {
+        "label": "una llamada",
+        "additional": "Numero de celular activo",
+        "state_op": {
+            "title": "de la llamada",
+            "first": [
+                "c",
+                "Contestado"
+            ],
+            "second": [
+                "n",
+                "No contestado"
+            ]
+        }
+    },
+    "r": {
+        "label": "una requisa",
+        "additional": "Objeto requizado",
+        "state_op": {
+            "title": "de la requisa",
+            "first": [
+                "r",
+                "Requizado"
+            ],
+            "second": [
+                "e",
+                "Entregado"
+            ]
+        }
+    }
+}

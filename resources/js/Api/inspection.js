@@ -11,9 +11,7 @@ export default {
 
     fetchStates: () => request.get("/inspection"),
 
-    store: (data) => request.post("/inspection", data),
 
-    update: (data, code) => request.put(`/inspection/${code}`, data),
 
     destroy: (code) => request.delete(`/inspection/${code}`)
 }
