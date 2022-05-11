@@ -110,38 +110,7 @@
         </div>
         <hr />
         <div class="mb-1">Seleccione una opción</div>
-        <div class="selectgroup selectgroup-pills mb-2">
-          <label class="selectgroup-item">
-            <input
-              type="radio"
-              name="p_type"
-              value="student"
-              class="selectgroup-input"
-              v-model="attention.person_type"
-            />
-            <span class="selectgroup-button">Estudiante</span>
-          </label>
-          <label class="selectgroup-item">
-            <input
-              type="radio"
-              name="p_type"
-              value="family"
-              class="selectgroup-input"
-              v-model="attention.person_type"
-            />
-            <span class="selectgroup-button">Apoderado</span>
-          </label>
-          <label class="selectgroup-item">
-            <input
-              type="radio"
-              name="p_type"
-              value="teacher"
-              class="selectgroup-input"
-              v-model="attention.person_type"
-            />
-            <span class="selectgroup-button">Docente</span>
-          </label>
-        </div>
+        <person-type v-model="attention.person_type" />
         <input-finder :fullname="person_name" :who="attention.person_type" />
       </div>
     </div>
@@ -151,6 +120,7 @@
 import api from "../../Api/attention";
 import InputFinder from "../../Components/Finder/InputFinder.vue";
 import File from "../../Components/Ui/File";
+import PersonType from "../../Components/Views/PersonType.vue";
 import { EventBus } from "../../Helpers/bus";
 import cache from "../../Helpers/cache";
 import day from "../../Helpers/day";
@@ -159,7 +129,8 @@ export default {
   mixins: [simpledmax],
   components: {
     InputFinder,
-    File
+    File,
+    PersonType
   },
   data() {
     return {

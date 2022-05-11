@@ -2,45 +2,15 @@
   <card
     :title="`Registro de ${decorated_types[i_type]} del año ${$store.getters['fullyear']}`"
   >
-    <m-button
+    <m-router
       slot="rb"
       color="btn-inverse-accent"
       class="btn-icon"
       icon="icon ion-md-add"
+      :to="{ name: 'new_inspection' }"
     >
-    </m-button>
-    <div class="selectgroup selectgroup-pills">
-      <label class="selectgroup-item">
-        <input
-          type="radio"
-          name="mode"
-          value="p"
-          class="selectgroup-input"
-          v-model="i_type"
-        />
-        <span class="selectgroup-button">Permisos</span>
-      </label>
-      <label class="selectgroup-item">
-        <input
-          type="radio"
-          name="mode"
-          value="r"
-          class="selectgroup-input"
-          v-model="i_type"
-        />
-        <span class="selectgroup-button">Requisas</span>
-      </label>
-      <label class="selectgroup-item">
-        <input
-          type="radio"
-          name="mode"
-          value="l"
-          class="selectgroup-input"
-          v-model="i_type"
-        />
-        <span class="selectgroup-button">Llamadas</span>
-      </label>
-    </div>
+    </m-router>
+    <inspection-type v-model="i_type" />
     <div class="row">
       <m-table
         class="col-md-12"
@@ -61,13 +31,14 @@
               </template>
             </td>
             <td>
-              {{ dest_types[item.entity_type].label }}
+              {{ ptypes[item.entity_type].label }}
             </td>
             <td>
+              <i class="icon ion-md-people icon-sm text-accent"></i>
               <router-link
-                class="font-weight-bold"
+                class="font-weight-bold text-primary"
                 :to="{
-                  name: dest_types[item.entity_type].route,
+                  name: ptypes[item.entity_type].route,
                   params: { dni: item.person.dni }
                 }"
               >
@@ -88,9 +59,19 @@
               </div>
             </td>
             <td>
-              <span v-show="item.additional">
-                {{ new Date(item.additional).toLocaleDateString() }}
-              </span>
+              <template v-if="item.type === 'p'">
+                <span v-show="item.additional">
+                  {{ new Date(item.additional).toLocaleDateString() }}
+                </span>
+              </template>
+              <template v-else>
+                {{ item.additional }}
+              </template>
+            </td>
+            <td>
+              <m-action />
+              <m-action icon="print" color="success" />
+              <m-action icon="trash" color="danger" />
             </td>
           </tr>
         </template>
@@ -103,7 +84,10 @@
 </template>
 <script>
 import api from "../../Api/inspection";
+import InspectionType from "./components/InspectionType.vue";
+import ptypes from "../../Data/personTypes.json";
 export default {
+  components: { InspectionType },
   name: "Inspection",
   data() {
     return {
@@ -124,20 +108,7 @@ export default {
         l: "llamadas",
         r: "requisas"
       },
-      dest_types: {
-        s: {
-          label: "Estudiante",
-          route: "student_profile"
-        },
-        t: {
-          label: "Docente",
-          route: "teacher_profile"
-        },
-        f: {
-          label: "Apoderado",
-          route: "family_profile"
-        }
-      },
+      ptypes,
       loading: false,
       decorated_states: []
     };
@@ -164,7 +135,7 @@ export default {
         r: "Obj. requizado",
         l: "Nro cel. activo"
       };
-      return [...this.columns, last_col_type[this.i_type]];
+      return [...this.columns, last_col_type[this.i_type], "Acciones"];
     }
   },
   methods: {

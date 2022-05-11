@@ -23,10 +23,18 @@
               {{ item.type === "p" ? "Presencial" : "Virtual" }}
             </td>
             <td style="max-width: 10rem">{{ item.title }}</td>
-            <td>{{ ptypes[item.person_type] }}</td>
-            <td class="font-weight-medium text-primary">
+            <td>{{ ptypes[item.person_type].label }}</td>
+            <td>
               <i class="icon ion-md-people icon-sm text-accent"></i>
-              {{ `${item.person.name} ${item.person.lastname}` }}
+              <router-link
+                class="font-weight-bold text-primary"
+                :to="{
+                  name: ptypes[item.person_type].route,
+                  params: { dni: item.person.dni }
+                }"
+              >
+                {{ `${item.person.name} ${item.person.lastname}` }}
+              </router-link>
             </td>
             <td>
               <template v-if="item.user_code === $store.state.user.user.code">
@@ -61,6 +69,7 @@
 import api from "../../Api/attention";
 import Month from "../../Components/Views/Month.vue";
 import cache from "../../Helpers/cache";
+import ptypes from "../../Data/personTypes.json";
 export default {
   name: "Attention",
   components: { Month },
@@ -68,11 +77,7 @@ export default {
     return {
       attentions: [],
       pagination: {},
-      ptypes: {
-        student: "Estudiante",
-        teacher: "Docente",
-        family: "Apoderado"
-      },
+      ptypes,
       columns: [
         "N° de At.",
         "Usuario",
