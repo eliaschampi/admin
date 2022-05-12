@@ -12,6 +12,7 @@
             id="description"
             v-model="inspection.description"
             v-validate="'required|min:10|max:450'"
+            maxlength="450"
             :label="descriptiontitle"
             :error="errors.first('description')"
           />
@@ -31,7 +32,7 @@
           <hr />
           <div>Selecciona</div>
           <input-finder :fullname="person_name" :who="inspection.entity_type" />
-          
+
           <div class="form-group mt-3">
             <label for="myadditional">
               {{ dec_types[inspection.inspection_type].additional }}
@@ -99,9 +100,6 @@ export default {
     }
   },
   computed: {
-    isedit() {
-      return this.$route.params.code;
-    },
     descriptiontitle() {
       return `Descripción breve ${
         this.dec_types[this.inspection.inspection_type].state_op.title
@@ -114,23 +112,31 @@ export default {
       this.inspection.entity_identifier = person.dni;
       $("#finderModal").modal("hide");
     },
-    store(data) {
-      if (data.code) {
-        return api.update(data, data.code);
-      }
-      return api.store(data);
-    },
-    async save() {
+
+    save() {
+      // validate
       if (!this.inspection.entity_identifier) {
         this.$snack.show("Falta seleccionar estudiante o apoderado");
         return;
       }
 
-      const { data } = await this.store(this.inspection);
+      //check
+      if (this.inspection.inspection_type === "p") {
+        if (
+          new Date(this.inspection.additional).getTime() < new Date().getTime()
+        ) {
+          this.$snack.show("Selecciona una fecha posterior");
+          return;
+        }
+      }
 
-      this.$snack.success(data.message);
-
-      this.$router.push({ name: "cedp" });
+      this.$validator.validateAll().then(async (r) => {
+        if (r) {
+          const { data } = await api.store(this.inspection);
+          this.$snack.success(data.message);
+          this.$router.push({ name: "cedp" });
+        }
+      });
     }
   }
 };

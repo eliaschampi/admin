@@ -1,9 +1,7 @@
 <template>
   <div>
-    <div class="mt-3 text-primary">
-      Selecciona el estado inicial {{ stateop.title }}
-    </div>
-    <div class="form-check mt-2">
+    <div class="mt-3 text-primary">Establece el estado {{ stateop.title }}</div>
+    <div class="form-check mt-2 ml-2">
       <input
         class="form-check-input"
         type="radio"
@@ -13,11 +11,14 @@
         :value="fval"
         @change="$emit('input', fval)"
       />
-      <label class="form-check-label" for="ins_state_a">
+      <label
+        class="form-check-label font-weight-medium text-success"
+        for="ins_state_a"
+      >
         {{ stateop.first[1] }}
       </label>
     </div>
-    <div class="form-check mt-2">
+    <div class="form-check mt-2 ml-2">
       <input
         class="form-check-input"
         type="radio"
@@ -27,7 +28,10 @@
         :value="sval"
         @change="$emit('input', sval)"
       />
-      <label class="form-check-label" for="ins_state_i">
+      <label
+        class="form-check-label font-weight-medium text-warning"
+        for="ins_state_i"
+      >
         {{ stateop.second[1] }}
       </label>
     </div>

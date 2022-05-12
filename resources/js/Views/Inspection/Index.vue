@@ -72,7 +72,11 @@
               <td>
                 <m-action @action="handleEditClick(item)" />
                 <m-action icon="print" color="success" />
-                <m-action icon="trash" color="danger" />
+                <m-action
+                  @action="handleDeleteClick(item)"
+                  icon="trash"
+                  color="danger"
+                />
               </td>
             </tr>
           </template>
@@ -82,7 +86,7 @@
         {{ `Hay ${inspections.length} registros` }}
       </p>
     </card>
-    <update-inspection ref="updatemodal" />
+    <update-inspection ref="updatemodal" @save="handleUpdate" />
   </section>
 </template>
 <script>
@@ -162,7 +166,9 @@ export default {
         code: item.code,
         description: item.description,
         additional: item.additional,
-        state: item.state
+        i_type: this.i_type,
+        state: item.state,
+        created_at: item.created_at
       };
       this.$refs["updatemodal"].showModal(
         sel_type,
@@ -170,6 +176,23 @@ export default {
         sel_fullname,
         sel_inspection
       );
+    },
+    async handleUpdate(inspection) {
+      const { data } = await api.update(inspection, inspection.code);
+      this.$snack.success(data.message);
+      $("#updateInspection").modal("hide");
+      this.fetchData();
+    },
+    handleDeleteClick(item) {
+      this.$snack.show({
+        text: "¿Esta seguro de eliminar este registro?",
+        button: "confirmar",
+        action: async () => {
+          const { data } = await api.destroy(item.code);
+          this.$snack.success(data.message);
+          this.inspections.splice(this.inspections.indexOf(item), 1);
+        }
+      });
     }
   }
 };

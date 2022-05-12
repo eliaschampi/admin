@@ -3,13 +3,51 @@
     id="updateInspection"
     :title="`Modificar ${mitype}`"
     btn-name="Modificar"
+    @sub="handleSave"
   >
-    <alert> I love you so much </alert>
+    <alert>
+      Este(a) <i>{{ mitype }}</i> se ha registrado para el
+      <span class="font-weight-medium text-secondary">{{ person.label }}</span>
+      <b class="alert-link">{{ fullname }}</b>
+    </alert>
+    <p class="mb-2">
+      <b class="text-primary">Fecha de registro: </b
+      >{{ inspection.created_at | datetim }}
+    </p>
+    <m-textarea
+      id="description"
+      v-model="inspection.description"
+      v-validate="'required|min:10|max:450'"
+      label="Descripción"
+      :error="errors.first('description')"
+    />
+    <template v-if="inspection.i_type">
+      <div class="form-group mt-2">
+        <label for="myadditional">
+          {{ requiredDT.additional }}
+        </label>
+        <input
+          id="myadditional"
+          :type="mitype === 'permiso' ? 'date' : 'text'"
+          required
+          placeholder="Campo obligatorio"
+          class="form-control"
+          v-model="inspection.additional"
+        />
+      </div>
+
+      <inspection-state
+        :stateop="requiredDT.state_op"
+        v-model="inspection.state"
+      />
+    </template>
   </modal>
 </template>
 <script>
 import dec_types from "@/Data/decTypes.json";
+import InspectionState from "./InspectionState.vue";
 export default {
+  components: { InspectionState },
   name: "update-inspection",
   data() {
     return {
@@ -20,6 +58,12 @@ export default {
       inspection: {}
     };
   },
+  computed: {
+    requiredDT() {
+      const { additional, state_op } = this.dec_types[this.inspection.i_type];
+      return { additional, state_op };
+    }
+  },
   methods: {
     showModal(mitype, person, fullname, inspection) {
       this.mitype = mitype;
@@ -27,6 +71,13 @@ export default {
       this.fullname = fullname;
       this.inspection = inspection;
       $("#updateInspection").modal("show");
+    },
+    handleSave() {
+      this.$validator.validateAll().then(r => {
+        if (r) {
+          this.$emit("save", this.inspection);
+        }
+      })
     }
   }
 };
