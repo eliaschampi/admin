@@ -1,93 +1,97 @@
 <template>
-  <card
-    :title="`Registro de ${decorated_types[i_type]} del año ${$store.getters['fullyear']}`"
-  >
-    <m-router
-      slot="rb"
-      color="btn-inverse-accent"
-      class="btn-icon"
-      icon="icon ion-md-add"
-      :to="{ name: 'new_inspection' }"
+  <section>
+    <card
+      :title="`Registro de ${decorated_types[i_type]} del año ${$store.getters['fullyear']}`"
     >
-    </m-router>
-    <inspection-type v-model="i_type" />
-    <div class="row">
-      <m-table
-        class="col-md-12"
-        :data="filtered"
-        :columns="columns_filtered"
-        v-model="buscado"
+      <m-router
+        slot="rb"
+        color="btn-inverse-accent"
+        class="btn-icon"
+        icon="icon ion-md-add"
+        :to="{ name: 'new_inspection' }"
       >
-        <template v-slot:data="{ rows }">
-          <tr v-for="item in rows" :key="item.code">
-            <td>{{ item.code }}</td>
-            <td>{{ decorated_types[item.inspection_type] }}</td>
-            <td>
-              <template v-if="item.user">
-                <b>{{ `${item.user.name}` }}</b>
-              </template>
-              <template v-else>
-                <i class="text-muted"> Enviado desde web app </i>
-              </template>
-            </td>
-            <td>
-              {{ ptypes[item.entity_type].label }}
-            </td>
-            <td>
-              <i class="icon ion-md-people icon-sm text-accent"></i>
-              <router-link
-                class="font-weight-bold text-primary"
-                :to="{
-                  name: ptypes[item.entity_type].route,
-                  params: { dni: item.person.dni }
-                }"
-              >
-                {{ `${item.person.name} ${item.person.lastname}` }}
-              </router-link>
-            </td>
-            <td>
-              {{ item.created_at | datetim }}
-            </td>
-            <td>
-              <div
-                :class="[
-                  'badge',
-                  `badge-${decorated_states[item.state].color}`
-                ]"
-              >
-                {{ decorated_states[item.state].label }}
-              </div>
-            </td>
-            <td>
-              <template v-if="item.type === 'p'">
-                <span v-show="item.additional">
-                  {{ new Date(item.additional).toLocaleDateString() }}
-                </span>
-              </template>
-              <template v-else>
-                {{ item.additional }}
-              </template>
-            </td>
-            <td>
-              <m-action />
-              <m-action icon="print" color="success" />
-              <m-action icon="trash" color="danger" />
-            </td>
-          </tr>
-        </template>
-      </m-table>
-    </div>
-    <p slot="foot" class="text-center text-primary">
-      {{ `Hay ${inspections.length} registros` }}
-    </p>
-  </card>
+      </m-router>
+      <inspection-type v-model="i_type" />
+      <div class="row">
+        <m-table
+          class="col-md-12"
+          :data="filtered"
+          :columns="columns_filtered"
+          v-model="buscado"
+        >
+          <template v-slot:data="{ rows }">
+            <tr v-for="item in rows" :key="item.code">
+              <td>{{ item.code }}</td>
+              <td>{{ decorated_types[item.inspection_type] }}</td>
+              <td>
+                <template v-if="item.user">
+                  <b>{{ `${item.user.name}` }}</b>
+                </template>
+                <template v-else>
+                  <i class="text-muted"> Enviado desde web app </i>
+                </template>
+              </td>
+              <td>
+                {{ ptypes[item.entity_type].label }}
+              </td>
+              <td>
+                <i class="icon ion-md-people icon-sm text-accent"></i>
+                <router-link
+                  class="font-weight-bold text-primary"
+                  :to="{
+                    name: ptypes[item.entity_type].route,
+                    params: { dni: item.person.dni }
+                  }"
+                >
+                  {{ `${item.person.name} ${item.person.lastname}` }}
+                </router-link>
+              </td>
+              <td>
+                {{ item.created_at | datetim }}
+              </td>
+              <td>
+                <div
+                  :class="[
+                    'badge',
+                    `badge-${decorated_states[item.state].color}`
+                  ]"
+                >
+                  {{ decorated_states[item.state].label }}
+                </div>
+              </td>
+              <td>
+                <template v-if="item.type === 'p'">
+                  <span v-show="item.additional">
+                    {{ new Date(item.additional).toLocaleDateString() }}
+                  </span>
+                </template>
+                <template v-else>
+                  {{ item.additional }}
+                </template>
+              </td>
+              <td>
+                <m-action @action="handleEditClick(item)" />
+                <m-action icon="print" color="success" />
+                <m-action icon="trash" color="danger" />
+              </td>
+            </tr>
+          </template>
+        </m-table>
+      </div>
+      <p slot="foot" class="text-center text-primary">
+        {{ `Hay ${inspections.length} registros` }}
+      </p>
+    </card>
+    <update-inspection ref="updatemodal" />
+  </section>
 </template>
 <script>
 import api from "../../Api/inspection";
 import InspectionType from "./components/InspectionType.vue";
 import ptypes from "../../Data/personTypes.json";
+import UpdateInspection from "./components/UpdateInspection.vue";
 export default {
-  components: { InspectionType },
+  components: { InspectionType, UpdateInspection },
   name: "Inspection",
   data() {
     return {
@@ -149,6 +153,23 @@ export default {
     async fetchTypes() {
       const { data } = await api.fetchStates();
       this.decorated_states = data.values;
+    },
+    handleEditClick(item) {
+      const sel_person = this.ptypes[item.entity_type];
+      const sel_fullname = `${item.person.name} ${item.person.lastname}`;
+      const sel_type = this.decorated_types[this.i_type].substr(0, 7);
+      const sel_inspection = {
+        code: item.code,
+        description: item.description,
+        additional: item.additional,
+        state: item.state
+      };
+      this.$refs["updatemodal"].showModal(
+        sel_type,
+        sel_person,
+        sel_fullname,
+        sel_inspection
+      );
     }
   }
 };
