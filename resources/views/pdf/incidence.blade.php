@@ -73,4 +73,5 @@
 </div>
 @if(!empty($incidence->image_attached))
 <i class="mt-5 text-small text-right"><i>* Este documento tiene adjuntos</i></i>
-@endif @endsection
+@endif
+@endsection

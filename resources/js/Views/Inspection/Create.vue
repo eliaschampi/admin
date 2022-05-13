@@ -87,7 +87,7 @@ export default {
   },
   watch: {
     "inspection.inspection_type"(val) {
-      this.inspection.additional = "";
+      this.inspection.additional = val !== "r" ? "" : "Celular";
       this.inspection.state = {
         p: "a",
         r: "r",
@@ -114,13 +114,11 @@ export default {
     },
 
     save() {
-      // validate
       if (!this.inspection.entity_identifier) {
         this.$snack.show("Falta seleccionar estudiante o apoderado");
         return;
       }
 
-      //check
       if (this.inspection.inspection_type === "p") {
         if (
           new Date(this.inspection.additional).getTime() < new Date().getTime()
