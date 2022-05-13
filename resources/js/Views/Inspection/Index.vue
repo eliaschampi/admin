@@ -71,7 +71,11 @@
               </td>
               <td>
                 <m-action @action="handleEditClick(item)" />
-                <m-action icon="print" color="success" />
+                <m-action
+                  @action="handlePrintAction(item)"
+                  icon="print"
+                  color="success"
+                />
                 <m-action
                   @action="handleDeleteClick(item)"
                   icon="trash"
@@ -153,6 +157,10 @@ export default {
       const { data } = await api.fetchByType(this.i_type);
       this.inspections = data.values;
       this.loading = false;
+    },
+    async handlePrintAction(item) {
+      const { data } = await api.print(item.code);
+      this.$downl(data, `Informe Nro ${item.code}`);
     },
     async fetchTypes() {
       const { data } = await api.fetchStates();

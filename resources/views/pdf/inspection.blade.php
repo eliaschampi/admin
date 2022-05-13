@@ -1,6 +1,6 @@
 @extends("layout.main")
 @section('content')
-    <h4 class="title text-primary">
+    <h4 class="title text-primary" style="text-transform: uppercase;">
         INFORME DE {{ $itype['label'] }} AL {{ $person }}
     </h4>
     <hr />
@@ -15,38 +15,36 @@
         </tr>
         <tr>
             <td width="30%">
-                <strong style="text-transform: capitalize;">
+                <strong>
                     {{ $person }}:
                 </strong>
             </td>
             <td width="70%">
-                <p style="text-transform: capitalize;">
-                    {{ $inspection->person->name . ' ' . $inspection->person->lastname }}
-                </p>
+                {{ $inspection->person->name . ' ' . $inspection->person->lastname }}
             </td>
         </tr>
         <tr>
             <td width="30%">
-                <strong style="text-transform: capitalize;">
+                <strong>
                     Estado:
                 </strong>
             </td>
             <td width="70%">
-                <p class="badge badge-{{ $state['color'] }}">
-                    {{ $state['label'] }}
-                </p>
+                {{ $state['label'] }}
             </td>
         </tr>
         <tr>
             <td width="30%">
-                {{ $itype['additional'] }}
+                <strong>
+                    {{ $itype['additional'] }}:
+                </strong>
             <td>
             <td width="70%">
                 {{ $inspection->additional }}
             <td>
         </tr>
     </table>
-    <div class="text-primary font-bold">Descripción:</div>
+    <div class="text-primary font-bold mt-5">DESCRIPCIÓN:</div>
     <hr />
     <p class="text-justify">{{ $inspection->description }}</p>
 

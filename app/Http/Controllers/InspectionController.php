@@ -87,7 +87,7 @@ class InspectionController extends Controller
         $itype = $types[$inspection->inspection_type];
         $person = config("main.atype.$inspection->entity_type");
 
-        $state = config("main.inspection.$inspecion->state");
+        $state = config("main.inspection.$inspection->state");
 
         $pdf = \PDF::loadView("pdf.inspection", compact("inspection", "itype", "person", "state"));
         return $pdf->download("adj.pdf");

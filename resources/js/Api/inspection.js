@@ -7,7 +7,9 @@ export default {
 
     fetchByEntity: (entity_identifier) => request.get(`/inspection/entity/${entity_identifier}`),
 
-    fetchByCode: (code) => request.get(`/inspection/show/${code}`),
+    print: (code) => request.get(`/inspection/print/${code}`, {
+        responseType: "blob"
+    }),
 
     fetchStates: () => request.get("/inspection"),
 

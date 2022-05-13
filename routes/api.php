@@ -231,7 +231,7 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
 
     Route::get("/inspection", [InspectionController::class, "fetchStates"]);
     Route::get("/inspection/{type}", [InspectionController::class, "fetchByType"]);
-    Route::get("/inspection/show/{code}", [InspectionController::class, "fetchByCode"]);
+    Route::get("/inspection/print/{code}", [InspectionController::class, "print"]);
     Route::post("/inspection", [InspectionController::class, "store"]);
     Route::put("/inspection/{code}", [InspectionController::class, "update"]);
     Route::delete("/inspection/{code}", [InspectionController::class, "destroy"]);
