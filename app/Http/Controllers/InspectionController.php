@@ -38,13 +38,6 @@ class InspectionController extends Controller
         ]);
     }
 
-    public function fetchByCode(int $code)
-    {
-        return response()->json([
-            "value" => $this->instance->fetchByCode($code),
-        ]);
-    }
-
     public function store(InspectionRequest $request)
     {
         $this->instance->store($request->all());
@@ -72,5 +65,31 @@ class InspectionController extends Controller
         return response()->json([
             "message" => "Correctamente Eliminado",
         ]);
+    }
+
+    function print(int $code) {
+
+        $inspection = $this->instance->fetchByCode($code);
+        $types = [
+            "p" => [
+                "label" => "permiso",
+                "additional" => "Fecha de permiso",
+            ],
+            "r" => [
+                "label" => "requiza",
+                "additional" => "Objeto requizado",
+            ],
+            "l" => [
+                "label" => "llamada",
+                "additional" => "Nro cel. Activo",
+            ],
+        ];
+        $itype = $types[$inspection->inspection_type];
+        $person = config("main.atype.$inspection->entity_type");
+
+        $state = config("main.inspection.$inspecion->state");
+
+        $pdf = \PDF::loadView("pdf.inspection", compact("inspection", "itype", "person", "state"));
+        return $pdf->download("adj.pdf");
     }
 }
