@@ -120,21 +120,14 @@ export default {
       }
 
       if (this.inspection.inspection_type === "p") {
-        if (
-          new Date(this.inspection.additional).getTime() < new Date().getTime()
-        ) {
-          this.$snack.show("Selecciona una fecha posterior");
-          return;
-        }
+        this.$validator.validateAll().then(async (r) => {
+          if (r) {
+            const { data } = await api.store(this.inspection);
+            this.$snack.success(data.message);
+            this.$router.push({ name: "cedp" });
+          }
+        });
       }
-
-      this.$validator.validateAll().then(async (r) => {
-        if (r) {
-          const { data } = await api.store(this.inspection);
-          this.$snack.success(data.message);
-          this.$router.push({ name: "cedp" });
-        }
-      });
     }
   }
 };

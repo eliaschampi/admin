@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\InspectionRequest;
 use App\Repositories\InspectionRepository;
-use Illuminate\Http\Request;
 
 class InspectionController extends Controller
 {
@@ -38,8 +38,21 @@ class InspectionController extends Controller
         ]);
     }
 
+    private function beforeUpsert(array $request)
+    {
+        if ($request["inspection_type"] === "p") {
+            $pdate = $request["additional"];
+            $state = $request["state"];
+            $etype = $request["entity_type"];
+            $dni = $request["entity_identifier"];
+            $ai = new \App\Repositories\AttendanceRepository;
+            $ai->upsertBeforeInpect($pdate, $state, $etype, $dni);
+        }
+    }
+
     public function store(InspectionRequest $request)
     {
+        $this->beforeUpsert($request->all());
         $this->instance->store($request->all());
         return response()->json([
             "message" => "Correctamente guardado",
@@ -49,10 +62,14 @@ class InspectionController extends Controller
     public function update(Request $request, int $code)
     {
         $validated = $request->validate([
-            'state' => 'required',
-            'description' => 'required|max:400',
-            'additional' => 'required|max:150',
+            "state" => "required",
+            "description" => "required|max:400",
+            "additional" => "required|max:150",
+            "inspection_type" => "required",
+            "entity_type" => "required",
+            "entity_identifier" => "required",
         ]);
+        $this->beforeUpsert($validated);
         $this->instance->update($validated, $code);
         return response()->json([
             "message" => "Correctamente actualizado",

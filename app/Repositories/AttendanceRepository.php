@@ -102,4 +102,49 @@ class AttendanceRepository extends BaseRepository
         }
         return $attendance->save();
     }
+
+    public function upsertBeforeInpect(string $pdate, string $state, string $etype, string $dni): bool
+    {
+        $entryState = null;
+        if ($etype === "family") {
+            return true;
+        }
+
+        if ($state === "a") {
+            $entryState = "permiso";
+        } else if ($state === "i") {
+            $entryState = "falta";
+        }
+        
+        $created_at = Carbon::createFromFormat("Y-m-d", $pdate);
+
+        if ($created_at->isWeekend()) {
+            return true;
+        }
+
+        $attendances = Attendance::where("entity_identifier", $dni)->whereDate("created_at", $created_at)->get();
+
+        $saved = false;
+        if (count($attendances) > 0) {
+
+            foreach ($attendances as $attendance) {
+                $attendance->state = $entryState;
+                $attendance->entry_time = null;
+                $saved = $attendance->save();
+            }
+
+        } else {
+            $attendance = new Attendance();
+            $attendance->timestamps = false;
+            $attendance->entity_identifier = $dni;
+            $attendance->entity_type = substr($etype, 0, 1);
+            $attendance->state = $entryState;
+            $attendance->entry_time = null;
+            $attendance->priority = 1;
+            $attendance->created_at = $created_at;
+            $saved = $attendance->save();
+        }
+
+        return $saved;
+    }
 }

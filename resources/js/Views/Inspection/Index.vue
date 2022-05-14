@@ -174,7 +174,9 @@ export default {
         code: item.code,
         description: item.description,
         additional: item.additional,
-        i_type: this.i_type,
+        inspection_type: this.i_type,
+        entity_type: item.entity_type,
+        entity_identifier: item.entity_identifier,
         state: item.state,
         created_at: item.created_at
       };

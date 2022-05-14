@@ -21,7 +21,7 @@
       label="Descripción"
       :error="errors.first('description')"
     />
-    <template v-if="inspection.i_type">
+    <template v-if="inspection.inspection_type">
       <div class="form-group mt-2">
         <label for="myadditional">
           {{ requiredDT.additional }}
@@ -60,7 +60,8 @@ export default {
   },
   computed: {
     requiredDT() {
-      const { additional, state_op } = this.dec_types[this.inspection.i_type];
+      const { additional, state_op } =
+        this.dec_types[this.inspection.inspection_type];
       return { additional, state_op };
     }
   },
@@ -73,11 +74,11 @@ export default {
       $("#updateInspection").modal("show");
     },
     handleSave() {
-      this.$validator.validateAll().then(r => {
+      this.$validator.validateAll().then((r) => {
         if (r) {
           this.$emit("save", this.inspection);
         }
-      })
+      });
     }
   }
 };
