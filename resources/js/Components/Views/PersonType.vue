@@ -37,8 +37,7 @@
 export default {
   name: "person-type",
   props: {
-    value: String,
-    default: "student"
+    value: String
   }
 };
 </script>

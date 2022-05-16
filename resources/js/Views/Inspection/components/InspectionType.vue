@@ -37,8 +37,7 @@
 export default {
   name: "inspection-type",
   props: {
-    value: String,
-    default: "p"
+    value: String
   }
 };
 </script>

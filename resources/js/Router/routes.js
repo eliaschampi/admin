@@ -90,7 +90,6 @@ import Customer from "../Views/Customer/Index";
 import Types from "../Views/Types/Index";
 import Payment from "../Views/Student/Payment";
 
-
 /**
  * iratyc  = it remains although the year changes
  *           esto se mantiene a pesar que el año cambie
@@ -167,7 +166,7 @@ const routes = [
         component: UserProfile,
         meta: {
           title: "Mi perfil",
-          iratyc: true,
+          iratyc: true
         }
       },
       {
@@ -510,7 +509,7 @@ const routes = [
         component: Inspection,
         meta: {
           title: "Registros normativos",
-          roles: "APN",
+          roles: "APN"
         }
       },
       {
@@ -519,7 +518,7 @@ const routes = [
         component: NewInspection,
         meta: {
           title: "Registros normativos",
-          roles: "APN",
+          roles: "APN"
         }
       },
       {

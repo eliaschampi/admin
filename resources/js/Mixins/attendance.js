@@ -34,25 +34,25 @@ export const errorQr = {
     },
     errorCaptured(error) {
       switch (error.name) {
-      case "NotAllowedError":
-        this.message = "ERROR: necesita conceder permiso de acceso al scaner";
-        break;
-      case "NotFoundError":
-        this.message = "ERROR: no hay scaner en este dispositivo";
-        break;
-      case "NotSupportedError":
-        this.message = "ERROR: contexto seguro requerido (HTTPS, localhost)";
-        break;
-      case "NotReadableError":
-        this.message = "ERROR: ¿el scaner ya está en uso?";
-        break;
-      case "OverconstrainedError":
-        this.message = "ERROR: las cámaras instaladas no son adecuadas";
-        break;
-      case "StreamApiNotSupportedError":
-        this.message =
+        case "NotAllowedError":
+          this.message = "ERROR: necesita conceder permiso de acceso al scaner";
+          break;
+        case "NotFoundError":
+          this.message = "ERROR: no hay scaner en este dispositivo";
+          break;
+        case "NotSupportedError":
+          this.message = "ERROR: contexto seguro requerido (HTTPS, localhost)";
+          break;
+        case "NotReadableError":
+          this.message = "ERROR: ¿el scaner ya está en uso?";
+          break;
+        case "OverconstrainedError":
+          this.message = "ERROR: las cámaras instaladas no son adecuadas";
+          break;
+        case "StreamApiNotSupportedError":
+          this.message =
             "ERROR: La API de streaming no es compatible con su navegador";
-        break;
+          break;
       }
     }
   }

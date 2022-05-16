@@ -126,7 +126,7 @@ export default {
     };
   },
   watch: {
-    i_type(val) {
+    i_type() {
       this.fetchData();
     }
   },

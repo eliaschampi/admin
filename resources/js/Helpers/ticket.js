@@ -7,7 +7,10 @@ export const ticket = (data, detail) => {
   printData.title = window.Laravel.INS;
   printData.main = data;
   printData.detail = detail;
-  printData.created_at = dformat(data.created_at, "DD [de] MMMM [del] YYYY h:mm A");
+  printData.created_at = dformat(
+    data.created_at,
+    "DD [de] MMMM [del] YYYY h:mm A"
+  );
 
   return new Promise((resolve, reject) => {
     fetch(`${API}/print`, {

@@ -83,13 +83,7 @@
           </panel>
         </div>
         <div
-          class="
-            col-md-8
-            mt-4 mt-md-0
-            d-flex
-            flex-row flex-wrap
-            align-content-start
-          "
+          class="col-md-8 mt-4 mt-md-0 d-flex flex-row flex-wrap align-content-start"
         >
           <div
             class="topay bg-light pointer"
