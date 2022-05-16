@@ -70,13 +70,17 @@
                 </template>
               </td>
               <td>
-                <m-action @action="handleEditClick(item)" />
+                <m-action
+                  @action="handleEditClick(item)"
+                  v-sho="item.user_code === u_code"
+                />
                 <m-action
                   @action="handlePrintAction(item)"
                   icon="print"
                   color="success"
                 />
                 <m-action
+                  v-sho="item.user_code === u_code"
                   @action="handleDeleteClick(item)"
                   icon="trash"
                   color="danger"
@@ -148,6 +152,9 @@ export default {
         l: "Nro cel. activo"
       };
       return [...this.columns, last_col_type[this.i_type], "Acciones"];
+    },
+    u_code() {
+      return this.$store.state.user.user.code;
     }
   },
   methods: {
