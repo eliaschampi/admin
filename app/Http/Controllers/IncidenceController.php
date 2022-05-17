@@ -34,6 +34,7 @@ class IncidenceController extends Controller
             "description" => "required|min:10|max:500",
             "agreement" => "required|min:5|max:300",
             "created_at" => "required",
+            "is_siseve" => "required"
         ]);
         $filename = "";
         $hasFile = $request->hasFile("file");
@@ -66,6 +67,7 @@ class IncidenceController extends Controller
             "description" => "required|min:10|max:500",
             "agreement" => "required|min:5|max:300",
             "created_at" => "",
+            "is_siseve" => "required"
         ]);
         $this->instance->update($request->all(), $code);
         return response()->json([

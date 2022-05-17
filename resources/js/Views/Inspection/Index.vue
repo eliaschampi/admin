@@ -72,7 +72,7 @@
               <td>
                 <m-action
                   @action="handleEditClick(item)"
-                  v-sho="item.user_code === u_code"
+                  v-show="item.user_code === u_code"
                 />
                 <m-action
                   @action="handlePrintAction(item)"
@@ -80,7 +80,7 @@
                   color="success"
                 />
                 <m-action
-                  v-sho="item.user_code === u_code"
+                  v-show="item.user_code === u_code"
                   @action="handleDeleteClick(item)"
                   icon="trash"
                   color="danger"
@@ -149,7 +149,7 @@ export default {
       const last_col_type = {
         p: "Fecha de permiso",
         r: "Obj. requizado",
-        l: "Nro cel. activo"
+        l: "Nro cwel. activo"
       };
       return [...this.columns, last_col_type[this.i_type], "Acciones"];
     },

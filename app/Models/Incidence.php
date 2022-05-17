@@ -18,6 +18,7 @@ class Incidence extends Model
         "agreement",
         "created_at",
         "image_attached",
+        "is_siseve",
     ];
 
     public function user()
@@ -25,8 +26,9 @@ class Incidence extends Model
         return $this->belongsTo(User::class, "user_code");
     }
 
-    public function students()
+    public function persons()
     {
-        return $this->belongsToMany(Student::class, "incidence_student", "incidence_code", "student_dni");
+        return $this->belongsToMany(Person::class, "incidence_entity", "incidence_code", "entity_identifier")
+            ->withPivot("entity_type", "actor_type");
     }
 }

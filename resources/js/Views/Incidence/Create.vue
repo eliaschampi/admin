@@ -7,6 +7,14 @@
   >
     <div class="form-row">
       <div class="col-md-6">
+        <div class="p-2">
+          <m-switch
+            id="invoice"
+            text="Es incidencia SISEVE"
+            v-model="incidence.is_siseve"
+          />
+        </div>
+
         <m-input
           id="Titulo"
           v-model="incidence.title"
@@ -52,6 +60,8 @@
           <select class="form-control" id="instype" v-model="incidence.type">
             <option value="in">Incidencia fisica</option>
             <option value="ve">Incidencia verbal</option>
+            <option value="ps">Incidencia Psicológica</option>
+            <option value="sx">Incidencia Sexual</option>
             <option value="co">Incidencia por mala conducta</option>
             <option value="me">Incidencia médica</option>
             <option value="re">Requisa</option>
@@ -67,9 +77,30 @@
             :error="errors.first('adjunto')"
           />
           <hr />
-          <m-button v-if="!isedit" size="btn-sm" @pum="showModal">
-            Agregar Estudiante
-          </m-button>
+          <h6>Agregar Involucrados</h6>
+          <template v-if="!isedit">
+            <m-button
+              size="btn-sm"
+              color="btn-inverse-warning"
+              @pum="showModal('student')"
+            >
+              Estudiante
+            </m-button>
+            <m-button
+              size="btn-sm"
+              color="btn-inverse-warning"
+              @pum="showModal('family')"
+            >
+              Apoderado
+            </m-button>
+            <m-button
+              size="btn-sm"
+              color="btn-inverse-warning"
+              @pum="showModal('teacher')"
+            >
+              Docente
+            </m-button>
+          </template>
         </template>
         <div class="form-group" v-else>
           <p
@@ -81,22 +112,47 @@
             Hay un archivo adjunto aquí.
           </p>
         </div>
-        <ul class="list-group">
-          <li
-            :key="index"
-            class="list-group-item text-primary"
-            v-for="(item, index) in incidence.students"
-          >
-            {{ `${item.person.name} ${item.person.lastname}` }}
-            <span
-              v-if="!isedit"
-              @click="quitS(item)"
-              class="pull-right text-danger pointer mt-1"
-            >
-              <i class="icon ion-md-trash icon-sm"></i>
-            </span>
-          </li>
-        </ul>
+
+        <table class="table table-sm mt-2">
+          <thead>
+            <tr>
+              <th>#:</th>
+              <th>Nombre apellido</th>
+              <th>Rol en la incidencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr :key="index" v-for="(item, index) in incidence.persons">
+              <th>{{ ptypes[item.entity_type] }}</th>
+              <th>
+                <span class="text-primary">
+                  {{ `${item.name} ${item.lastname}` }}
+                </span>
+              </th>
+              <th>
+                <select
+                  style="max-width: 7rem"
+                  class="form-control form-control-sm"
+                  v-model="item.actor_type"
+                >
+                  <option value="involucrado">Involucrado</option>
+                  <option value="testigo">Testigo</option>
+                  <option value="transgresor">Transgresor</option>
+                  <option value="afectado">Afectado</option>
+                </select>
+              </th>
+              <th>
+                <span
+                  class="text-accent pointer"
+                  v-if="!isedit"
+                  @click="quitS(item)"
+                >
+                  <i class="icon ion-md-remove-circle icon-md"></i>
+                </span>
+              </th>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </m-form>
@@ -114,11 +170,18 @@ export default {
   data() {
     return {
       load: false,
+      entity_type: "student",
+      ptypes: {
+        student: "Estudiante",
+        teacher: "Docente",
+        family: "Apoderado"
+      },
       incidence: {
+        is_siseve: false,
         type: "in",
         description: "",
         agreement: "",
-        students: [],
+        persons: [],
         created_at: ""
       },
       ifiles: []
@@ -143,31 +206,33 @@ export default {
     }
   },
   methods: {
-    showModal() {
+    showModal(type) {
       this.$store.dispatch("updateSfmOption", {
-        who: "student",
+        who: type,
         mode: 2,
         after: () => {
+          this.entity_type = type;
           EventBus.$emit("showFinderModal");
         }
       });
     },
     addS({ name, lastname, dni }) {
-      if (!this.incidence.students.some((item) => item.dni === dni)) {
-        this.incidence.students.push({
+      if (!this.incidence.persons.some((item) => item.dni === dni)) {
+        this.incidence.persons.push({
           dni,
-          person: {
-            name,
-            lastname
-          }
+          name,
+          lastname,
+          entity_type: this.entity_type,
+          actor_type: "involucrado"
         });
         $("#finderModal").modal("hide");
+        this.entity_type = "student";
       } else {
         this.$snack.warning("Ya esta agregado");
       }
     },
     quitS(item) {
-      this.incidence.students.splice(this.incidence.students.indexOf(item), 1);
+      this.incidence.persons.splice(this.incidence.persons.indexOf(item), 1);
     },
     storeData() {
       if (this.isedit) {
@@ -179,7 +244,7 @@ export default {
       return api.store(formData);
     },
     save() {
-      if (!this.incidence.students.length) {
+      if (!this.incidence.persons.length) {
         this.$snack.warning("Agregue estudiantes");
         return;
       }

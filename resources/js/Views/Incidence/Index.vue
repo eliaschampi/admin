@@ -15,26 +15,37 @@
       <m-table
         class="col-md-12"
         :columns="columns"
-        :data="incidences"
+        :data="filtered"
         :fetch="fetchData"
         v-model="buscado"
       >
-        <month @monthchange="fetchData" />
-        <template slot="data">
-          <tr :key="item.code" v-for="item in filtered">
+        <div class="d-flex">
+          <month @monthchange="fetchData" style="max-width: 9rem" />
+          <m-check
+            id="show_siseve_id"
+            class="ml-3 align-self-center"
+            text="Mostrar Incidencias SISEVE"
+            v-model="show_siseve"
+          />
+        </div>
+        <template v-slot:data="{ rows }">
+          <tr :key="item.code" v-for="item in rows">
             <td>{{ item.code }}</td>
             <td>{{ item.user.name }}</td>
-            <td style="max-width: 10rem">{{ types[item.type] }}</td>
+            <td style="max-width: 10rem">
+              {{ types[item.type] }}
+              <div class="badge badge-primary" v-show="item.is_siseve">
+                SISEVE
+              </div>
+            </td>
             <td>{{ item.created_at | datetim }}</td>
             <td style="max-width: 10rem">
               <p>{{ item.title }}</p>
             </td>
             <td class="font-weight-medium text-primary">
               <i class="icon ion-md-people icon-sm text-accent"></i>
-              <template v-if="item.students.length === 1">
-                {{
-                  `${item.students[0].person.name} ${item.students[0].person.lastname}`
-                }}
+              <template v-if="item.persons.length === 1">
+                {{ `${item.persons[0].name} ${item.persons[0].lastname}` }}
               </template>
               <template v-else> Varios </template>
             </td>
@@ -79,6 +90,7 @@ export default {
   data() {
     return {
       months,
+      show_siseve: false,
       columns: [
         "N° de Inc.",
         "Usuario",
@@ -92,6 +104,8 @@ export default {
         in: "Incidencia física",
         ve: "Incidencia verbal entre varios",
         co: "Incidencia por conducta",
+        ps: "Incidencia Psicológica",
+        sx: "Incidencia Sexual",
         me: "Incidencia médica",
         re: "Requisa",
         ot: "Otro"
@@ -108,7 +122,7 @@ export default {
     filtered() {
       const tester = new RegExp(this.buscado, "i");
       return this.incidences.filter((item) => {
-        return tester.test(item.title);
+        return tester.test(item.title) && item.is_siseve === this.show_siseve;
       });
     },
     u_code() {

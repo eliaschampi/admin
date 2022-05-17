@@ -26,6 +26,8 @@ return [
     "ins" => [
         "in" => "Incidencia física",
         "ve" => "Incidencia verbal",
+        "ps" => "Incidencia Psicológica",
+        "sx" => "Incidencia Sexual",
         "co" => "Incidencia por mala conducta",
         "me" => "Incidencia médica",
         "re" => "Requisa",

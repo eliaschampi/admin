@@ -17,7 +17,7 @@ class IncidenceRepository extends BaseRepository
     {
         return Incidence::with(["user" => function ($query) {
             $query->select("code", "name");
-        }, "students", "students.person" => function ($query) {
+        }, "persons" => function ($query) {
             $query->select("dni", "name", "lastname");
         }])
             ->whereHas("user", function ($query) {
@@ -38,10 +38,14 @@ class IncidenceRepository extends BaseRepository
             $data["user_code"] = $this->user_code;
             $data["image_attached"] = $filename;
             $incidence = Incidence::create($data);
-            $students = array_map(function ($item) {
-                return $item["dni"];
-            }, $data["students"]);
-            $incidence->students()->attach($students);
+
+            $entities = [];
+
+            foreach ($data["persons"] as $entity) {
+                $entities[$entity["dni"]] = ["entity_type" => $entity["entity_type"], "actor_type" => $entity["actor_type"]];
+            }
+
+            $incidence->persons()->attach($entities);
         });
     }
 
@@ -56,6 +60,7 @@ class IncidenceRepository extends BaseRepository
         $incidence->description = $data["description"];
         $incidence->agreement = $data["agreement"];
         $incidence->created_at = $data["created_at"];
+        $incidence->is_siseve = $data["is_siseve"];
         return $incidence->save();
     }
 
