@@ -1,7 +1,7 @@
-@extends("layout.main")
+@extends('layout.main')
 @section('content')
     <h4 class="title text-primary">
-        FICHA DE INCIDENCIA
+        FICHA DE INCIDENCIA {{ $incidence->is_siseve ? 'SISEVE' : '' }}
     </h4>
     <hr />
     <table>
@@ -38,21 +38,25 @@
     <hr />
     <p class="text-justify">{{ $incidence->agreement }}</p>
 
-    <strong class="text-primary">Estudiantes Involucrados</strong>
+    <strong class="text-primary">Involucrados</strong>
     <hr />
     <table class="printable">
         <thead>
             <tr>
+                <th>Es:</th>
                 <th>DNI</th>
                 <th>Nombre y Apellidos</th>
+                <th>Rol en la incidencia</th>
                 <th>Huella/Firma</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($incidence->students as $item)
+            @foreach ($incidence->persons as $item)
                 <tr>
+                    <td>{{ config('main.atype.' . $item->pivot->entity_type) }}</td>
                     <td>{{ $item->dni }}</td>
-                    <td>{{ $item->person->name . ' ' . $item->person->lastname }}</td>
+                    <td>{{ $item->name . ' ' . $item->lastname }}</td>
+                    <td>{{ $item->pivot->actor_type }}</td>
                     <td></td>
                 </tr>
             @endforeach
