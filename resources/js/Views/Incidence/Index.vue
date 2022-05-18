@@ -134,7 +134,29 @@ export default {
       const month = this.$store.state.month;
       const { data } = await api.fetchByMonth(month, page);
       const all = data.values;
-      this.incidences = [...all.data];
+      const vals = all.data.map((item) => {
+        const persons = item.persons.map((p) => ({
+          dni: p.dni,
+          name: p.name,
+          lastname: p.lastname,
+          entity_type: p.pivot.entity_type,
+          actor_type: p.pivot.actor_type
+        }));
+        return {
+          persons,
+          code: item.code,
+          user: item.user,
+          user_code: item.user_code,
+          title: item.title,
+          type: item.type,
+          description: item.description,
+          agreement: item.agreement,
+          image_attached: item.image_attached,
+          is_siseve: item.is_siseve,
+          created_at: item.created_at
+        };
+      });
+      this.incidences = vals;
       delete all.data;
       this.pagination = all;
     },

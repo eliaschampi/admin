@@ -134,6 +134,7 @@
                   style="max-width: 7rem"
                   class="form-control form-control-sm"
                   v-model="item.actor_type"
+                  :disabled="isedit"
                 >
                   <option value="involucrado">Involucrado</option>
                   <option value="testigo">Testigo</option>

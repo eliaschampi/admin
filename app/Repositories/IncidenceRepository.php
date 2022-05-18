@@ -27,6 +27,7 @@ class IncidenceRepository extends BaseRepository
             ->whereMonth("created_at", $month)
             ->latest()
             ->paginate($this->paginateNumber());
+
     }
 
     public function store(array $data, string $filename): void
