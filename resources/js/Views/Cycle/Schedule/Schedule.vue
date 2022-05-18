@@ -12,41 +12,40 @@
       />
       <div class="row">
         <div class="col-md-4" v-if="teachers.length">
-          <panel :title="teachers_title" class="border">
-            <div
-              class="d-flex align-items-center rounded"
-              v-for="item in teachers"
-              :key="item.dni"
-            >
-              <div class="avatar">
-                <img
-                  v-if="item.person.profile"
-                  width="30"
-                  class="rounded"
-                  :src="`/default/${item.person.profile.image}`"
-                />
-                <img v-else src="/img/logo.png" />
-              </div>
-              <div class="info ml-1">
-                <router-link
-                  :to="{
-                    name: 't_schedule',
-                    params: { dni: item.dni }
-                  }"
-                >
-                  {{ item.person.name }}
-                </router-link>
-                <div class="d-flex align-items-center">
-                  <span class="text-small d-block">Color</span>
-                  <div
-                    class="boli ml-1"
-                    :style="{
-                      backgroundColor: `#${colors[item.dni]}`
+          <panel :title="teachers_title">
+            <template v-for="(item, index) in teachers">
+              <div class="d-flex align-items-center rounded" :key="item.dni">
+                <div class="avatar">
+                  <img
+                    v-if="item.person.profile"
+                    width="30"
+                    class="rounded"
+                    :src="`/default/${item.person.profile.image}`"
+                  />
+                  <img v-else src="/img/logo.png" />
+                </div>
+                <div class="info ml-1">
+                  <router-link
+                    :to="{
+                      name: 't_schedule',
+                      params: { dni: item.dni }
                     }"
-                  ></div>
+                  >
+                    {{ item.person.name }}
+                  </router-link>
+                  <div class="d-flex align-items-center">
+                    <span class="text-small d-block">Color</span>
+                    <div
+                      class="boli ml-1"
+                      :style="{
+                        backgroundColor: `#${colors[item.dni]}`
+                      }"
+                    ></div>
+                  </div>
                 </div>
               </div>
-            </div>
+              <hr :key="index">
+            </template>
           </panel>
         </div>
         <div
