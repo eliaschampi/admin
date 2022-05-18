@@ -4,12 +4,12 @@
       <p>
         Aeduca es una plataforma como servicio (Paas). Está conformado por un
         grupo de herramientas educativas en la nube que cumplen el objetivo de
-        centralizar, gestionar y distribuir la información de la I.E Carrión.
+        centralizar, gestionar y distribuir la información de las instituciones
+        educativas
       </p>
       <p>
         <span class="font-weight-bold"> Versión de la aplicación: </span>
         <b class="badge badge-warning p-2"> {{ $store.state.version }} </b>
-        Aurora
       </p>
       <p>
         <span class="font-weight-bold"> Año: </span>
@@ -19,7 +19,7 @@
       </p>
       <p>
         <span class="font-weight-bold">Fecha de actualización:</span>
-        17 de Mayo del 2022 a las 8:05 p.m.
+        18 de Mayo del 2022 a las 7:05 p.m.
       </p>
       <p>
         <span class="font-weight-bold">Desarrollador:</span>

@@ -10,6 +10,7 @@
       <div class="input-group-append">
         <m-submit
           :load="loading"
+          :disabled="name.length < 3"
           color="btn-outline-primary"
           icon="ion ion-ios-search"
         />

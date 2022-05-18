@@ -32,10 +32,10 @@ class StudentRepository extends BaseRepository
         }
 
         return $student
-            ->whereHas("person", function (Builder $query) use ($name) {
-                $query->whereRaw("concat_ws(' ',lastname, name) ilike '%$name%'");
-            })->with(["person", "person.profile"])
-            ->limit(5)
+            ->with(["person", "person.profile"])
+            ->join("person", "student.dni", "=", "person.dni")
+            ->orderByRaw("(person.name || ' ' || person.lastname) <-> '$name'")
+            ->limit(6)
             ->get();
     }
 

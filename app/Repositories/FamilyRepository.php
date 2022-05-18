@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Family;
 use App\Models\Student;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class FamilyRepository
@@ -27,10 +26,10 @@ class FamilyRepository
 
     public function search(string $name)
     {
-        return Family::whereHas('person', function (Builder $query) use ($name) {
-            $query->whereRaw("concat_ws(' ',lastname, name) ilike '%$name%'");
-        })->with(["person", "person.profile"])
-            ->limit(5)
+        return Family::with(["person", "person.profile"])
+            ->join("person", "family.dni", "=", "person.dni")
+            ->orderByRaw("(person.name || ' ' || person.lastname) <-> '$name'")
+            ->limit(6)
             ->get();
     }
 

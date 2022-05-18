@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Teacher;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class TeacherRepository extends BaseRepository
@@ -31,10 +30,10 @@ class TeacherRepository extends BaseRepository
 
     public function search(string $name)
     {
-        return Teacher::whereHas('person', function (Builder $query) use ($name) {
-            $query->whereRaw("concat_ws(' ',lastname, name) ilike '%$name%'");
-        })->with(["person", "person.profile"])
-            ->limit(5)
+        return Teacher::with(["person", "person.profile"])
+            ->join("person", "teacher.dni", "=", "person.dni")
+            ->orderByRaw("(person.name || ' ' || person.lastname) <-> '$name'")
+            ->limit(6)
             ->get();
     }
 
