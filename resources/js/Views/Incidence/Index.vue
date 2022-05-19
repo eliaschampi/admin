@@ -102,12 +102,13 @@ export default {
       ],
       types: {
         in: "Incidencia física",
-        ve: "Incidencia verbal entre varios",
-        co: "Incidencia por conducta",
+        ve: "Incidencia verbal",
         ps: "Incidencia Psicológica",
+        co: "Incidencia por conducta",
         sx: "Incidencia Sexual",
         me: "Incidencia médica",
         re: "Requisa",
+        bu: "Bulling",
         ot: "Otro"
       },
       buscado: "",

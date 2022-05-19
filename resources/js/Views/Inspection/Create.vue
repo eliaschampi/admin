@@ -118,16 +118,13 @@ export default {
         this.$snack.show("Falta seleccionar estudiante o apoderado");
         return;
       }
-
-      if (this.inspection.inspection_type === "p") {
-        this.$validator.validateAll().then(async (r) => {
-          if (r) {
-            const { data } = await api.store(this.inspection);
-            this.$snack.success(data.message);
-            this.$router.push({ name: "cedp" });
-          }
-        });
-      }
+      this.$validator.validateAll().then(async (r) => {
+        if (r) {
+          const { data } = await api.store(this.inspection);
+          this.$snack.success(data.message);
+          this.$router.push({ name: "cedp" });
+        }
+      });
     }
   }
 };

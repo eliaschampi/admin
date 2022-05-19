@@ -28,7 +28,7 @@ class InspectionRequest extends FormRequest
             "entity_type" => "required",
             "entity_identifier" => "required|max:8|min:8",
             "state" => "required",
-            "description" => "required|max:400",
+            "description" => "required|max:450",
             "additional" => "required|max:150",
         ];
     }

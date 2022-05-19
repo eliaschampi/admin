@@ -61,9 +61,10 @@
             <option value="in">Incidencia fisica</option>
             <option value="ve">Incidencia verbal</option>
             <option value="ps">Incidencia Psicológica</option>
+            <option value="co">Incidencia por conducta</option>
             <option value="sx">Incidencia Sexual</option>
-            <option value="co">Incidencia por mala conducta</option>
             <option value="me">Incidencia médica</option>
+            <option value="bu">Bulling</option>
             <option value="re">Requisa</option>
             <option value="ot">Otro</option>
           </select>
