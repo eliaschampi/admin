@@ -23,13 +23,13 @@
               {{ item.type === "p" ? "Presencial" : "Virtual" }}
             </td>
             <td style="max-width: 10rem">{{ item.title }}</td>
-            <td>{{ ptypes[item.person_type].label }}</td>
+            <td>{{ ptypes[item.entity_type].label }}</td>
             <td>
               <i class="icon ion-md-people icon-sm text-accent"></i>
               <router-link
                 class="font-weight-bold text-primary"
                 :to="{
-                  name: ptypes[item.person_type].route,
+                  name: ptypes[item.entity_type].route,
                   params: { dni: item.person.dni }
                 }"
               >

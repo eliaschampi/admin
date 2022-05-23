@@ -44,7 +44,7 @@
                   </div>
                 </div>
               </div>
-              <hr :key="index">
+              <hr :key="index" />
             </template>
           </panel>
         </div>

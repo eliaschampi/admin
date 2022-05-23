@@ -35,9 +35,9 @@
         >
           El
           {{
-            attention.person_type === "student"
+            attention.entity_type === "student"
               ? "estudiante"
-              : attention.person_type === "family"
+              : attention.entity_type === "family"
               ? "apoderado"
               : "docente"
           }}
@@ -110,8 +110,8 @@
         </div>
         <hr />
         <div class="mb-1">Seleccione una opción</div>
-        <person-type v-model="attention.person_type" />
-        <input-finder :fullname="person_name" :who="attention.person_type" />
+        <person-type v-model="attention.entity_type" />
+        <input-finder :fullname="person_name" :who="attention.entity_type" />
       </div>
     </div>
   </m-form>
@@ -137,8 +137,8 @@ export default {
       load: false,
       attention: {
         type: "p",
-        person_type: "student",
-        person_dni: null,
+        entity_type: "student",
+        entity_identifier: null,
         introduction: "",
         description: "",
         conclusion: "",
@@ -154,9 +154,9 @@ export default {
     }
   },
   watch: {
-    "attention.person_type"() {
+    "attention.entity_type"() {
       this.person_name = "";
-      this.attention.person_dni = null;
+      this.attention.entity_identifier = null;
     }
   },
   mounted() {
@@ -176,7 +176,7 @@ export default {
   methods: {
     addPerson(person) {
       this.person_name = `${person.name} ${person.lastname}`;
-      this.attention.person_dni = person.dni;
+      this.attention.entity_identifier = person.dni;
       $("#finderModal").modal("hide");
     },
     storeData() {
@@ -190,7 +190,11 @@ export default {
     },
     save() {
       this.$validator.validateAll().then((r) => {
-        if (r && this.attention.person_dni && this.attention.created_at) {
+        if (
+          r &&
+          this.attention.entity_identifier &&
+          this.attention.created_at
+        ) {
           this.load = true;
           this.storeData()
             .then((r) => {

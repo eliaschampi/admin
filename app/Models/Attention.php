@@ -13,9 +13,9 @@ class Attention extends Model
     protected $fillable = [
         "user_code",
         "type",
-        "person_dni",
+        "entity_identifier",
         "branch_code",
-        "person_type",
+        "entity_type",
         "introduction",
         "title",
         "description",
@@ -31,6 +31,6 @@ class Attention extends Model
 
     public function person()
     {
-        return $this->belongsTo(Person::class, "person_dni");
+        return $this->belongsTo(Person::class, "entity_identifier");
     }
 }

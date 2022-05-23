@@ -27,8 +27,8 @@ class AttentionController extends Controller
         $fileHasBeenStored = false;
         $res = json_decode($request->data, true);
         Validator::make($res, [
-            "person_type" => "required",
-            "person_dni" => "required",
+            "entity_type" => "required",
+            "entity_identifier" => "required",
             "type" => "required",
             "title" => "required|min:5|max:80",
             "introduction" => "required|min:10|max:300",
@@ -45,7 +45,7 @@ class AttentionController extends Controller
             ]);
             $file = $request->file("file");
             $ext = $file->getClientOriginalExtension();
-            $filename = "at_" . $res['person_dni'] . "_" . rand(10000, 99999) . ".$ext";
+            $filename = "at_" . $res['entity_identifier'] . "_" . rand(10000, 99999) . ".$ext";
             $fileHasBeenStored = Storage::putFileAs("/main/", $file, $filename);
         }
 
@@ -62,7 +62,7 @@ class AttentionController extends Controller
     public function update(Request $request, int $code)
     {
         $request->validate([
-            "person_dni" => "required",
+            "entity_identifier" => "required",
             "type" => "required",
             "title" => "required",
             "introduction" => "required|min:10|max:300",

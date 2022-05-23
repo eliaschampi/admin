@@ -43,7 +43,7 @@ class AttentionRepository extends BaseRepository
         }
         $attention = $this->fetchByCode($code);
         $attention->introduction = $data["introduction"];
-        $attention->person_dni = $data["person_dni"];
+        $attention->entity_identifier = $data["entity_identifier"];
         $attention->type = $data["type"];
         $attention->title = $data["title"];
         $attention->description = $data["description"];

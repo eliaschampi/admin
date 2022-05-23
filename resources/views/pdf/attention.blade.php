@@ -3,7 +3,7 @@
     <h4 class="title text-primary">
         ATENCIÓN AL
         {{ strtoupper(
-            config("main.atype.$attention->person_type") . ' ' . $attention->person->name . ' ' . $attention->person->lastname,
+            config("main.atype.$attention->entity_type") . ' ' . $attention->person->name . ' ' . $attention->person->lastname,
         ) }}
     </h4>
     <hr />
@@ -38,7 +38,7 @@
     <hr />
     <p class="text-justify">{{ $attention->introduction }}</p>
 
-    <div class="text-primary font-bold">El {{ config("main.atype.$attention->person_type") }} compartió:</div>
+    <div class="text-primary font-bold">El {{ config("main.atype.$attention->entity_type") }} compartió:</div>
     <hr />
     <p class="text-justify">{{ $attention->description }}</p>
 
@@ -62,7 +62,7 @@
                 <th style="width: 5cm">
                     {{ $attention->person->name . ' ' . $attention->person->lastname }}
                     <br />
-                    <small>{{ config("main.atype.$attention->person_type") }}</small>
+                    <small>{{ config("main.atype.$attention->entity_type") }}</small>
                 </th>
                 <th></th>
                 <th></th>
