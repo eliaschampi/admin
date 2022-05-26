@@ -8,7 +8,10 @@ export default {
 
   print: (code) =>
     request.get(`/inspection/print/${code}`, {
-      responseType: "blob"
+      responseType: "blob",
+      headers: {
+        "iam-trust": "E_75keseps77_K"
+      }
     }),
 
   fetchStates: () => request.get("/inspection"),

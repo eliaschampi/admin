@@ -45,6 +45,13 @@ Route::group(["middleware" => ["withkey"]], function () {
     Route::get("/payments/{register_code}", [IncomeDetailController::class, "fetchStudentPayments"]);
     Route::get("/register_all/{dni}", [RegisterController::class, "fetchByStudent"]);
     Route::get("/inspection/entity/{entity_identifier}", [InspectionController::class], "fetchByEntity");
+
+    //dw cedp
+    Route::get("/inspection/print/{code}", [InspectionController::class, "print"]);
+    Route::get("/attention_dw/{code}", [AttentionController::class, "downloadAttached"]);
+    Route::get("/attention_print/{code}", [AttentionController::class, "print"]);
+    Route::get("/incidence_dw/{code}", [IncidenceController::class, "downloadAttached"]);
+    Route::get("/incidence_print/{code}", [IncidenceController::class, "print"]);
 });
 
 Route::group(["middleware" => ["jwt.auth"]], function () {
@@ -218,20 +225,15 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::post("/incidence", [IncidenceController::class, "store"]);
     Route::put("/incidence/{code}", [IncidenceController::class, "update"]);
     Route::delete("/incidence/{code}", [IncidenceController::class, "destroy"]);
-    Route::get("/incidence_dw/{code}", [IncidenceController::class, "downloadAttached"]);
-    Route::get("/incidence_print/{code}", [IncidenceController::class, "print"]);
 
     // attention
     Route::get("/attention/{month}", [AttentionController::class, "fetchByMonth"]);
     Route::post("/attention", [AttentionController::class, "store"]);
     Route::put("/attention/{code}", [AttentionController::class, "update"]);
     Route::delete("/attention/{code}", [AttentionController::class, "destroy"]);
-    Route::get("/attention_dw/{code}", [AttentionController::class, "downloadAttached"]);
-    Route::get("/attention_print/{code}", [AttentionController::class, "print"]);
 
     Route::get("/inspection", [InspectionController::class, "fetchStates"]);
     Route::get("/inspection/{type}", [InspectionController::class, "fetchByType"]);
-    Route::get("/inspection/print/{code}", [InspectionController::class, "print"]);
     Route::post("/inspection", [InspectionController::class, "store"]);
     Route::put("/inspection/{code}", [InspectionController::class, "update"]);
     Route::delete("/inspection/{code}", [InspectionController::class, "destroy"]);

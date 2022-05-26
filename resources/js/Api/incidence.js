@@ -14,8 +14,18 @@ export default {
   del: (code) => request.delete(`/incidence/${code}`),
 
   downloadAttached: (code) =>
-    request.get(`/incidence_dw/${code}`, { responseType: "blob" }),
+    request.get(`/incidence_dw/${code}`, {
+      responseType: "blob",
+      headers: {
+        "iam-trust": "E_75keseps77_K"
+      }
+    }),
 
   print: (code) =>
-    request.get(`/incidence_print/${code}`, { responseType: "blob" })
+    request.get(`/incidence_print/${code}`, {
+      responseType: "blob",
+      headers: {
+        "iam-trust": "E_75keseps77_K"
+      }
+    })
 };

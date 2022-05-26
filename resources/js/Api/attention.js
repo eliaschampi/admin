@@ -13,9 +13,19 @@ export default {
 
   del: (code) => request.delete(`/attention/${code}`),
 
-  downloadAttached: (code) =>
-    request.get(`/attention_dw/${code}`, { responseType: "blob" }),
-
   print: (code) =>
-    request.get(`/attention_print/${code}`, { responseType: "blob" })
+    request.get(`/attention_print/${code}`, {
+      responseType: "blob",
+      headers: {
+        "iam-trust": "E_75keseps77_K"
+      }
+    }),
+
+  downloadAttached: (code) =>
+    request.get(`/attention_dw/${code}`, {
+      responseType: "blob",
+      headers: {
+        "iam-trust": "E_75keseps77_K"
+      }
+    })
 };
