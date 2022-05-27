@@ -40,6 +40,14 @@
         :stateop="requiredDT.state_op"
         v-model="inspection.state"
       />
+      
+      <m-switch
+        class="mt-4"
+        v-if="inspection.inspection_type === 'l'"
+        id="id_update_cel"
+        text="Actualizar el numero de celular activo"
+        v-model="inspection.update_person_phone"
+      />
     </template>
   </modal>
 </template>

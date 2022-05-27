@@ -182,6 +182,7 @@ export default {
         inspection_type: this.i_type,
         entity_type: item.entity_type,
         entity_identifier: item.entity_identifier,
+        update_person_phone: item.update_person_phone,
         state: item.state,
         created_at: item.created_at
       };

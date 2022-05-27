@@ -38,6 +38,12 @@
             </td>
             <td>
               <template v-if="item.user_code === $store.state.user.user.code">
+                <m-action
+                  @action="print(item.code)"
+                  icon="print"
+                  color="success"
+                  tool="Imprimir"
+                />
                 <m-action @action="edit(item)" />
                 <m-action
                   @action="delA(item)"
@@ -46,12 +52,7 @@
                   tool="Eliminar"
                 />
               </template>
-              <m-action
-                @action="print(item.code)"
-                icon="print"
-                color="success"
-                tool="Imprimir"
-              />
+              <i v-else class="icon ion-md-lock icon-md text-muted"></i>
             </td>
           </tr>
         </template>

@@ -42,6 +42,7 @@
               :type="inspection.inspection_type === 'p' ? 'date' : 'text'"
               required
               placeholder="Campo obligatorio"
+              maxlength="20"
               class="form-control"
               v-model="inspection.additional"
             />
@@ -50,6 +51,14 @@
           <inspection-state
             :stateop="dec_types[inspection.inspection_type].state_op"
             v-model="inspection.state"
+          />
+
+          <m-switch
+            class="mt-4"
+            v-if="inspection.inspection_type === 'l'"
+            id="id_uodate_cel"
+            text="Actualizar el numero de celular activo"
+            v-model="inspection.update_person_phone"
           />
         </div>
       </div>
@@ -71,6 +80,7 @@ export default {
     return {
       title: "Registrar",
       inspection: {
+        update_person_phone: false,
         inspection_type: "p",
         entity_type: "student",
         description: "",

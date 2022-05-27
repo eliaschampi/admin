@@ -60,6 +60,13 @@ class PersonRepository extends BaseRepository
         return $person->save();
     }
 
+    public function updatePhone(string $dni, string $phone)
+    {
+        $person = Person::find($dni);
+        $person->phone = $phone;
+        $person->save();
+    }
+
     public function destroy(Person $person): bool
     {
         return $person->delete();

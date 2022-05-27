@@ -40,6 +40,14 @@ class InspectionController extends Controller
 
     private function beforeUpsert(array $request)
     {
+        //update phone
+        if ($request["inspection_type"] === "l") {
+            if ($request["update_person_phone"] === true) {
+                $pi = new \App\Repositories\PersonRepository;
+                $pi->updatePhone($request["entity_identifier"], $request["additional"]);
+            }
+        }
+
         if ($request["inspection_type"] === "p") {
             $pdate = $request["additional"];
             $state = $request["state"];
@@ -68,6 +76,7 @@ class InspectionController extends Controller
             "inspection_type" => "required",
             "entity_type" => "required",
             "entity_identifier" => "required",
+            "update_person_phone" => "",
         ]);
         $this->beforeUpsert($validated);
         $this->instance->update($validated, $code);
