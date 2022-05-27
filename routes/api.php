@@ -47,11 +47,11 @@ Route::group(["middleware" => ["withkey"]], function () {
     Route::get("/inspection/entity/{entity_identifier}", [InspectionController::class], "fetchByEntity");
 
     //dw cedp
-    Route::get("/inspection/print/{code}", [InspectionController::class, "print"]);
-    Route::get("/attention_dw/{code}", [AttentionController::class, "downloadAttached"]);
+    Route::get("/inspection_print/{code}", [InspectionController::class, "print"]);
     Route::get("/attention_print/{code}", [AttentionController::class, "print"]);
-    Route::get("/incidence_dw/{code}", [IncidenceController::class, "downloadAttached"]);
     Route::get("/incidence_print/{code}", [IncidenceController::class, "print"]);
+    Route::get("/incidence_dw/{code}", [IncidenceController::class, "downloadAttached"]);
+    Route::get("/attention_dw/{code}", [AttentionController::class, "downloadAttached"]);
 });
 
 Route::group(["middleware" => ["jwt.auth"]], function () {

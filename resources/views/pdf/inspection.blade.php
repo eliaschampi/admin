@@ -1,4 +1,4 @@
-@extends("layout.main")
+@extends('layout.main')
 @section('content')
     <h4 class="title text-primary" style="text-transform: uppercase;">
         INFORME DE {{ $itype['label'] }} AL {{ $person }}
@@ -57,10 +57,14 @@
         <tr>
             <td width="50%" class="text-center">
                 _______________________
-                <div>{{ $inspection->user->name . ' ' . $inspection->user->lastname }}</div>
-                <span class="text-small text-accent">
-                    {{ $inspection->user->rol->name }}
-                </span>
+                @if (!empty($inspection->user))
+                    <div>{{ $inspection->user->name . ' ' . $inspection->user->lastname }}</div>
+                    <span class="text-small text-accent">
+                        {{ $inspection->user->rol->name }}
+                    </span>
+                @else
+                    <div>Coordinador de la institución</div>
+                @endif
             </td>
             <td width="50%" class="text-center">
                 _______________________

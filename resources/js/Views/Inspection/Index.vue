@@ -71,20 +71,18 @@
               </td>
               <td>
                 <m-action
-                  @action="handleEditClick(item)"
-                  v-show="item.user_code === u_code"
-                />
-                <m-action
                   @action="handlePrintAction(item)"
                   icon="print"
                   color="success"
                 />
-                <m-action
-                  v-show="item.user_code === u_code"
-                  @action="handleDeleteClick(item)"
-                  icon="trash"
-                  color="danger"
-                />
+                <template v-if="item.user_code === u_code || !item.branch_code">
+                  <m-action @action="handleEditClick(item)" />
+                  <m-action
+                    @action="handleDeleteClick(item)"
+                    icon="trash"
+                    color="danger"
+                  />
+                </template>
               </td>
             </tr>
           </template>

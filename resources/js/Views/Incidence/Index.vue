@@ -154,6 +154,7 @@ export default {
           agreement: item.agreement,
           image_attached: item.image_attached,
           is_siseve: item.is_siseve,
+          is_visible: item.is_visible,
           created_at: item.created_at
         };
       });

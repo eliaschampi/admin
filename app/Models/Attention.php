@@ -22,6 +22,7 @@ class Attention extends Model
         "conclusion",
         "created_at",
         "file_attached",
+        "is_visible"
     ];
 
     public function user()

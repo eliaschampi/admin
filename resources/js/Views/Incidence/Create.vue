@@ -9,9 +9,14 @@
       <div class="col-md-6">
         <div class="p-2">
           <m-switch
-            id="invoice"
+            id="id_siseve"
             text="Es incidencia SISEVE"
             v-model="incidence.is_siseve"
+          />
+          <m-switch
+            id="id_visible_in"
+            text="La incidencia es visible en la plataforma"
+            v-model="incidence.is_visible"
           />
         </div>
 
@@ -180,6 +185,7 @@ export default {
       },
       incidence: {
         is_siseve: false,
+        is_visible: true,
         type: "in",
         description: "",
         agreement: "",

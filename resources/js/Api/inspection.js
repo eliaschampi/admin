@@ -7,7 +7,7 @@ export default {
     request.get(`/inspection/entity/${entity_identifier}`),
 
   print: (code) =>
-    request.get(`/inspection/print/${code}`, {
+    request.get(`/inspection_print/${code}`, {
       responseType: "blob",
       headers: {
         "iam-trust": "E_75keseps77_K"

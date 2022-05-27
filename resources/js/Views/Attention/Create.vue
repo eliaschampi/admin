@@ -82,8 +82,8 @@
             <span class="selectgroup-button">Virtual</span>
           </label>
         </div>
-        <hr />
-        <div class="form-group">
+
+        <div class="form-group mt-4">
           <label for="datess">Fecha de atención</label>
           <input
             id="datess"
@@ -108,10 +108,17 @@
           <i class="icon ion-md-cloud-download icon-sm text-accent"></i>
           Hay un documento adjunto aquí.
         </div>
-        <hr />
-        <div class="mb-1">Seleccione una opción</div>
+
+        <div class="mt-4 mb-2">Seleccione una opción</div>
         <person-type v-model="attention.entity_type" />
         <input-finder :fullname="person_name" :who="attention.entity_type" />
+        <div class="mt-4">
+          <m-switch
+            id="id_visible_ar"
+            text="La atención es visible en la plataforma"
+            v-model="attention.is_visible"
+          />
+        </div>
       </div>
     </div>
   </m-form>
@@ -136,6 +143,7 @@ export default {
     return {
       load: false,
       attention: {
+        is_visible: true,
         type: "p",
         entity_type: "student",
         entity_identifier: null,

@@ -35,6 +35,7 @@ class AttentionController extends Controller
             "description" => "required|min:10|max:500",
             "conclusion" => "nullable|min:5|max:200",
             "created_at" => "required",
+            "is_visible" => "required",
         ]);
         $filename = "";
         $hasFile = $request->hasFile("file");
@@ -45,7 +46,7 @@ class AttentionController extends Controller
             ]);
             $file = $request->file("file");
             $ext = $file->getClientOriginalExtension();
-            $filename = "at_" . $res['entity_identifier'] . "_" . rand(10000, 99999) . ".$ext";
+            $filename = "at_" . $res["entity_identifier"] . "_" . rand(10000, 99999) . ".$ext";
             $fileHasBeenStored = Storage::putFileAs("/main/", $file, $filename);
         }
 
@@ -69,6 +70,7 @@ class AttentionController extends Controller
             "description" => "required|min:10|max:500",
             "conclusion" => "nullable|min:5|max:200",
             "created_at" => "",
+            "is_visible" => "required",
         ]);
         $this->instance->update($request->all(), $code);
         return response()->json([

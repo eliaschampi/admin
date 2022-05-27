@@ -69,7 +69,7 @@ return [
             "color" => "success",
         ],
         "r" => [
-            "label" => "Requizado",
+            "label" => "Requisado",
             "color" => "info",
         ],
         "c" => [

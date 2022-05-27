@@ -48,6 +48,7 @@ class AttentionRepository extends BaseRepository
         $attention->title = $data["title"];
         $attention->description = $data["description"];
         $attention->conclusion = $data["conclusion"];
+        $attention->is_visible = $data["is_visible"];
         return $attention->save();
     }
 

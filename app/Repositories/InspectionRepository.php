@@ -17,7 +17,9 @@ class InspectionRepository extends BaseRepository
                 "person" => function ($query) {
                     $query->select("dni", "name", "lastname");
                 }])
-            ->where("branch_code", $this->branch_code)
+            ->where(function ($query) {
+                $query->where("branch_code", $this->branch_code)->orWhereNull("branch_code");
+            })
             ->whereYear("created_at", $this->current_year)
             ->orderBy("created_at", "DESC")
             ->get();

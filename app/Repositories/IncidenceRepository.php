@@ -62,12 +62,13 @@ class IncidenceRepository extends BaseRepository
         $incidence->agreement = $data["agreement"];
         $incidence->created_at = $data["created_at"];
         $incidence->is_siseve = $data["is_siseve"];
+        $incidence->is_visible = $data["is_visible"];
         return $incidence->save();
     }
 
     public function destroy(Incidence $incidence): bool | null
     {
-        $incidence->students()->detach();
+        $incidence->persons()->detach();
         return $incidence->delete();
     }
 }
