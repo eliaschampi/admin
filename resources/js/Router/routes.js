@@ -38,7 +38,7 @@ import FamilyInfo from "../Views/Family/Main.vue";
 import MainFamily from "../Views/Family/Index";
 //extra
 import ESfamily from "../Views/Student/Family";
-//academci
+
 // teacher
 import Teacher from "../Views/Teacher/Index";
 import TeacherInfo from "../Views/Teacher/Main.vue";
@@ -61,9 +61,12 @@ import OpCreate from "../Views/Cycle/Schedule/Create.vue";
 // incidence
 import Incidence from "../Views/Incidence/Index";
 import NewIncidence from "../Views/Incidence/Create";
+import IncidenceStudent from "../Views/Incidence/ByStudent";
+
 // attention
 import Attention from "../Views/Attention/Index";
 import NewAttention from "../Views/Attention/Create";
+
 // inspection
 import Inspection from "../Views/Inspection/Index";
 import NewInspection from "../Views/Inspection/Create";
@@ -74,16 +77,20 @@ import AttendanceStudent from "../Views/Attendance/ByStudent";
 import Absence from "../Views/Attendance/Absence";
 import AttendanceManual from "../Views/Attendance/Register";
 import Automatically from "../Views/Attendance/Automatically";
+
 // attendance teacher
 import AttendanceTeacherMain from "../Views/Attendance/TeacherAttendance";
 import AttendanceTeacher from "../Views/Attendance/ByTeacher";
+
 // invoicing
 import Invoice from "../Views/Income/Invoice";
 import Income from "../Views/Income/Index";
 import Canceled from "../Views/Income/Canceleds";
+
 // cash
 import Cash from "../Views/Cash/Cash";
 import Cashes from "../Views/Cash/Cashes";
+
 // expense
 import Expense from "../Views/Expense/Index";
 import NewExpense from "../Views/Expense/Create";
@@ -243,10 +250,16 @@ const routes = [
                 name: "attendance_student",
                 meta: {
                   title: "Asistencia del estudiante",
-                  meta: {
-                    title: "Asistencia por Estudiante",
-                    iratyc: true
-                  }
+                  iratyc: true
+                }
+              },
+              {
+                path: ":dni?/incidencia",
+                component: IncidenceStudent,
+                name: "incidence_student",
+                meta: {
+                  title: "Incidencias del estudiante",
+                  iratyc: true
                 }
               }
             ]

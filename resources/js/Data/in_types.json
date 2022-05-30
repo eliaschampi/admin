@@ -1,0 +1,11 @@
+{
+    "in": "Incidencia física",
+    "ve": "Incidencia verbal",
+    "ps": "Incidencia Psicológica",
+    "co": "Incidencia por conducta",
+    "sx": "Incidencia Sexual",
+    "me": "Incidencia médica",
+    "re": "Requisa",
+    "bu": "Bulling",
+    "ot": "Otro"
+}

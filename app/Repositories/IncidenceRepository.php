@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Incidence;
+use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 
 class IncidenceRepository extends BaseRepository
@@ -28,6 +29,23 @@ class IncidenceRepository extends BaseRepository
             ->latest()
             ->paginate($this->paginateNumber());
 
+    }
+
+    public function fetchByEntity(string $dni, bool $show_all)
+    {
+        $ins = Incidence::with(["user" => function ($query) {
+            $query->select("code", "name");
+        }])
+            ->whereYear("created_at", date("Y"))
+            ->whereHas("persons", function ($query) use ($dni) {
+                $query->where("dni", $dni);
+            });
+
+        if ($show_all === false) {
+            return $ins->where("is_visible", true)->orderBy("created_at", "desc")->get();
+        }
+
+        return $ins->orderBy("created_at", "desc")->get();
     }
 
     public function store(array $data, string $filename): void

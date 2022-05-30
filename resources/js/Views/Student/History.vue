@@ -2,9 +2,13 @@
   <section>
     <panel>
       <div class="selectgroup selectgroup-pills">
-        <label
+        <router-link
+          tag="label"
           class="selectgroup-item"
-          @click.once="handleGoToRoute('attendance_student')"
+          :to="{
+            name: 'attendance_student',
+            params: { dni: $route.params.dni }
+          }"
         >
           <input
             :checked="$route.name === 'attendance_student'"
@@ -14,10 +18,14 @@
             class="selectgroup-input"
           />
           <span class="selectgroup-button">Asistencia</span>
-        </label>
-        <label
+        </router-link>
+        <router-link
+          tag="label"
           class="selectgroup-item"
-          @click.once="handleGoToRoute('incidence_student')"
+          :to="{
+            name: 'incidence_student',
+            params: { dni: $route.params.dni }
+          }"
         >
           <input
             :checked="$route.name === 'incidence_student'"
@@ -27,10 +35,14 @@
             class="selectgroup-input"
           />
           <span class="selectgroup-button">Incidencias</span>
-        </label>
-        <label
+        </router-link>
+        <router-link
+          tag="label"
           class="selectgroup-item"
-          @click.once="handleGoToRoute('attention_student')"
+          :to="{
+            name: 'attention_student',
+            params: { dni: $route.params.dni }
+          }"
         >
           <input
             :checked="$route.name === 'attention_student'"
@@ -40,10 +52,14 @@
             class="selectgroup-input"
           />
           <span class="selectgroup-button">Atenciones</span>
-        </label>
-        <label
+        </router-link>
+        <router-link
+          tag="label"
           class="selectgroup-item"
-          @click.once="handleGoToRoute('inspection_student')"
+          :to="{
+            name: 'inspection_student',
+            params: { dni: $route.params.dni }
+          }"
         >
           <input
             :checked="$route.name === 'inspection_student'"
@@ -53,10 +69,11 @@
             class="selectgroup-input"
           />
           <span class="selectgroup-button">Permisos</span>
-        </label>
-        <label
+        </router-link>
+        <router-link
+          tag="label"
           class="selectgroup-item"
-          @click.once="handleGoToRoute('justify_student')"
+          :to="{ name: 'justify_student', params: { dni: $route.params.dni } }"
         >
           <input
             :checked="$route.name === 'justify_student'"
@@ -66,10 +83,14 @@
             class="selectgroup-input"
           />
           <span class="selectgroup-button">Justificaciones</span>
-        </label>
-        <label
+        </router-link>
+        <router-link
+          tag="label"
           class="selectgroup-item"
-          @click.once="handleGoToRoute('inspection_student')"
+          :to="{
+            name: 'inspection_student',
+            params: { dni: $route.params.dni }
+          }"
         >
           <input
             :checked="$route.name === 'inspection_student'"
@@ -79,7 +100,7 @@
             class="selectgroup-input"
           />
           <span class="selectgroup-button"> Requisas </span>
-        </label>
+        </router-link>
       </div>
       <hr />
       <router-view />
@@ -88,12 +109,6 @@
 </template>
 <script>
 export default {
-  name: "history",
-  methods: {
-    handleGoToRoute(val) {
-      if (this.$route.name === val) return;
-      this.$router.push({ name: val, params: { dni: this.$route.params.dni } });
-    }
-  }
+  name: "history"
 };
 </script>

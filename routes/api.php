@@ -52,10 +52,14 @@ Route::group(["middleware" => ["withkey"]], function () {
     Route::get("/incidence_print/{code}", [IncidenceController::class, "print"]);
     Route::get("/incidence_dw/{code}", [IncidenceController::class, "downloadAttached"]);
     Route::get("/attention_dw/{code}", [AttentionController::class, "downloadAttached"]);
+    //cedp for aeduca user
+    Route::get("/cedp/incidence/{dni}/{show_all?}", [IncidenceController::class, "fetchByEntity"]);
 });
 
+//group
 Route::group(["middleware" => ["jwt.auth"]], function () {
 
+    //mark
     Route::get("/counts", [SystemController::class, "counts"]);
     Route::post("/support", [SystemController::class, "sendMessageToElias"]);
 

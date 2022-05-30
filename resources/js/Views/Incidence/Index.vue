@@ -81,6 +81,7 @@
 <script>
 import months from "../../Data/months.json";
 import api from "../../Api/incidence";
+import in_types from "../../Data/in_types.json";
 import Month from "../../Components/Views/Month.vue";
 import cache from "../../Helpers/cache";
 export default {
@@ -100,17 +101,7 @@ export default {
         "Estudiante",
         "Acciones"
       ],
-      types: {
-        in: "Incidencia física",
-        ve: "Incidencia verbal",
-        ps: "Incidencia Psicológica",
-        co: "Incidencia por conducta",
-        sx: "Incidencia Sexual",
-        me: "Incidencia médica",
-        re: "Requisa",
-        bu: "Bulling",
-        ot: "Otro"
-      },
+      types: in_types,
       buscado: "",
       incidences: [],
       pagination: {}

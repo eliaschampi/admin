@@ -19,7 +19,7 @@ class Incidence extends Model
         "created_at",
         "image_attached",
         "is_siseve",
-        "is_visible"
+        "is_visible",
     ];
 
     public function user()
