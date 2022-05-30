@@ -1,20 +1,20 @@
 <template>
-  <card id="stuatt" title="Reporte de asistencia">
-    <template #rb>
-      <m-button @pum="handleChangePriority" color="btn-inverse-info btn-sm">
-        <b>i</b>({{ priority }})
-      </m-button>
-      <m-button
-        :disabled="!attendances.length"
-        @pum="exportToExcel"
-        color="btn-inverse-primary"
-        class="btn-icon"
-        icon="icon ion-md-cloud-download"
-      />
-    </template>
-
+  <div>
     <m-table :columns="columns" :data="attendances" :fetch="fetchData">
-      <range @fetch="fetchData" />
+
+      <div>
+        <range @fetch="fetchData">
+          <m-button
+            class="align-self-center"
+            style="max-width: 4rem"
+            @pum="handleChangePriority"
+            color="btn-inverse-info btn-sm"
+          >
+            <b>i</b>({{ priority }})
+          </m-button>
+        </range>
+      </div>
+      
       <template slot="data">
         <attendance-row
           :key="item.code"
@@ -31,10 +31,18 @@
           <td>{{ item.created_at | date }}</td>
         </attendance-row>
       </template>
+      <m-button
+        @pum="exportToExcel"
+        color="btn-inverse-primary"
+        slot="foot"
+        size="btn-sm"
+      >
+        Exportar
+      </m-button>
     </m-table>
 
-    <p class="text-center text-primary" slot="foot">
-      {{ attendances.length }} Asistencias
+    <p class="text-center text-primary">
+      Total de registros: {{ attendances.length }}
     </p>
 
     <justification
@@ -44,7 +52,7 @@
       @closed="jusClosed"
       @updated="jusUpdated"
     />
-  </card>
+  </div>
 </template>
 <script>
 import { mapGetters } from "vuex";

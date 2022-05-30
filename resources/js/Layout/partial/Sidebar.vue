@@ -164,6 +164,17 @@
             Pagos y Mensualidades
           </router-link>
         </li>
+        <li class="nav-item">
+          <router-link
+            :to="{
+              name: 'attendance_student',
+              params: { dni: s_dni }
+            }"
+            class="nav-link"
+          >
+            Convivencia
+          </router-link>
+        </li>
       </menu-side>
       <li class="nav-item sidebar-category">
         <p>Administración</p>
@@ -268,17 +279,6 @@
               class="nav-link"
             >
               Docentes
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link
-              :to="{
-                name: 'attendance_student',
-                params: { dni: s_dni }
-              }"
-              class="nav-link"
-            >
-              Por Estudiante
             </router-link>
           </li>
           <li class="nav-item">

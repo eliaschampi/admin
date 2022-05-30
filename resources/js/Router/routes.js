@@ -32,6 +32,7 @@ import StudentInfo from "../Views/Student/Main.vue";
 import InfoProfile from "../Views/Student/Profile";
 import InfoRegister from "../Views/Student/Register";
 import Moreover from "../Views/Student/Moreover";
+import History from "../Views/Student/History";
 // family
 import FamilyInfo from "../Views/Family/Main.vue";
 import MainFamily from "../Views/Family/Index";
@@ -233,13 +234,22 @@ const routes = [
         component: Container,
         children: [
           {
-            path: ":dni?/asistencia",
-            name: "attendance_student",
-            component: AttendanceStudent,
-            meta: {
-              title: "Asistencia por Estudiante",
-              iratyc: true
-            }
+            path: "convivencia",
+            component: History,
+            children: [
+              {
+                path: ":dni?/asistencia",
+                component: AttendanceStudent,
+                name: "attendance_student",
+                meta: {
+                  title: "Asistencia del estudiante",
+                  meta: {
+                    title: "Asistencia por Estudiante",
+                    iratyc: true
+                  }
+                }
+              }
+            ]
           },
           // main info
           {

@@ -25,6 +25,7 @@
       class="search align-self-center"
       icon="icon ion-md-search"
     />
+    <slot />
   </div>
 </template>
 
