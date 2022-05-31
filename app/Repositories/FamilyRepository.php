@@ -33,6 +33,13 @@ class FamilyRepository
             ->get();
     }
 
+    public function fetchFamilyDnisByStudent(string $dni)
+    {
+        return DB::table("family_student")
+            ->where("student_dni", $dni)->pluck("family_dni")
+            ->toArray();
+    }
+
     public function fetchBySection(string $section_code)
     {
         return Family::with("person")->whereHas("students.registers", function ($query) use ($section_code) {

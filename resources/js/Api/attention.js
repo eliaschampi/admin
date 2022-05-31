@@ -4,6 +4,12 @@ export default {
   fetchByMonth: (month, page) =>
     request.get(`/attention/${month}?page=${page}`),
 
+  fetchByEntity: (dni) => request.get(`/cedp/attention/${dni}/true`, {
+    headers: {
+      "iam-trust": "E_75keseps77_K"
+    }
+  }),
+
   store: (data) =>
     request.post("/attention", data, {
       "Content-Type": "multipart/form-data"

@@ -25,9 +25,25 @@ class AttentionRepository extends BaseRepository
             ->paginate($this->paginateNumber());
     }
 
+    public function fetchByEntity(string $dni, bool $show_all)
+    {
+        $dnis = (new FamilyRepository)->fetchFamilyDnisByStudent($dni);
+        $att = Attention::with(["user" => function ($query) {
+            $query->select("code", "name");
+        }])
+            ->whereIn("entity_identifier", [...$dnis, $dni])
+            ->whereYear("created_at", date("Y"));
+
+        if ($show_all === false) {
+            return $att->where("is_visible", true)->orderBy("created_at", "desc")->get();
+        }
+
+        return $att->orderBy("created_at", "desc")->get();
+    }
+
     public function store(array $data, string $filename): Attention
     {
-         if (empty($data["created_at"])) {
+        if (empty($data["created_at"])) {
             $data["created_at"] = now();
         }
         $data["user_code"] = $this->user_code;
@@ -38,7 +54,7 @@ class AttentionRepository extends BaseRepository
 
     public function update(array $data, int $code): bool
     {
-         if (empty($data["created_at"])) {
+        if (empty($data["created_at"])) {
             $data["created_at"] = now();
         }
         $attention = $this->fetchByCode($code);

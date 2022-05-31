@@ -22,6 +22,13 @@ class AttentionController extends Controller
         ]);
     }
 
+    public function fetchByEntity(string $dni, string $show_all = "false")
+    {
+        return response()->json([
+            "values" => $this->instance->fetchByEntity($dni, $show_all === "true"),
+        ]);
+    }
+
     public function store(Request $request)
     {
         $fileHasBeenStored = false;

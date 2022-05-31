@@ -66,6 +66,7 @@ import IncidenceStudent from "../Views/Incidence/ByStudent";
 // attention
 import Attention from "../Views/Attention/Index";
 import NewAttention from "../Views/Attention/Create";
+import AttentionStudent from "../Views/Attention/ByStudent";
 
 // inspection
 import Inspection from "../Views/Inspection/Index";
@@ -259,6 +260,15 @@ const routes = [
                 name: "incidence_student",
                 meta: {
                   title: "Incidencias del estudiante",
+                  iratyc: true
+                }
+              },
+              {
+                path: ":dni?/atenciones",
+                component: AttentionStudent,
+                name: "attention_student",
+                meta: {
+                  title: "Atenciones del estudiante",
                   iratyc: true
                 }
               }

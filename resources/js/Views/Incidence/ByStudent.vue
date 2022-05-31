@@ -1,34 +1,27 @@
 <template>
-  <div>
-    <m-table
-      :columns="columns"
-      :load="loading"
-      :head="false"
-      :data="incidences"
-    >
-      <template v-slot:data="{ rows }">
-        <tr v-for="item in rows" :key="item.code">
-          <td>{{ item.code }}</td>
-          <td>{{ item.user.name }}</td>
-          <td>
-            {{ item.title }}
-          </td>
-          <td>
-            <span class="badge badge-primary">
-              {{ types[item.type] }}
-            </span>
-          </td>
-          <td>
-            {{ item.created_at | datetim }}
-          </td>
-          <td>
-            <m-action @action="edit(item)" />
-            <m-action icon="print" color="success" @action="print(item)" />
-          </td>
-        </tr>
-      </template>
-    </m-table>
-  </div>
+  <m-table :columns="columns" :load="loading" :head="false" :data="incidences">
+    <template v-slot:data="{ rows }">
+      <tr v-for="item in rows" :key="item.code">
+        <td>{{ item.code }}</td>
+        <td>{{ item.user.name }}</td>
+        <td>
+          {{ item.title }}
+        </td>
+        <td>
+          <span class="badge badge-primary">
+            {{ types[item.type] }}
+          </span>
+        </td>
+        <td>
+          {{ item.created_at | datetim }}
+        </td>
+        <td>
+          <m-action @action="edit(item)" />
+          <m-action icon="print" color="success" @action="print(item)" />
+        </td>
+      </tr>
+    </template>
+  </m-table>
 </template>
 <script>
 import api from "../../Api/incidence";

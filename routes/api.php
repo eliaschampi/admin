@@ -54,6 +54,7 @@ Route::group(["middleware" => ["withkey"]], function () {
     Route::get("/attention_dw/{code}", [AttentionController::class, "downloadAttached"]);
     //cedp for aeduca user
     Route::get("/cedp/incidence/{dni}/{show_all?}", [IncidenceController::class, "fetchByEntity"]);
+    Route::get("/cedp/attention/{dni}/{show_all?}", [AttentionController::class, "fetchByEntity"]);
 });
 
 //group
