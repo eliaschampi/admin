@@ -71,7 +71,7 @@
               </td>
               <td>
                 <m-action
-                  @action="handlePrintAction(item)"
+                  @action="print(item.code)"
                   icon="print"
                   color="success"
                 />
@@ -163,9 +163,9 @@ export default {
       this.inspections = data.values;
       this.loading = false;
     },
-    async handlePrintAction(item) {
-      const { data } = await api.print(item.code);
-      this.$downl(data, `Informe Nro ${item.code}`);
+    async print(code) {
+      const { data } = await api.print(code);
+      this.$downl(data, `Informe Nro ${code}`);
     },
     async fetchTypes() {
       const { data } = await api.fetchStates();

@@ -172,7 +172,7 @@
             }"
             class="nav-link"
           >
-            Convivencia
+            CEDP
           </router-link>
         </li>
       </menu-side>

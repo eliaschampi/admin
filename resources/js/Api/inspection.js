@@ -3,8 +3,12 @@ import request from "@/Http";
 export default {
   fetchByType: (type) => request.get(`/inspection/${type}`),
 
-  fetchByEntity: (entity_identifier) =>
-    request.get(`/inspection/entity/${entity_identifier}`),
+  fetchByEntity: (dni, type) =>
+    request.get(`/cedp/inspection/${dni}/${type}`, {
+      headers: {
+        "iam-trust": "E_75keseps77_K"
+      }
+    }),
 
   print: (code) =>
     request.get(`/inspection_print/${code}`, {

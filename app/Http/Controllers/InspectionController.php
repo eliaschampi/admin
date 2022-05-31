@@ -31,10 +31,10 @@ class InspectionController extends Controller
         ]);
     }
 
-    public function fetchByEntity(string $entity_identifier)
+    public function fetchByEntity(string $dni, string $type)
     {
         return response()->json([
-            "values" => $this->instance->fetchByEntity($type),
+            "values" => $this->instance->fetchByEntity($dni, $type),
         ]);
     }
 

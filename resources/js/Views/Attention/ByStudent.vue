@@ -27,6 +27,7 @@
               <m-action
                 icon="print"
                 color="success"
+                tool="Exportar"
                 @action="print(item.code)"
               />
             </template>
@@ -57,9 +58,9 @@ export default {
     };
   },
   methods: {
-    async fetchData(val = this.$route.params.dni) {
+    async fetchData() {
       this.loading = true;
-      const { data } = await api.fetchByEntity(val);
+      const { data } = await api.fetchByEntity(this.$route.params.dni);
       this.attentions = data.values;
       this.loading = false;
     },

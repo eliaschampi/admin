@@ -20,7 +20,12 @@
             v-show="item.user_code === u_code"
             @action="edit(item, 'incidence')"
           />
-          <m-action icon="print" color="success" @action="print(item.code)" />
+          <m-action
+            icon="print"
+            color="success"
+            tool="Exportar"
+            @action="print(item.code)"
+          />
         </td>
       </tr>
     </template>
@@ -49,9 +54,9 @@ export default {
     };
   },
   methods: {
-    async fetchData(val = this.$route.params.dni) {
+    async fetchData() {
       this.loading = true;
-      const { data } = await api.fetchByEntity(val);
+      const { data } = await api.fetchByEntity(this.$route.params.dni);
       this.incidences = data.values;
       this.loading = false;
     },

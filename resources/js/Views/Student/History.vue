@@ -23,6 +23,37 @@
           tag="label"
           class="selectgroup-item"
           :to="{
+            name: 'inspection_student',
+            params: { type: 'p', dni: $route.params.dni }
+          }"
+        >
+          <input
+            :checked="$route.params.type === 'p'"
+            type="radio"
+            name="mode"
+            value="p"
+            class="selectgroup-input"
+          />
+          <span class="selectgroup-button">Permisos</span>
+        </router-link>
+        <router-link
+          tag="label"
+          class="selectgroup-item"
+          :to="{ name: 'justify_student', params: { dni: $route.params.dni } }"
+        >
+          <input
+            :checked="$route.name === 'justify_student'"
+            type="radio"
+            name="mode"
+            value="j"
+            class="selectgroup-input"
+          />
+          <span class="selectgroup-button">Justificaciones</span>
+        </router-link>
+        <router-link
+          tag="label"
+          class="selectgroup-item"
+          :to="{
             name: 'incidence_student',
             params: { dni: $route.params.dni }
           }"
@@ -58,42 +89,11 @@
           class="selectgroup-item"
           :to="{
             name: 'inspection_student',
-            params: { dni: $route.params.dni }
+            params: { type: 'r', dni: $route.params.dni }
           }"
         >
           <input
-            :checked="$route.name === 'inspection_student'"
-            type="radio"
-            name="mode"
-            value="p"
-            class="selectgroup-input"
-          />
-          <span class="selectgroup-button">Permisos</span>
-        </router-link>
-        <router-link
-          tag="label"
-          class="selectgroup-item"
-          :to="{ name: 'justify_student', params: { dni: $route.params.dni } }"
-        >
-          <input
-            :checked="$route.name === 'justify_student'"
-            type="radio"
-            name="mode"
-            value="j"
-            class="selectgroup-input"
-          />
-          <span class="selectgroup-button">Justificaciones</span>
-        </router-link>
-        <router-link
-          tag="label"
-          class="selectgroup-item"
-          :to="{
-            name: 'inspection_student',
-            params: { dni: $route.params.dni }
-          }"
-        >
-          <input
-            :checked="$route.name === 'inspection_student'"
+            :checked="$route.params.type === 'r'"
             type="radio"
             name="mode"
             value="r"

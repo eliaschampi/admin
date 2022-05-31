@@ -25,10 +25,14 @@ class InspectionRepository extends BaseRepository
             ->get();
     }
 
-    public function fetchByEntity(string $entity_identifier)
+    public function fetchByEntity(string $entity_identifier, string $inspection_type)
     {
-        return Inspection::where("entity_identifier", $entity_identifier)
-            ->whereYear("created_at", $this->current_year)
+        return Inspection::with(["user" => function ($query) {
+            $query->select("code", "name");
+        }])
+            ->where("entity_identifier", $entity_identifier)
+            ->where("inspection_type", $inspection_type)
+            ->whereYear("created_at", date("Y"))
             ->orderBy("created_at", "DESC")
             ->get();
     }

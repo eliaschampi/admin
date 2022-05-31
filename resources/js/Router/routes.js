@@ -71,6 +71,7 @@ import AttentionStudent from "../Views/Attention/ByStudent";
 // inspection
 import Inspection from "../Views/Inspection/Index";
 import NewInspection from "../Views/Inspection/Create";
+import InspectionStudent from "../Views/Inspection/ByStudent";
 
 // attendance student
 import AttendanceSection from "../Views/Attendance/StudentAttendance";
@@ -269,6 +270,15 @@ const routes = [
                 name: "attention_student",
                 meta: {
                   title: "Atenciones del estudiante",
+                  iratyc: true
+                }
+              },
+              {
+                path: ":type/:dni?/cedp",
+                component: InspectionStudent,
+                name: "inspection_student",
+                meta: {
+                  title: "Registros normativos",
                   iratyc: true
                 }
               }

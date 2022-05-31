@@ -40,11 +40,11 @@ Route::group(["prefix" => "auth"], function () {
 });
 
 Route::group(["middleware" => ["withkey"]], function () {
+    //cedp p1
     Route::get("/attendance/{section_code}/{date}/{priority}", [AttendanceController::class, "fetchBySection"]);
     Route::get("/attendance/{entity_identifier}/{from}/{to}/{priority}", [AttendanceController::class, "fetchByEntity"]);
     Route::get("/payments/{register_code}", [IncomeDetailController::class, "fetchStudentPayments"]);
     Route::get("/register_all/{dni}", [RegisterController::class, "fetchByStudent"]);
-    Route::get("/inspection/entity/{entity_identifier}", [InspectionController::class], "fetchByEntity");
 
     //dw cedp
     Route::get("/inspection_print/{code}", [InspectionController::class, "print"]);
@@ -55,6 +55,7 @@ Route::group(["middleware" => ["withkey"]], function () {
     //cedp for aeduca user
     Route::get("/cedp/incidence/{dni}/{show_all?}", [IncidenceController::class, "fetchByEntity"]);
     Route::get("/cedp/attention/{dni}/{show_all?}", [AttentionController::class, "fetchByEntity"]);
+    Route::get("/cedp/inspection/{dni}/{type}", [InspectionController::class, "fetchByEntity"]);
 });
 
 //group
