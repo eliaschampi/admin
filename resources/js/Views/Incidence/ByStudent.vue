@@ -16,8 +16,11 @@
           {{ item.created_at | datetim }}
         </td>
         <td>
-          <m-action @action="edit(item)" />
-          <m-action icon="print" color="success" @action="print(item)" />
+          <m-action
+            v-show="item.user_code === u_code"
+            @action="edit(item, 'incidence')"
+          />
+          <m-action icon="print" color="success" @action="print(item.code)" />
         </td>
       </tr>
     </template>
@@ -26,13 +29,14 @@
 <script>
 import api from "../../Api/incidence";
 import in_types from "../../Data/in_types.json";
-import cache from "../../Helpers/cache";
+import { fetchData } from "../../Mixins";
+import { inat } from "../../Mixins/utils";
 export default {
   name: "incidence-student",
+  mixins: [inat, fetchData],
   data() {
     return {
       incidences: [],
-      loading: false,
       types: in_types,
       columns: [
         "Nro",
@@ -44,14 +48,6 @@ export default {
       ]
     };
   },
-  mounted() {
-    this.fetchData();
-  },
-  watch: {
-    "$route.params.dni"(val) {
-      this.fetchData(val);
-    }
-  },
   methods: {
     async fetchData(val = this.$route.params.dni) {
       this.loading = true;
@@ -59,14 +55,9 @@ export default {
       this.incidences = data.values;
       this.loading = false;
     },
-    edit(item) {
-      cache.setItem("incidence", item);
-      this.$router.push({ name: "new_incidence", params: { code: item.code } });
-    },
-    print(item) {
-      api.print(item.code).then(({ data }) => {
-        this.$downl(data, `Incidencia Nro ${item.code}`);
-      });
+    async print(code) {
+      const { data } = await api.print(code);
+      this.$downl(data, `Incidencia Nro ${code}`);
     }
   }
 };

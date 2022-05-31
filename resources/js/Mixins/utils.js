@@ -1,5 +1,6 @@
 import { iso } from "../Helpers/date";
 import shApi from "../Api/schedule";
+import cache from "../Helpers/cache";
 /**
  * @name incomeMod
  */
@@ -60,3 +61,22 @@ export const deleteSH = {
     }
   }
 };
+
+export const inat = {
+  data() {
+    return {
+      loading: false
+    }
+  },
+  computed: {
+    u_code() {
+      return this.$store.state.user.user.code;
+    }
+  },
+  methods: {
+    edit(item, model) {
+      cache.setItem(model, item);
+      this.$router.push({ name: `new_${model}`, params: { code: item.code } });
+    }
+  }
+}

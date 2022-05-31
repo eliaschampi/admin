@@ -17,6 +17,7 @@
         :columns="columns"
         :data="filtered"
         :fetch="fetchData"
+        :load="loading"
         v-model="buscado"
       >
         <div class="d-flex">
@@ -51,7 +52,7 @@
             </td>
             <td>
               <template v-if="item.user_code === u_code">
-                <m-action @action="edit(item)" />
+                <m-action @action="edit(item, 'incidence')" />
                 <m-action
                   @action="delI(item)"
                   icon="trash"
@@ -60,7 +61,7 @@
                 />
               </template>
               <m-action
-                @action="print(item)"
+                @action="print(item.code)"
                 icon="print"
                 color="success"
                 tool="Imprimir"
@@ -83,11 +84,12 @@ import months from "../../Data/months.json";
 import api from "../../Api/incidence";
 import in_types from "../../Data/in_types.json";
 import Month from "../../Components/Views/Month.vue";
-import cache from "../../Helpers/cache";
+import { inat } from "../../Mixins/utils";
 export default {
   components: {
     Month
   },
+  mixins: [inat],
   data() {
     return {
       months,
@@ -107,18 +109,12 @@ export default {
       pagination: {}
     };
   },
-  mounted() {
-    this.fetchData();
-  },
   computed: {
     filtered() {
       const tester = new RegExp(this.buscado, "i");
       return this.incidences.filter((item) => {
         return tester.test(item.title) && item.is_siseve === this.show_siseve;
       });
-    },
-    u_code() {
-      return this.$store.state.user.user.code;
     }
   },
   methods: {
@@ -153,24 +149,18 @@ export default {
       delete all.data;
       this.pagination = all;
     },
-    print(item) {
-      api.print(item.code).then(({ data }) => {
-        this.$downl(data, `Incidencia Nro ${item.code}`);
-      });
-    },
-    edit(item) {
-      cache.setItem("incidence", item);
-      this.$router.push({ name: "new_incidence", params: { code: item.code } });
+    async print(code) {
+      const { data } = await api.print(code);
+      this.$downl(data, `Incidencia Nro ${code}`);
     },
     delI(item) {
       this.$snack.show({
         text: "¿Está seguro de eliminar la incidencia?",
         button: "CONFIRMAR",
-        action: () => {
-          api.del(item.code).then(() => {
-            this.$snack.success("Correctamente Eliminado");
-            this.incidences.splice(this.incidences.indexOf(item), 1); //eslint-disable-line
-          });
+        action: async () => {
+          const { data } = await api.del(item.code);
+          this.$snack.success(data.message);
+          this.incidences.splice(this.incidences.indexOf(item), 1);
         }
       });
     }
