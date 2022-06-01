@@ -66,9 +66,9 @@
 import api from "@/Api/attendance.js";
 import { edit, priority } from "@/Mixins/attendance.js";
 import Datepick from "@/Components/Views/Datepick.vue";
-import PersonLink from "./PersonLink.vue";
-import Justification from "./Justification";
-import AttendanceRow from "./AttendanceRow.vue";
+import PersonLink from "./components/PersonLink.vue";
+import Justification from "./components/Justification";
+import AttendanceRow from "./components/AttendanceRow.vue";
 export default {
   mixins: [edit, priority],
   components: { Justification, PersonLink, AttendanceRow, Datepick },

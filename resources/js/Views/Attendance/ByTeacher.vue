@@ -60,8 +60,8 @@ import { mapState, mapGetters } from "vuex";
 import api from "@/Api/attendance";
 import Range from "@/Components/Ui/Range";
 import { edit } from "@/Mixins/attendance";
-import AttendanceRow from "./AttendanceRow.vue";
-import Justification from "./Justification.vue";
+import AttendanceRow from "./components/AttendanceRow.vue";
+import Justification from "./components/Justification.vue";
 import { fetchOnWatch } from "../../Mixins";
 import { diffToDate, dparseFromFormat } from "../../Helpers/day";
 export default {

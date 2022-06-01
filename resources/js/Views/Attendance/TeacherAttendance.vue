@@ -53,12 +53,12 @@
   </section>
 </template>
 <script>
-import { edit } from "@/Mixins/attendance";
-import Justification from "./Justification.vue";
-import AttendanceRow from "./AttendanceRow.vue";
-import PersonLink from "./PersonLink.vue";
-import Datepick from "@/Components/Views/Datepick";
 import api from "@/Api/attendance";
+import { edit } from "@/Mixins/attendance";
+import Datepick from "@/Components/Views/Datepick";
+import Justification from "./components/Justification.vue";
+import AttendanceRow from "./components/AttendanceRow.vue";
+import PersonLink from "./components/PersonLink.vue";
 export default {
   mixins: [edit],
   components: {

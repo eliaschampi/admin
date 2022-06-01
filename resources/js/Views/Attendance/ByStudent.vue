@@ -1,7 +1,6 @@
 <template>
   <div>
     <m-table :columns="columns" :data="attendances" :fetch="fetchData">
-
       <div>
         <range @fetch="fetchData">
           <m-button
@@ -14,7 +13,7 @@
           </m-button>
         </range>
       </div>
-      
+
       <template slot="data">
         <attendance-row
           :key="item.code"
@@ -59,8 +58,8 @@ import { mapGetters } from "vuex";
 import api from "@/Api/attendance";
 import Range from "@/Components/Ui/Range";
 import { edit, priority } from "@/Mixins/attendance";
-import AttendanceRow from "./AttendanceRow.vue";
-import Justification from "./Justification.vue";
+import AttendanceRow from "./components/AttendanceRow.vue";
+import Justification from "./components/Justification.vue";
 import { fetchOnWatch } from "../../Mixins";
 export default {
   mixins: [edit, fetchOnWatch, priority],

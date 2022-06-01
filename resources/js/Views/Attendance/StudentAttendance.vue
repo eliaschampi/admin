@@ -61,13 +61,13 @@
   </card>
 </template>
 <script>
+import api from "@/Api/attendance";
 import { edit, priority } from "@/Mixins/attendance";
 import mySection from "@/Components/Views/mySection";
-import Justification from "./Justification.vue";
-import AttendanceRow from "./AttendanceRow.vue";
 import Datepick from "@/Components/Views/Datepick";
-import api from "@/Api/attendance";
-import PersonLink from "./PersonLink.vue";
+import Justification from "./components/Justification.vue";
+import AttendanceRow from "./components/AttendanceRow.vue";
+import PersonLink from "./components/PersonLink.vue";
 export default {
   mixins: [edit, priority],
   components: {

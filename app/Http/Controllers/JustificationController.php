@@ -17,6 +17,12 @@ class JustificationController extends Controller
         $this->instance = $instance;
     }
 
+    public function fetchByEntity(string $dni)
+    {
+        return response()->json([
+            "values" => $this->instance->fetchByEntity($dni),
+        ]);
+    }
 
     public function downloadAttached(int $code)
     {
@@ -53,7 +59,6 @@ class JustificationController extends Controller
         }
         return response()->json(false, 500);
     }
-
 
     public function toggle(int $code, string $aprove)
     {

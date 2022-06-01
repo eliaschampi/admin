@@ -66,11 +66,11 @@
   </section>
 </template>
 <script>
+import api from "@/Api/attendance";
 import Blobs from "@/Components/Ui/Loader/Blobs";
 import { EventBus } from "@/Helpers/bus";
 import VueQrReader from "vue-qr-reader/dist/lib/vue-qr-reader.umd.js";
 import { errorQr } from "@/Mixins/attendance";
-import api from "@/Api/attendance";
 import { dformat } from "@/Helpers/day";
 export default {
   mixins: [errorQr],

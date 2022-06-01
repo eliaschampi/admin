@@ -76,6 +76,7 @@ import InspectionStudent from "../Views/Inspection/ByStudent";
 // attendance student
 import AttendanceSection from "../Views/Attendance/StudentAttendance";
 import AttendanceStudent from "../Views/Attendance/ByStudent";
+import JustificationStudent from "../Views/Attendance/Justification";
 import Absence from "../Views/Attendance/Absence";
 import AttendanceManual from "../Views/Attendance/Register";
 import Automatically from "../Views/Attendance/Automatically";
@@ -279,6 +280,15 @@ const routes = [
                 name: "inspection_student",
                 meta: {
                   title: "Registros normativos",
+                  iratyc: true
+                }
+              },
+              {
+                path: ":dni?/justificaciones",
+                component: JustificationStudent,
+                name: "justify_student",
+                meta: {
+                  title: "Justificaciones",
                   iratyc: true
                 }
               }

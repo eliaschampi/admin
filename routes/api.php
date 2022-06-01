@@ -222,6 +222,7 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::put("/attendance/{code}", [AttendanceController::class, "update"]);
 
     //justification
+    Route::get("/cedp/justification/{dni}", [JustificationController::class, "fetchByEntity"]);
     Route::get("/justification/{code}", [JustificationController::class, "downloadAttached"]);
     Route::post("/justification", [JustificationController::class, "store"]);
     Route::put("/justification/{code}/{aprove}", [JustificationController::class, "toggle"]);

@@ -80,8 +80,8 @@
 <script>
 import api from "../../Api/attendance";
 import regApi from "../../Api/register";
-import mySection from "@/Components/Views/mySection";
 import { priority } from "../../Mixins/attendance";
+import mySection from "@/Components/Views/mySection";
 import _ from "lodash";
 export default {
   components: { mySection },
