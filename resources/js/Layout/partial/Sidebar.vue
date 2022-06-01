@@ -271,6 +271,23 @@
               Por sección
             </router-link>
           </li>
+
+          <li class="nav-item" v-can="'PN'">
+            <router-link
+              :to="{
+                name: 'attendance_manual',
+                params: { degree_code: dc }
+              }"
+              class="nav-link"
+            >
+              Registrar Manualmente
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link :to="{ name: 'absence' }" class="nav-link">
+              Tardanzas e Inasistencias
+            </router-link>
+          </li>
           <li class="nav-item">
             <router-link
               :to="{
@@ -289,23 +306,7 @@
               }"
               class="nav-link"
             >
-              Por Docente
-            </router-link>
-          </li>
-          <li class="nav-item" v-can="'PN'">
-            <router-link
-              :to="{
-                name: 'attendance_manual',
-                params: { degree_code: dc }
-              }"
-              class="nav-link"
-            >
-              Registrar Manualmente
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'absence' }" class="nav-link">
-              Tardanzas e Inasistencias
+              Reporte por Docente
             </router-link>
           </li>
         </menu-side>
