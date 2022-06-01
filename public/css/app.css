@@ -10664,6 +10664,14 @@ code {
   border-radius: 4px;
 }
 
+.text-dotted {
+  display: inline-block;
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
 /* Footer */
 .footer {
   background: #f1f8fe;

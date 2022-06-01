@@ -1,34 +1,47 @@
 <template>
-  <m-table :columns="columns" :load="loading" :head="false" :data="attentions">
-    <template v-slot:data="{ rows }">
-      <tr v-for="item in rows" :key="item.code">
-        <td>{{ item.code }}</td>
-        <td>{{ item.user.name }}</td>
-        <td>
-          {{ item.title }}
-        </td>
-        <td>
-          <span class="badge badge-primary">
-            {{ item.entity_identifier === $route.params.dni ? "No" : "Si" }}
-          </span>
-        </td>
-        <td>
-          {{ item.created_at | datetim }}
-        </td>
-        <td>
-          <template v-if="item.user_code === u_code">
-            <m-action @action="edit(item, 'attention')" />
-            <m-action
-              icon="print"
-              color="success"
-              tool="Exportar"
-              @action="print(item.code)"
-            />
-          </template>
-        </td>
-      </tr>
-    </template>
-  </m-table>
+  <div>
+    <alert class="mb-4">
+      Aquí se muestran las atenciones del <b>estudiante y sus apoderados</b>
+      <br />
+      Los reportes ahora son confidenciales; es decir su contenido solo estará
+      disponible para el usuario que ha creado.
+    </alert>
+    <m-table
+      :columns="columns"
+      :load="loading"
+      :head="false"
+      :data="attentions"
+    >
+      <template v-slot:data="{ rows }">
+        <tr v-for="item in rows" :key="item.code">
+          <td>{{ item.code }}</td>
+          <td>{{ item.user.name }}</td>
+          <td>
+            {{ item.title }}
+          </td>
+          <td>
+            <span class="badge badge-primary">
+              {{ item.entity_identifier === $route.params.dni ? "No" : "Si" }}
+            </span>
+          </td>
+          <td>
+            {{ item.created_at | datetim }}
+          </td>
+          <td>
+            <template v-if="item.user_code === u_code">
+              <m-action @action="edit(item, 'attention')" />
+              <m-action
+                icon="print"
+                color="success"
+                tool="Exportar"
+                @action="print(item.code)"
+              />
+            </template>
+          </td>
+        </tr>
+      </template>
+    </m-table>
+  </div>
 </template>
 <script>
 import api from "../../Api/attention";

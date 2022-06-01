@@ -1,31 +1,43 @@
 <template>
-  <m-table :columns="columns" :load="loading" :head="false" :data="inspections">
-    <template v-slot:data="{ rows }">
-      <tr v-for="item in rows" :key="item.code">
-        <td>{{ item.code }}</td>
-        <td>{{ item.user.name }}</td>
-        <td>
-          <span :class="`badge badge-${states[item.state].color}`">{{
-            states[item.state].label
-          }}</span>
-        </td>
-        <td>
-          {{ item.created_at | datetim }}
-        </td>
-        <td>
-          <b>{{ item.additional }}</b>
-        </td>
-        <td>
-          <m-action
-            icon="print"
-            color="success"
-            tool="Exportar"
-            @action="print(item.code)"
-          />
-        </td>
-      </tr>
-    </template>
-  </m-table>
+  <div>
+    <alert class="mb-4" v-show="$route.params.type === 'p'">
+      Los permisos y las justificaciónes son enviados desde la plataforma por el
+      usuario, aunque también pueden ser generados por los administradores.
+      Revisa y gestiona los permisos aquí
+    </alert>
+    <m-table
+      :columns="columns"
+      :load="loading"
+      :head="false"
+      :data="inspections"
+    >
+      <template v-slot:data="{ rows }">
+        <tr v-for="item in rows" :key="item.code">
+          <td>{{ item.code }}</td>
+          <td>{{ item.user.name }}</td>
+          <td>
+            <span :class="`badge badge-${states[item.state].color}`">{{
+              states[item.state].label
+            }}</span>
+          </td>
+          <td>
+            {{ item.created_at | datetim }}
+          </td>
+          <td>
+            <b>{{ item.additional }}</b>
+          </td>
+          <td>
+            <m-action
+              icon="print"
+              color="success"
+              tool="Exportar"
+              @action="print(item.code)"
+            />
+          </td>
+        </tr>
+      </template>
+    </m-table>
+  </div>
 </template>
 <script>
 import api from "../../Api/inspection";
