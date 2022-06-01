@@ -164,7 +164,7 @@
             Pagos y Mensualidades
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-can="'PN'">
           <router-link
             :to="{
               name: 'attendance_student',

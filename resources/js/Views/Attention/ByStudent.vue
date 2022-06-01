@@ -3,7 +3,7 @@
     <alert class="mb-4">
       Aquí se muestran las atenciones del <b>estudiante y sus apoderados</b>
       <br />
-      Los reportes ahora son confidenciales; es decir su contenido solo estará
+      Los reportes ahora son confidenciales; es decir, su contenido solo estará
       disponible para el usuario que ha creado.
     </alert>
     <m-table
@@ -57,7 +57,7 @@ export default {
         "Nro",
         "Usuario",
         "Atención",
-        "Es del apoderado",
+        "¿Del apoderado?",
         "Fecha de registro",
         "#"
       ]

@@ -62,10 +62,10 @@ export default {
       original_state: null,
       columns: [
         "Nro",
-        "Enviado en:",
-        "Dia de asis.",
+        "Enviado el:",
+        "Para fecha:",
         "Justificación",
-        "Estado de asis.",
+        "Estado de asis:",
         "#"
       ]
     };

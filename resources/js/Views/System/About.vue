@@ -19,7 +19,7 @@
       </p>
       <p>
         <span class="font-weight-bold">Fecha de actualización:</span>
-        26 de Mayo del 2022 a las 7:50 p.m.
+        01 de Junio del 2022 a las 12:00 p.m.
       </p>
       <p>
         <span class="font-weight-bold">Desarrollador:</span>

@@ -253,7 +253,8 @@ const routes = [
                 name: "attendance_student",
                 meta: {
                   title: "Asistencia del estudiante",
-                  iratyc: true
+                  iratyc: true,
+                  roles: "APN"
                 }
               },
               {
@@ -262,7 +263,8 @@ const routes = [
                 name: "incidence_student",
                 meta: {
                   title: "Incidencias del estudiante",
-                  iratyc: true
+                  iratyc: true,
+                  roles: "APN"
                 }
               },
               {
@@ -271,7 +273,8 @@ const routes = [
                 name: "attention_student",
                 meta: {
                   title: "Atenciones del estudiante",
-                  iratyc: true
+                  iratyc: true,
+                  roles: "APN"
                 }
               },
               {
@@ -280,7 +283,8 @@ const routes = [
                 name: "inspection_student",
                 meta: {
                   title: "Registros normativos",
-                  iratyc: true
+                  iratyc: true,
+                  roles: "APN"
                 }
               },
               {
@@ -289,7 +293,8 @@ const routes = [
                 name: "justify_student",
                 meta: {
                   title: "Justificaciones",
-                  iratyc: true
+                  iratyc: true,
+                  roles: "APN"
                 }
               }
             ]
