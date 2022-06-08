@@ -43,6 +43,7 @@ class RegisterHelper
         ];
 
         $pdf = \PDF::loadView("pdf.consv", compact("data"));
+        $pdf->setPaper("A4", "portrait");
         return $pdf->download("consv.pdf");
     }
     

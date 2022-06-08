@@ -79,6 +79,7 @@ class SystemController extends Controller
 
         }
         $pdf = \PDF::loadView("pdf.card", compact("persons", "title"));
+        $pdf->setPaper("A4", "portrait");
         return $pdf->download("card.pdf");
     }
 }

@@ -66,6 +66,7 @@ class ExpenseController extends Controller
     {
         $expense = $this->instance->fetch($code);
         $pdf = \PDF::loadView("pdf.expense", compact("expense"));
+        $pdf->setPaper("A4", "portrait");
         return $pdf->download("adj.pdf"); 
     }
 

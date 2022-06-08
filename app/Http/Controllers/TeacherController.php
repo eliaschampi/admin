@@ -87,6 +87,7 @@ class TeacherController extends Controller
         $teacher = $this->instance->fetch($dni);
         $spe = (new ConfigRepository())->fetchByTagsPlucked(["doc", "cs.d", "cy.m"]);
         $pdf = \PDF::loadView("pdf.teacher", compact("teacher", "spe"));
+        $pdf->setPaper("A4", "portrait");
         return $pdf->download("teacher.pdf");
     }
 }

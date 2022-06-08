@@ -1,13 +1,9 @@
-@page {
-    size  : A4;
-    margin: 5mm 5mm 5mm 5mm;
-}
 
 body {
     font-family   : "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size     : 21px;
     margin        : 0;
-    padding-top   : 5mm;
+    padding-top: 5mm;
     padding-bottom: 5mm;
 }
 
@@ -18,11 +14,11 @@ body {
 .carnet {
     overflow         : hidden;
     margin-left      : 5mm;
-    margin-bottom    : 10mm;
+    margin-bottom    : 5mm;
     width            : 8.7cm;
     height           : 5.6cm;
     display          : inline-block;
-    page-break-inside: auto;
+    page-break-inside: avoid;
 }
 
 .carnet>img {

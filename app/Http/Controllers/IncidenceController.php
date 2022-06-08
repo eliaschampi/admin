@@ -119,6 +119,7 @@ class IncidenceController extends Controller
     function print($code) {
         $incidence = $this->instance->fetchByCode($code);
         $pdf = \PDF::loadView("pdf.incidence", compact("incidence"));
+        $pdf->setPaper("A4", "portrait");
         return $pdf->download("adj.pdf");
     }
 

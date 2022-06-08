@@ -116,6 +116,7 @@ class InspectionController extends Controller
         $state = config("main.inspection.$inspection->state");
 
         $pdf = \PDF::loadView("pdf.inspection", compact("inspection", "itype", "person", "state"));
+        $pdf->setPaper("A4", "portrait");
         return $pdf->download("adj.pdf");
     }
 }

@@ -120,6 +120,7 @@ class AttentionController extends Controller
     function print($code) {
         $attention = $this->instance->fetchByCode($code);
         $pdf = \PDF::loadView("pdf.attention", compact("attention"));
+        $pdf->setPaper("A4", "portrait");
         return $pdf->download("adj.pdf");
     }
 }

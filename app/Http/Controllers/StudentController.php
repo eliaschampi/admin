@@ -67,6 +67,7 @@ class StudentController extends Controller
         (new Filesystem)->cleanDirectory($path);
 
         $pdf = \PDF::loadView('pdf.student', compact("student", "rt", "cycles", "status"));
+        $pdf->setPaper("A4", "portrait");
         $pdf->save($path . "FU - Estudiante.pdf");
 
         $profile = $student->person->profile;

@@ -100,6 +100,7 @@ class FamilyController extends Controller
         $family = $this->instance->fetchForPdf($family_dni);
         $rt = config("main.rt");
         $pdf = \PDF::loadView("pdf.family", compact("family", "rt"));
+        $pdf->setPaper("A4", "portrait");
         return $pdf->download("family.pdf");
     }
 }

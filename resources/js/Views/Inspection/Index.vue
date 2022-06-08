@@ -147,7 +147,7 @@ export default {
       const last_col_type = {
         p: "Fecha de permiso",
         r: "Obj. requizado",
-        l: "Nro cwel. activo"
+        l: "Nro cel. activo"
       };
       return [...this.columns, last_col_type[this.i_type], "Acciones"];
     },

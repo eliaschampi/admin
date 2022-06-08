@@ -64,6 +64,7 @@ class ProfileController extends Controller
     {
         $profile = $this->instance->fetchByDni($dni);
         $pdf = \PDF::loadView("pdf.aeduca", compact("profile"));
+        $pdf->setPaper("A4", "portrait");
         return $pdf->download("aeduca.pdf");
     }
 }
