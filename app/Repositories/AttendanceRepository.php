@@ -34,6 +34,7 @@ class AttendanceRepository extends BaseRepository
                 $query->select("dni", "name", "lastname", "phone");
             }])
             ->where("priority", 1)
+            ->where("branch_code", $this->branch_code)
             ->where("entity_type", "t")
             ->orderBy("entry_time", "DESC")->get();
     }
@@ -88,6 +89,7 @@ class AttendanceRepository extends BaseRepository
             "state" => $state,
             "entry_time" => $time,
             "priority" => $priority,
+            "branch_code" => $this->branch_code
         ]);
     }
 

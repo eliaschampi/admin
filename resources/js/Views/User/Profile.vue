@@ -11,7 +11,7 @@
     </div>
     <template slot="profile-foot">
       <m-button
-        v-can="'APYN'"
+        v-can="'APY'"
         color="btn-inverse-primary"
         @pum="reAuthenticate"
         size="btn-sm"

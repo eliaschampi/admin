@@ -24,6 +24,11 @@
     background-size: cover;
   }
 
+  &.bg4 {
+    background: url(/img/background/user-info4.jpg) center center no-repeat;
+    background-size: cover;
+  }
+
   .navbar-menu-wrapper {
     transition: width $action-transition-duration $action-transition-timing-function;
     -webkit-transition: width $action-transition-duration $action-transition-timing-function;

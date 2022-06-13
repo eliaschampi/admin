@@ -10,7 +10,7 @@
         :to="{ name: 'new_t' }"
         color="btn-inverse-accent btn-icon"
         icon="icon ion-md-add"
-        v-can="'S'"
+        v-can="'SN'"
       >
       </m-router>
     </template>

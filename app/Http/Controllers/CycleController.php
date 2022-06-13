@@ -37,7 +37,7 @@ class CycleController extends Controller
             } else if (in_array($cycle->type, ["GE5", "OP1", "OP2", "OR1", "OR2", "IN1", "IN2"])) {
                 $s = 5;
                 $x = 5;
-            } else if (is_array($cycle->type, ["ADM", "REF"])) {
+            } else if (in_array($cycle->type, ["ADM", "REF"])) {
                 $x = 1;
             }
 

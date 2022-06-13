@@ -203,7 +203,7 @@ const routes = [
         name: "new_t",
         component: CreateForm,
         meta: {
-          roles: "AS",
+          roles: "ANS",
           title: "Docente"
         }
       },
