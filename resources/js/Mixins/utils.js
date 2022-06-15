@@ -66,7 +66,7 @@ export const inat = {
   data() {
     return {
       loading: false
-    }
+    };
   },
   computed: {
     u_code() {
@@ -79,4 +79,4 @@ export const inat = {
       this.$router.push({ name: `new_${model}`, params: { code: item.code } });
     }
   }
-}
+};

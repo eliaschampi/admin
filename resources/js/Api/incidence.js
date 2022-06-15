@@ -4,11 +4,12 @@ export default {
   fetchByMonth: (month, page) =>
     request.get(`/incidence/${month}?page=${page}`),
 
-  fetchByEntity: (dni) => request.get(`/cedp/incidence/${dni}/true`, {
-    headers: {
-      "iam-trust": "E_75keseps77_K"
-    }
-  }),
+  fetchByEntity: (dni) =>
+    request.get(`/cedp/incidence/${dni}/true`, {
+      headers: {
+        "iam-trust": "E_75keseps77_K"
+      }
+    }),
 
   store: (data) =>
     request.post("/incidence", data, {
