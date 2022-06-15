@@ -6,46 +6,48 @@
     <hr />
     <table>
         <tr>
-            <td width="30%">
-                <strong> N° de informe: </strong>
+            <td width="30%" class="font-bold">
+                N° de informe:
             </td>
             <td width="70%">
                 <p>{{ $inspection->code }}</p>
             </td>
         </tr>
         <tr>
-            <td width="30%">
-                <strong>
-                    {{ $person }}:
-                </strong>
+            <td width="30%" class="font-bold">
+                {{ $person }}:
             </td>
             <td width="70%">
                 {{ $inspection->person->name . ' ' . $inspection->person->lastname }}
             </td>
         </tr>
+        <br />
         <tr>
-            <td width="30%">
-                <strong>
-                    Estado:
-                </strong>
+            <td width="30%" class="font-bold">
+                Estado:
             </td>
             <td width="70%">
                 {{ $state['label'] }}
             </td>
         </tr>
+        <br />
         <tr>
-            <td width="30%">
-                <strong>
-                    {{ $itype['additional'] }}:
-                </strong>
-            <td>
+            <td width="30%" class="font-bold">
+                {{ $itype['additional'] }}:
+            </td>
             <td width="70%">
-                {{ $inspection->additional }}
-            <td>
+                {{ ' ' . $inspection->additional }}
+                @if ($inspection->inspection_type === 'p')
+                    <i>(Permiso por {{ $inspection->extra }} dias)</i>
+                @endif
+            </td>
         </tr>
     </table>
+
     <div class="text-primary font-bold mt-5">DESCRIPCIÓN:</div>
+
     <hr />
+
     <p class="text-justify">{{ $inspection->description }}</p>
 
     <div class="text-right mt-5">
