@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Cache\CycleCache;
-use App\Exports\AttendanceBySectionExport;
-use App\Exports\AttendanceExport;
-use App\Repositories\AttendanceRepository;
-use App\Repositories\PersonRepository;
-use App\Repositories\RegisterRepository;
-use App\Repositories\TeacherRepository;
 use Carbon\Carbon;
+use App\Cache\CycleCache;
 use Illuminate\Http\Request;
+use App\Exports\AttendanceExport;
+use App\Repositories\PersonRepository;
+use App\Repositories\TeacherRepository;
+use App\Repositories\RegisterRepository;
+use App\Exports\AttendanceBySectionExport;
+use App\Repositories\AttendanceRepository;
 
 class AttendanceController extends Controller
 {

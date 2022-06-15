@@ -184,7 +184,8 @@ export default {
         entity_identifier: item.entity_identifier,
         update_person_phone: item.update_person_phone,
         state: item.state,
-        created_at: item.created_at
+        created_at: item.created_at,
+        extra: item.extra
       };
       this.$refs["updatemodal"].showModal(
         sel_type,

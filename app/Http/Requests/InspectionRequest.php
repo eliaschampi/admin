@@ -30,6 +30,7 @@ class InspectionRequest extends FormRequest
             "state" => "required",
             "description" => "required|max:450",
             "additional" => "required|max:150",
+            "extra" => ""
         ];
     }
 }

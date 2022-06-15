@@ -21,6 +21,7 @@ class Inspection extends Model
         "description",
         "state",
         "additional",
+        "extra"
     ];
 
     public function user()

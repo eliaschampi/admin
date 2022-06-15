@@ -36,11 +36,15 @@
         />
       </div>
 
+      <p class="mt-2" v-show="inspection.inspection_type === 'p'">
+        <b class="text-primary">Dias de permiso: </b>{{ inspection.extra }} dias
+      </p>
+
       <inspection-state
         :stateop="requiredDT.state_op"
         v-model="inspection.state"
       />
-      
+
       <m-switch
         class="mt-4"
         v-if="inspection.inspection_type === 'l'"

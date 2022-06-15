@@ -52,9 +52,10 @@ class InspectionController extends Controller
             $pdate = $request["additional"];
             $state = $request["state"];
             $etype = $request["entity_type"];
+            $pdays = $request["extra"];
             $dni = $request["entity_identifier"];
             $ai = new \App\Repositories\AttendanceRepository;
-            $ai->upsertBeforeInpect($pdate, $state, $etype, $dni);
+            $ai->upsertBeforeInpect($pdate, $pdays, $state, $etype, $dni);
         }
     }
 
@@ -77,6 +78,7 @@ class InspectionController extends Controller
             "entity_type" => "required",
             "entity_identifier" => "required",
             "update_person_phone" => "",
+            "extra" => ""
         ]);
         $this->beforeUpsert($validated);
         $this->instance->update($validated, $code);

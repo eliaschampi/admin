@@ -53,6 +53,7 @@ class InspectionRepository extends BaseRepository
         $inspection->entity_identifier = $data["entity_identifier"];
         $inspection->description = $data["description"];
         $inspection->additional = $data["additional"];
+        $inspection->extra = $data["extra"];
         return $inspection->save();
     }
 
@@ -62,6 +63,7 @@ class InspectionRepository extends BaseRepository
         $inspection->state = $data["state"];
         $inspection->description = $data["description"];
         $inspection->additional = $data["additional"];
+        $inspection->extra = $data["extra"];
         return $inspection->save();
     }
 

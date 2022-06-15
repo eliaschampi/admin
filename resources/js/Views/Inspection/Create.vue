@@ -26,13 +26,6 @@
               v-model="inspection.created_at"
             />
           </div>
-        </div>
-        <div class="col-md-6">
-          <person-type v-model="inspection.entity_type" />
-          <hr />
-          <div>Selecciona</div>
-          <input-finder :fullname="person_name" :who="inspection.entity_type" />
-
           <div class="form-group mt-3">
             <label for="myadditional">
               {{ dec_types[inspection.inspection_type].additional }}
@@ -47,15 +40,47 @@
               v-model="inspection.additional"
             />
           </div>
+        </div>
+        <div class="col-md-6">
+          <person-type v-model="inspection.entity_type" />
+          <hr />
+          <div>Selecciona</div>
+          <input-finder :fullname="person_name" :who="inspection.entity_type" />
 
           <inspection-state
             :stateop="dec_types[inspection.inspection_type].state_op"
             v-model="inspection.state"
           />
 
+          <div
+            class="form-group mt-4"
+            v-if="inspection.inspection_type === 'p'"
+          >
+            <label for="instype"
+              >¿Por cuantos dias se registra el permiso?
+              <br />
+              <small class="font-italic">
+                Si se aprueba el permiso la asistencia dentro de este rango será
+                registrada o modificada a [permiso]
+              </small>
+            </label>
+            <select
+              class="form-control"
+              id="instype"
+              required
+              v-model="inspection.extra"
+            >
+              <option value="1">1 día</option>
+              <option value="2">2 días</option>
+              <option value="3">3 días</option>
+              <option value="4">4 días</option>
+              <option value="5">Una semana</option>
+            </select>
+          </div>
+
           <m-switch
             class="mt-4"
-            v-if="inspection.inspection_type === 'l'"
+            v-else-if="inspection.inspection_type === 'l'"
             id="id_uodate_cel"
             text="Actualizar el numero de celular activo"
             v-model="inspection.update_person_phone"

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Attendance;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -89,7 +90,7 @@ class AttendanceRepository extends BaseRepository
             "state" => $state,
             "entry_time" => $time,
             "priority" => $priority,
-            "branch_code" => $this->branch_code
+            "branch_code" => $this->branch_code,
         ]);
     }
 
@@ -105,11 +106,12 @@ class AttendanceRepository extends BaseRepository
         return $attendance->save();
     }
 
-    public function upsertBeforeInpect(string $pdate, string $state, string $etype, string $dni): bool
+    public function upsertBeforeInpect(string $pdate, string $pdays, string $state, string $etype, string $dni)
     {
         $entryState = null;
         if ($etype === "family") {
-            return true;
+            return;
+            //$pdate, date("Y-m-d", strtotime("$pdate + $days days"))
         }
 
         if ($state === "a") {
@@ -117,36 +119,31 @@ class AttendanceRepository extends BaseRepository
         } else if ($state === "i") {
             $entryState = "falta";
         }
-        
-        $created_at = Carbon::createFromFormat("Y-m-d", $pdate);
 
-        if ($created_at->isWeekend()) {
-            return true;
-        }
+        $pd = CarbonPeriod::since($pdate)->until((is_numeric($pdays) ? intval($pdays) - 1 : 0) . " day");
 
-        $attendances = Attendance::where("entity_identifier", $dni)->whereDate("created_at", $created_at)->get();
-
-        $saved = false;
-        if (count($attendances) > 0) {
-
-            foreach ($attendances as $attendance) {
-                $attendance->state = $entryState;
-                $attendance->entry_time = null;
-                $saved = $attendance->save();
+        foreach ($pd as $date) {
+            if (!$date->isWeekend()) {
+                if (!Attendance::where("entity_identifier", $dni)->whereDate("created_at", $date)->exists()) {
+                    $attendance = new Attendance();
+                    $attendance->timestamps = false;
+                    $attendance->entity_identifier = $dni;
+                    $attendance->entity_type = substr($etype, 0, 1);
+                    $attendance->state = $entryState;
+                    $attendance->entry_time = null;
+                    $attendance->priority = 1;
+                    $attendance->branch_code = $this->branch_code;
+                    $attendance->created_at = $date;
+                    $attendance->save();
+                }
             }
-
-        } else {
-            $attendance = new Attendance();
-            $attendance->timestamps = false;
-            $attendance->entity_identifier = $dni;
-            $attendance->entity_type = substr($etype, 0, 1);
-            $attendance->state = $entryState;
-            $attendance->entry_time = null;
-            $attendance->priority = 1;
-            $attendance->created_at = $created_at;
-            $saved = $attendance->save();
         }
 
-        return $saved;
+        Attendance::where("entity_identifier", $dni)
+            ->whereBetween("created_at", [$pd->startDate, $pd->endDate])
+            ->update([
+                "state" => $entryState,
+                "entry_time" => null,
+            ]);
     }
 }
