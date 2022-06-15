@@ -60,9 +60,10 @@
                 </div>
               </td>
               <td>
-                <template v-if="item.type === 'p'">
+                <template v-if="item.inspection_type === 'p'">
                   <span v-show="item.additional">
                     {{ new Date(item.additional).toLocaleDateString() }}
+                    <i>(para {{ item.extra || "1" }} dias)</i>
                   </span>
                 </template>
                 <template v-else>

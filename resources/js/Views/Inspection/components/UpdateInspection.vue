@@ -37,7 +37,7 @@
       </div>
 
       <p class="mt-2" v-show="inspection.inspection_type === 'p'">
-        <b class="text-primary">Dias de permiso: </b>{{ inspection.extra }} dias
+        <b class="text-primary">Dias de permiso: </b>{{ inspection.extra || "1" }} días
       </p>
 
       <inspection-state
