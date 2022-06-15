@@ -7,6 +7,10 @@ use App\Models\Inspection;
 class InspectionRepository extends BaseRepository
 {
 
+    public function fetchByCode(int $code): Inspection | null {
+        return Inspection::find($code);
+    }
+
     public function fetchByType(string $type)
     {
         return Inspection::where("inspection_type", $type)
@@ -37,11 +41,6 @@ class InspectionRepository extends BaseRepository
             ->get();
     }
 
-    public function fetchByCode(int $code): Inspection | null
-    {
-        return Inspection::find($code);
-    }
-
     public function store(array $data): bool
     {
         $inspection = new Inspection();
@@ -67,9 +66,9 @@ class InspectionRepository extends BaseRepository
         return $inspection->save();
     }
 
-    public function destroy(int $code): bool
+    public function destroy(Inspection $inspection): bool
     {
-        return Inspection::find($code)->delete();
+        return $inspection->delete();
     }
 
 }

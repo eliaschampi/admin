@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\InspectionRequest;
 use App\Repositories\InspectionRepository;
+use Illuminate\Http\Request;
 
 class InspectionController extends Controller
 {
@@ -78,7 +78,7 @@ class InspectionController extends Controller
             "entity_type" => "required",
             "entity_identifier" => "required",
             "update_person_phone" => "",
-            "extra" => ""
+            "extra" => "",
         ]);
         $this->beforeUpsert($validated);
         $this->instance->update($validated, $code);
@@ -89,7 +89,13 @@ class InspectionController extends Controller
 
     public function destroy(int $code)
     {
-        $this->instance->destroy($code);
+
+        $inspection = $this->instance->fetchByCode($code);
+        if ($inspection->inspection_type === "p") {
+            $ai = new \App\Repositories\AttendanceRepository;
+            $ai->destroyInspecteds($inspection->entity_identifier, $inspection->additional, $inspection->extra);
+        }
+        $this->instance->destroy($inspection);
         return response()->json([
             "message" => "Correctamente Eliminado",
         ]);
