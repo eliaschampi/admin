@@ -87,6 +87,12 @@
               </td>
             </tr>
           </template>
+          <div slot="foot" class="d-flex justify-content-center">
+            <pagination
+              :data="pagination"
+              @pagination-change-page="fetchData"
+            />
+          </div>
         </m-table>
       </div>
       <p slot="foot" class="text-center text-primary">
@@ -107,6 +113,7 @@ export default {
   data() {
     return {
       inspections: [],
+      pagination: {},
       i_type: "p",
       buscado: "",
       columns: [
@@ -157,11 +164,14 @@ export default {
     }
   },
   methods: {
-    async fetchData() {
+    async fetchData(page = 1) {
       this.inspections = [];
       this.loading = true;
-      const { data } = await api.fetchByType(this.i_type);
-      this.inspections = data.values;
+      const { data } = await api.fetchByType(this.i_type, page);
+      const all = data.values;
+      this.inspections = [...all.data];
+      delete all.data;
+      this.pagination = all;
       this.loading = false;
     },
     async print(code) {
@@ -199,7 +209,7 @@ export default {
       const { data } = await api.update(inspection, inspection.code);
       this.$snack.success(data.message);
       $("#updateInspection").modal("hide");
-      this.fetchData();
+      this.fetchData(this.pagination.current_page);
     },
     handleDeleteClick(item) {
       this.$snack.show({

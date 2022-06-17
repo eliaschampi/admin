@@ -27,7 +27,7 @@ class InspectionRepository extends BaseRepository
             })
             ->whereYear("created_at", $this->current_year)
             ->orderBy("created_at", "DESC")
-            ->get();
+            ->paginate($this->paginateNumber());
     }
 
     public function fetchByEntity(string $entity_identifier, string $inspection_type)

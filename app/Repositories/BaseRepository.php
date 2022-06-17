@@ -18,7 +18,6 @@ class BaseRepository
             $this->user_code = $user->code;
             unset($user);
         }
-        // unser user variable
     }
 
     protected function herelike()
@@ -28,6 +27,6 @@ class BaseRepository
 
     protected function paginateNumber()
     {
-        return 30;
+        return 25;
     }
 }

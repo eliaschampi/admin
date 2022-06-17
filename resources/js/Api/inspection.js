@@ -1,7 +1,7 @@
 import request from "@/Http";
 
 export default {
-  fetchByType: (type) => request.get(`/inspection/${type}`),
+  fetchByType: (type, page) => request.get(`/inspection/${type}?page=${page}`),
 
   fetchByEntity: (dni, type) =>
     request.get(`/cedp/inspection/${dni}/${type}`, {
