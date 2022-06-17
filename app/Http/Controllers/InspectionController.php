@@ -52,8 +52,9 @@ class InspectionController extends Controller
             $pdate = $request["additional"];
             $state = $request["state"];
             $etype = $request["entity_type"];
-            $pdays = $request["extra"];
             $dni = $request["entity_identifier"];
+            $pdays = is_numeric($request["extra"]) ? intval($request["extra"]) - 1 : 0;
+            
             $ai = new \App\Repositories\AttendanceRepository;
             $ai->upsertBeforeInpect($pdate, $pdays, $state, $etype, $dni);
         }

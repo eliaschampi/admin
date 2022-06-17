@@ -106,12 +106,11 @@ class AttendanceRepository extends BaseRepository
         return $attendance->save();
     }
 
-    public function upsertBeforeInpect(string $pdate, string $pdays, string $state, string $etype, string $dni)
+    public function upsertBeforeInpect(string $pdate, int $pdays, string $state, string $etype, string $dni)
     {
         $entryState = null;
         if ($etype === "family") {
             return;
-            //$pdate, date("Y-m-d", strtotime("$pdate + $days days"))
         }
 
         if ($state === "a") {
@@ -120,7 +119,7 @@ class AttendanceRepository extends BaseRepository
             $entryState = "falta";
         }
 
-        $pd = CarbonPeriod::since($pdate)->until((is_numeric($pdays) ? intval($pdays) - 1 : 0) . " day");
+        $pd = CarbonPeriod::since($pdate)->until($pdays . " day");
 
         foreach ($pd as $date) {
             if (!$date->isWeekend()) {
