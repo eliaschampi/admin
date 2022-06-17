@@ -76,7 +76,7 @@
                   icon="print"
                   color="success"
                 />
-                <template v-if="item.user_code === u_code || !item.branch_code">
+                <template v-if="item.user_code === u_code || !item.user">
                   <m-action @action="handleEditClick(item)" />
                   <m-action
                     @action="handleDeleteClick(item)"

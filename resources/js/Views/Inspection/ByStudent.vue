@@ -14,7 +14,12 @@
       <template v-slot:data="{ rows }">
         <tr v-for="item in rows" :key="item.code">
           <td>{{ item.code }}</td>
-          <td>{{ item.user.name }}</td>
+          <td>
+            <template v-if="item.user">
+              {{ item.user.name }}
+            </template>
+            <i v-else>Enviado desde web app</i>
+          </td>
           <td>
             <span :class="`badge badge-${states[item.state].color}`">{{
               states[item.state].label

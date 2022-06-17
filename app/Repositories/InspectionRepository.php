@@ -7,7 +7,8 @@ use App\Models\Inspection;
 class InspectionRepository extends BaseRepository
 {
 
-    public function fetchByCode(int $code): Inspection | null {
+    public function fetchByCode(int $code): Inspection | null
+    {
         return Inspection::find($code);
     }
 
@@ -52,7 +53,9 @@ class InspectionRepository extends BaseRepository
         $inspection->entity_identifier = $data["entity_identifier"];
         $inspection->description = $data["description"];
         $inspection->additional = $data["additional"];
-        $inspection->extra = $data["extra"];
+        if ($data["inspection_type"] === "p") {
+            $inspection->extra = $data["extra"];
+        }
         return $inspection->save();
     }
 
@@ -62,7 +65,9 @@ class InspectionRepository extends BaseRepository
         $inspection->state = $data["state"];
         $inspection->description = $data["description"];
         $inspection->additional = $data["additional"];
-        $inspection->extra = $data["extra"];
+        if ($data["inspection_type"] === "p") {
+            $inspection->extra = $data["extra"];
+        }
         return $inspection->save();
     }
 
