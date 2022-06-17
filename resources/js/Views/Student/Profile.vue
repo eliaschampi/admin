@@ -24,7 +24,7 @@
         class="pointer font-weight-bold text-primary mt-2"
         @click="handleRoute('attendance_student')"
       >
-        Asistencia
+        consejeria Escolar y Desarrollo personal
       </div>
       <hr />
     </info>
