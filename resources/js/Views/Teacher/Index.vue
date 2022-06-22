@@ -119,14 +119,9 @@ export default {
       this.pagination = all;
     },
     cards() {
-      mainApi
-        .printCard({
-          mode: "teacher",
-          identifier: "teacher"
-        })
-        .then((r) => {
-          this.$downl(r.data, "Carnet de docentes", ".pdf");
-        });
+      mainApi.printCardT().then((r) => {
+        this.$downl(r.data, "Carnet de docentes", ".pdf");
+      });
     }
   }
 };

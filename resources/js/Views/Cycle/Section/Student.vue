@@ -111,15 +111,10 @@ export default {
       });
     },
     printCard() {
-      const identifier = this.$store.getters["section/code"];
-      mainapi
-        .printCard({
-          mode: "section",
-          identifier
-        })
-        .then((r) => {
-          this.$downl(r.data, `Carnet de ${identifier}`);
-        });
+      const section_code = this.$store.getters["section/code"];
+      mainapi.printCardS(section_code).then((r) => {
+        this.$downl(r.data, `Carnet de ${section_code}`);
+      });
     },
     handleInactivesChange(ischecked) {
       this.inactives = ischecked;

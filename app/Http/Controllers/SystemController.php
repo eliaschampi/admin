@@ -54,31 +54,35 @@ class SystemController extends Controller
         return response()->json("Tu mensaje se envió con éxito");
     }
 
-    public function printCard(string $mode, string $identifier, string $subtitle = "")
+    public function printCard(string $dni, string $section_code)
     {
-        $personInstance = new \App\Repositories\PersonRepository();
 
-        $persons = [];
-        $title = "Carrión 2022";
-
-        if ($mode === "student") {
-
-            $register = $personInstance->fetchSingle($identifier);
-            array_push($persons, $register->student->person);
-            $title = $subtitle;
-
-        } else if ($mode === "section") {
-
-            $persons = $personInstance->fetchForCard($identifier);
-            $title = substr($identifier, -2) . " de " . config("main.cycle." . substr($identifier, 4, 3));
-
-        } else if ($mode === "teacher") {
-
-            $persons = $personInstance->fetchForCardT();
-            $title = $mode;
-
+        $person = (new \App\Repositories\PersonRepository)->fetchSingle($dni);
+        $title = "Docente " . date("Y");
+        if ($section_code !== "teacher") {
+            $title = substr($section_code, -2) . " de " . config("main.cycle." . substr($section_code, 4, 3));
         }
-        $pdf = \PDF::loadView("pdf.card", compact("persons", "title"));
+        $pdf = \PDF::loadView("pdf.card", compact("person", "title"));
+        $customPaper = array(0, 0, 153, 244);
+        $pdf->setPaper($customPaper, "landscape");
+        return $pdf->download("card.pdf");
+    }
+
+    public function printCardS(string $section_code)
+    {
+        $persons = (new \App\Repositories\PersonRepository)->fetchForCard($section_code);
+        $title = substr($section_code, -2) . " de " . config("main.cycle." . substr($section_code, 4, 3));
+        $pdf = \PDF::loadView("pdf.cards", compact("persons", "title"));
+        $pdf->setPaper("A4", "portrait");
+        return $pdf->download("card.pdf");
+    }
+
+    public function printCardT()
+    {
+
+        $persons = (new \App\Repositories\PersonRepository)->fetchForCardT();
+        $title = "Docente " . date("Y");
+        $pdf = \PDF::loadView("pdf.cards", compact("persons", "title"));
         $pdf->setPaper("A4", "portrait");
         return $pdf->download("card.pdf");
     }

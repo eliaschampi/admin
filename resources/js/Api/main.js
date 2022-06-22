@@ -20,8 +20,18 @@ export default {
 
   fetchCounts: () => request.get("/counts"),
 
-  printCard: (data) =>
-    request.get(`/card/${data.mode}/${data.identifier}/${data.sub}`, {
+  printCard: (dni, section_code) =>
+    request.get(`/card/${dni}/${section_code}`, {
+      responseType: "blob"
+    }),
+
+  printCardS: (section_code) =>
+    request.get(`/card/${section_code}`, {
+      responseType: "blob"
+    }),
+
+  printCardT: () =>
+    request.get("/card", {
       responseType: "blob"
     })
 };

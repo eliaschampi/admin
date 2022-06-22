@@ -141,13 +141,7 @@ export default {
     },
     printCard() {
       mainapi
-        .printCard({
-          mode: "student",
-          identifier: this.register.student_dni,
-          sub: `${this.register.section_code.substr(-2)} de ${
-            this.register.level
-          }`
-        })
+        .printCard(this.register.student_dni, this.register.section_code)
         .then((r) => {
           this.$downl(
             r.data,
