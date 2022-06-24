@@ -6,78 +6,73 @@
         color="btn-inverse-accent btn-icon"
         size="btn-sm"
         v-can="'S'"
-        :to="{ name: 'new_schedule', params: { degree_code: code } }"
+        :to="{ name: 'new_schedule' }"
         class="px-2"
         slot="rb"
       />
+
+      <div class="d-flex">
+        <my-section @done="fetchData" />
+        <m-button class="ml-auto align-self-center btn-sm" @pum="fetchData">
+          Actualizar
+        </m-button>
+      </div>
+      <ul class="nav nav-pills">
+        <li class="nav-item pointer" @click="day = 1">
+          <div class="nav-link" :class="{ active: day === 1 }">Lunes</div>
+        </li>
+        <li class="nav-item pointer" @click="day = 2">
+          <div class="nav-link" :class="{ active: day === 2 }">Martes</div>
+        </li>
+        <li class="nav-item pointer" @click="day = 3">
+          <div class="nav-link" :class="{ active: day === 3 }">Miercoles</div>
+        </li>
+        <li class="nav-item pointer" @click="day = 4">
+          <div class="nav-link" :class="{ active: day === 4 }">Jueves</div>
+        </li>
+        <li class="nav-item pointer" @click="day = 5">
+          <div class="nav-link" :class="{ active: day === 5 }">Viernes</div>
+        </li>
+      </ul>
+      <hr />
       <div class="row">
-        <div class="col-md-4" v-if="teachers.length">
-          <panel :title="teachers_title">
-            <template v-for="(item, index) in teachers">
-              <div class="d-flex align-items-center rounded" :key="item.dni">
-                <div class="avatar">
-                  <img
-                    v-if="item.person.profile"
-                    width="30"
-                    class="rounded"
-                    :src="`/default/${item.person.profile.image}`"
-                  />
-                  <img v-else src="/img/logo.png" />
-                </div>
-                <div class="info ml-1">
-                  <router-link
-                    :to="{
-                      name: 't_schedule',
-                      params: { dni: item.dni }
-                    }"
-                  >
-                    {{ item.person.name }}
-                  </router-link>
-                  <div class="d-flex align-items-center">
-                    <span class="text-small d-block">Color</span>
-                    <div
-                      class="boli ml-1"
-                      :style="{
-                        backgroundColor: `#${colors[item.dni]}`
-                      }"
-                    ></div>
-                  </div>
-                </div>
+        <div class="col-md-3">
+          <div
+            v-for="item in teachers"
+            :key="item.dni"
+            class="d-flex align-items-center bg-light rounded-md p-2 mb-1"
+          >
+            <div class="avatar">
+              <img
+                v-if="item.person.profile"
+                width="30"
+                class="rounded"
+                :src="`/default/${item.person.profile.image}`"
+              />
+              <img v-else src="/img/logo.png" />
+            </div>
+            <div class="info ml-1">
+              <router-link
+                :to="{
+                  name: 't_schedule',
+                  params: { dni: item.dni }
+                }"
+              >
+                {{ item.person.name }}
+              </router-link>
+              <div class="d-flex align-items-center">
+                <span class="text-small d-block">Color</span>
+                <div
+                  class="boli ml-1"
+                  :style="{
+                    backgroundColor: `#${colors[item.dni]}`
+                  }"
+                ></div>
               </div>
-              <hr :key="index" />
-            </template>
-          </panel>
-        </div>
-        <div
-          class="mt-4 mt-md-0"
-          :class="teachers.length ? 'col-md-8' : 'col-md-12'"
-        >
-          <div class="d-flex">
-            <my-section @done="fetchData" />
-            <m-button class="ml-auto align-self-center btn-sm" @pum="fetchData">
-              Actualizar
-            </m-button>
+            </div>
           </div>
-          <ul class="nav nav-pills">
-            <li class="nav-item pointer" @click="day = 1">
-              <div class="nav-link" :class="{ active: day === 1 }">Lunes</div>
-            </li>
-            <li class="nav-item pointer" @click="day = 2">
-              <div class="nav-link" :class="{ active: day === 2 }">Martes</div>
-            </li>
-            <li class="nav-item pointer" @click="day = 3">
-              <div class="nav-link" :class="{ active: day === 3 }">
-                Miercoles
-              </div>
-            </li>
-            <li class="nav-item pointer" @click="day = 4">
-              <div class="nav-link" :class="{ active: day === 4 }">Jueves</div>
-            </li>
-            <li class="nav-item pointer" @click="day = 5">
-              <div class="nav-link" :class="{ active: day === 5 }">Viernes</div>
-            </li>
-          </ul>
-          <hr />
+        </div>
+        <div class="col-md-9">
           <m-table
             :columns="['#', 'Curso', 'Desde', 'Hasta', 'Acciones']"
             :data="filtered"
@@ -139,51 +134,28 @@ export default {
       day: 1
     };
   },
-  mounted() {
-    this.fetchTech();
-  },
-  watch: {
-    cycle_code() {
-      this.fetchTech();
-    }
-  },
   computed: {
-    ...mapGetters("degree", ["code"]),
-    cycle_code() {
-      return this.$store.state.degree.degree.cycle_code;
-    },
-    teachers_title() {
-      return `Docentes de ${this.$options.filters.level(this.cycle_code)}`;
-    },
+    ...mapGetters("section", ["code"]),
     filtered() {
       return this.schedules.filter((item) => item.day === this.day);
     }
   },
   methods: {
-    fetchTech() {
-      t_api.fetchByCycle(this.cycle_code).then((r) => {
-        this.teachers = r.data.values;
-        r.data.values.forEach((item) => {
-          this.colors[item.dni] = Math.floor(Math.random() * 16777215).toString(
-            16
-          );
-        });
-      });
-    },
     edit(item) {
       this.schedule = { ...item };
       $("#newSchedule").modal("show");
     },
-    fetchData() {
+    async fetchData() {
       this.load = true;
-      sh_api
-        .fetchMain(this.$store.getters["section/code"])
-        .then((r) => {
-          this.schedules = r.data.values;
-        })
-        .finally(() => {
-          this.load = false;
-        });
+      const { code } = this;
+      const { data: onedata } = await t_api.fetchBySection(code);
+      this.teachers = onedata.values;
+      onedata.values.forEach(({ dni }) => {
+        this.colors[dni] = Math.floor(Math.random() * 16777215).toString(16);
+      });
+      const { data } = await sh_api.fetchMain(code);
+      this.schedules = data.values;
+      this.load = false;
     },
     async save(schedule) {
       return await sh_api.update(schedule).then((r) => {

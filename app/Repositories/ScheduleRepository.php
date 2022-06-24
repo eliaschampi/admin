@@ -10,7 +10,7 @@ class ScheduleRepository extends BaseRepository
     {
         return Schedule::with(["op", "op.course"])
             ->whereHas("op", function ($query) use ($section_code) {
-                return $query->where("section_code", $section_code);
+                return $query->whereRaw("'$section_code|all' ~* any(sts)");
             })->orderBy("day")->get();
     }
 
@@ -19,7 +19,7 @@ class ScheduleRepository extends BaseRepository
         return Schedule::with(["op", "op.course"])
             ->whereHas("op", function ($query) use ($teacher_dni) {
                 return $query->where("teacher_dni", $teacher_dni)
-                             ->where("section_code", "like", "2022%");
+                             ->whereRaw("'2022|all' ~* any(sts)");
             })->orderBy("day")->get();
     }
 

@@ -5,7 +5,7 @@ export default {
 
   fetchAll: (page) => request.get(`/teacher?page=${page}`),
 
-  fetchByCycle: (c_code) => request.get(`/teacher_cycle/${c_code}`),
+  fetchBySection: (section_code) => request.get(`/teacher/section/${section_code}`),
 
   fetchBySpe: (spe) => request.get(`/teacher_spe/${spe}`),
 

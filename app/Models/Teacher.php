@@ -8,13 +8,13 @@ class Teacher extends Model
 {
     protected $table = "teacher";
 
-    protected $primaryKey = 'dni';
+    protected $primaryKey = "dni";
 
     public $incrementing = false;
 
     public $timestamps = false;
 
-    protected $keyType = 'string';
+    protected $keyType = "string";
 
     protected $fillable = ["dni", "specialty", "startdate"];
 

@@ -13,9 +13,9 @@ class OpRepository
         try {
             DB::beginTransaction();
             $op = Op::updateOrCreate([
-                "section_code" => $data["section_code"],
                 "teacher_dni" => $data["teacher_dni"],
                 "course_code" => $data["course_code"],
+                "sts" => $data["sts"],
             ], $data);
             $op->schedules()->createMany($data["schedules"]);
             DB::commit();

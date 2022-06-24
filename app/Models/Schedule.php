@@ -8,14 +8,14 @@ class Schedule extends Model
 {
     protected $table = "schedule";
 
-    protected $primaryKey = 'code';
+    protected $primaryKey = "code";
 
     public $timestamps = false;
 
     protected $guarded = ["code"];
 
     protected $attributes = [
-        'state' => true,
+        "state" => true,
     ];
 
     public function op()

@@ -8,16 +8,11 @@ class Op extends Model
 {
     protected $table = "op";
 
-    protected $primaryKey = 'code';
+    protected $primaryKey = "code";
 
     public $timestamps = false;
 
-    protected $fillable = ["course_code", "teacher_dni", "section_code"];
-
-    public function section()
-    {
-        return $this->belongsTo(Section::class, "section_code");
-    }
+    protected $fillable = ["course_code", "teacher_dni", "sts"];
 
     public function teacher()
     {

@@ -53,14 +53,14 @@ class TeacherRepository extends BaseRepository
         });
     }
 
-    public function fetchByCycle(string $c_code)
+    public function fetchBySection(string $section_code)
     {
         return Teacher::with(["person" => function ($query) {
             return $query->select("dni", "name", "lastname");
         }, "person.profile" => function ($query) {
             return $query->select("person_dni", "image");
-        }])->whereHas("ops.section.degree", function ($query) use ($c_code) {
-            $query->where("cycle_code", $c_code);
+        }])->whereHas("ops", function ($query) use ($section_code) {
+            $query->whereRaw("'$section_code|all' ~* any(sts)");
         })->get();
     }
 

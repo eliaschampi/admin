@@ -51,10 +51,10 @@ class TeacherController extends Controller
         ]);
     }
 
-    public function fetchByCycle(string $c_code)
+    public function fetchBySection(string $c_code)
     {
         return response()->json([
-            "values" => $this->instance->fetchByCycle($c_code),
+            "values" => $this->instance->fetchBySection($c_code),
         ]);
     }
 

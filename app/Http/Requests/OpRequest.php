@@ -25,9 +25,9 @@ class OpRequest extends FormRequest
     public function rules()
     {
         return [
-            "section_code" => "required",
             "teacher_dni" => "required",
             "course_code" => "required",
+            "sts" => "required",
             "schedules" => ""
         ];
     }

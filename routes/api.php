@@ -139,7 +139,7 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::resource("/teacher", TeacherController::class)->except(["edit", "create", "destroy"]);
     Route::get("/teacher/search/{name}", [TeacherController::class, "search"]);
     Route::get("/teacher/self/{dni}", [TeacherController::class, "self"]);
-    Route::get("/teacher_cycle/{c_code}", [TeacherController::class, "fetchByCycle"]);
+    Route::get("/teacher/section/{section_code}", [TeacherController::class, "fetchBySection"]);
     Route::get("/teacher_spe/{spe}", [TeacherController::class, "fetchBySpe"]);
     Route::get("/teacher_pdf/{dni}", [TeacherController::class, "printInfo"]);
     Route::put("/teacher_state/{dni}", [TeacherController::class, "changeState"]);
