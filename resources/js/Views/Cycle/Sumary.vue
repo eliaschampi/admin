@@ -199,11 +199,10 @@ export default {
         }
       });
     },
-    fetchCycles(fetchData) {
-      cycleApi.fetchAll().then((r) => {
-        this.cycles = r.data.values;
-        fetchData();
-      });
+    async fetchCycles(fetchData) {
+      const { data } = await cycleApi.fetchAll();
+      this.cycles = data.values;
+      fetchData();
     },
     onItem(item, where) {
       this.$store.commit("section/SET_SECTION_CODE", item.code);

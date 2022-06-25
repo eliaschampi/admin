@@ -24,6 +24,13 @@ class SectionController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return response()->json([
+            "sumaries" => $this->instance->fetchByYearAndBranch(),
+        ]);
+    }
+
     public function store(SectionRequest $request)
     {
         $this->instance->store($request->all());

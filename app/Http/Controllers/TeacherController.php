@@ -44,13 +44,6 @@ class TeacherController extends Controller
         ]);
     }
 
-    public function fetchBySpe($spe)
-    {
-        return response()->json([
-            "values" => $this->instance->fetchBySpe($spe),
-        ]);
-    }
-
     public function fetchBySection(string $c_code)
     {
         return response()->json([

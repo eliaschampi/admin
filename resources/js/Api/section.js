@@ -3,6 +3,8 @@ import request from "../Http";
 export default {
   // code is degree_code
   fetchSumary: () => request.get("/section"),
+  // by current here
+  fetchByYearAndBranch: () => request.get("/section/create"),
   // by degree
   fetchByDegree: (code) => request.get(`/section_dg/${code}`),
   // code is degree_code

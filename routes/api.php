@@ -111,7 +111,7 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::get("/grado/{code}", [DegreeController::class, "degree"]);
 
     //section
-    Route::resource("/section", SectionController::class)->except(["edit", "show", "create"]);
+    Route::resource("/section", SectionController::class)->except(["edit", "show"]);
     Route::get("/section_dg/{degree_code}", [SectionController::class, "fetchByDegree"]);
     Route::get("/migrate/{degree_code}", [SectionController::class, "fetchForMigrate"]);
 
@@ -140,7 +140,6 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::get("/teacher/search/{name}", [TeacherController::class, "search"]);
     Route::get("/teacher/self/{dni}", [TeacherController::class, "self"]);
     Route::get("/teacher/section/{section_code}", [TeacherController::class, "fetchBySection"]);
-    Route::get("/teacher_spe/{spe}", [TeacherController::class, "fetchBySpe"]);
     Route::get("/teacher_pdf/{dni}", [TeacherController::class, "printInfo"]);
     Route::put("/teacher_state/{dni}", [TeacherController::class, "changeState"]);
 

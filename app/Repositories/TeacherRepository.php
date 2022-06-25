@@ -37,13 +37,6 @@ class TeacherRepository extends BaseRepository
             ->get();
     }
 
-    public function fetchBySpe($spe)
-    {
-        return Teacher::with(["person" => function ($query) {
-            return $query->select("dni", "name", "lastname");
-        }])->whereIn("specialty", [$spe, "MIX"])->get();
-    }
-
     public function store(array $teacher): Teacher
     {
         return DB::transaction(function () use ($teacher) {

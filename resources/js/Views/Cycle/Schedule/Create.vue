@@ -8,49 +8,8 @@
     >
       <div class="row p-3">
         <div class="col-md-4 vl">
-          <div class="form-group">
-            <label for="secselec">Sección</label>
-            <select
-              class="form-control"
-              name="seccion"
-              id="secselec"
-              v-model="opT.section_code"
-              v-validate="'required'"
-            >
-              <option
-                :key="item.code"
-                v-for="item in sections"
-                :value="item.code"
-              >
-                {{ item.name }}
-              </option>
-            </select>
-            <span class="small text-danger" v-show="errors.has('seccion')"
-              >{{ errors.first("seccion") }}
-            </span>
-          </div>
-          <div class="form-group">
-            <label for="docselect">Docente</label>
-            <select
-              class="form-control"
-              name="docente"
-              id="docselect"
-              v-model="opT.teacher_dni"
-              v-validate="'required'"
-            >
-              <option
-                :key="item.dni"
-                v-for="item in teachers"
-                :value="item.dni"
-              >
-                {{ item.fullname }}
-              </option>
-            </select>
-            <span class="small text-danger" v-show="errors.has('docente')"
-              >{{ errors.first("docente") }}
-            </span>
-          </div>
-          <div class="form-group">
+          <input-finder :fullname="person_name" who="teacher" />
+          <div class="form-group mt-4">
             <label for="docselect">Curso</label>
             <select
               class="form-control"
@@ -70,6 +29,32 @@
             <span class="small text-danger" v-show="errors.has('curso')"
               >{{ errors.first("curso") }}
             </span>
+          </div>
+          <div class="form-group mt-4">
+            <label for="modality_id">Modalidad</label>
+            <select
+              class="form-control"
+              name="modality"
+              id="modality_id"
+              v-model="modality"
+              @change="handleChangeModality"
+            >
+              <option value="all">Toda la institución</option>
+              <option value="cycle">Ciclo o nivel académico</option>
+              <option value="sts">Multiples secciones o grupos</option>
+            </select>
+          </div>
+          <div class="form-group mt-4" v-if="modality === 'cycle'">
+            <label for="level_id">Ciclo o nivel</label>
+            <select class="form-control" id="level_id" @input="handleAddCycle">
+              <option
+                :key="item.code"
+                v-for="item in cycles"
+                :value="item.type"
+              >
+                {{ item.full_name }}
+              </option>
+            </select>
           </div>
         </div>
         <div class="col-md-8" style="position: relative">
@@ -117,19 +102,24 @@
   </section>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
-import days from "@/Data/weekDays.json";
 import api from "@/Api/op";
-import courseApi from "../../../Api/course";
-import t_api from "../../../Api/teacher";
 import AddItem from "./AddItem.vue";
+import days from "@/Data/weekDays.json";
+import courseApi from "../../../Api/course";
+import cycleApi from "@/Api/cycle";
+import InputFinder from "../../../Components/Finder/InputFinder.vue";
+import { EventBus } from "../../../Helpers/bus";
 export default {
   components: {
-    AddItem
+    AddItem,
+    InputFinder
   },
   data() {
     return {
       errorMessage: "",
+      person_name: "",
+      modality: "sts",
+      cycles: [],
       courses: [],
       columns: ["#", "Día", "Desde", "Hasta", "Acciones"],
       days,
@@ -137,45 +127,43 @@ export default {
       opT: {
         teacher_dni: "",
         course_code: "",
-        section_code: "",
+        sts: [],
         schedules: []
       }
     };
   },
   mounted() {
-    const { degree_code } = this.$route.params;
-    const spe = degree_code.substr(4, 3);
-    if (!this.sections.length) {
-      this.fetchSections(degree_code);
-    }
-    this.fetchData(spe);
-    courseApi.fetchAll().then((r) => {
-      this.courses = r.data.courses.filter((item) => {
-        return [spe, "OTR"].includes(item.type);
-      });
-    });
-  },
-  watch: {
-    "$route.params.degree_code"(val) {
-      const spe = val.substr(4, 3);
-      this.fetchData(spe);
-      this.fetchSections(val);
-    }
-  },
-  computed: {
-    ...mapState("section", ["sections"])
+    EventBus.$on("afterSelectPerson", this.addPerson);
+    this.fetchCourses();
   },
   methods: {
-    ...mapActions({
-      fetchSections: "section/fetchAll"
-    }),
-    fetchData(spe) {
-      t_api.fetchBySpe(spe).then((r) => {
-        this.teachers = r.data.values.map((item) => ({
-          dni: item.dni,
-          fullname: `${item.person.name} ${item.person.lastname}`
-        }));
-      });
+    addPerson({ dni, name, lastname }) {
+      this.person_name = `${name} ${lastname}`;
+      this.opT.teacher_dni = dni;
+      $("#finderModal").modal("hide");
+    },
+    handleAddCycle(event) {
+      this.opT.sts = [event.target.value];
+    },
+    handleChangeModality(event) {
+      if (event.target.value === "cycle") {
+        this.fetchCycles();
+      }
+    },
+    async fetchCourses() {
+      const { data } = await courseApi.fetchAll();
+      this.courses = data.courses;
+    },
+    async fetchCycles() {
+      if (this.cycles.length === 0) {
+        const { data } = await cycleApi.fetchAll();
+        this.cycles = data.values;
+        if (data.values.length) {
+          this.handleAddCycle({
+            target: { value: data.values[0].type }
+          });
+        }
+      }
     },
     save() {
       this.$validator.validateAll().then((r) => {

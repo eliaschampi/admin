@@ -14,15 +14,20 @@ class SectionRepository extends BaseRepository
                 $query->select("dni", "name", "lastname");
             }])
             ->withCount('registers')
-            ->orderByDesc("code", "ASC")
+            ->orderBy("code", "ASC")
             ->where("code", "like", $this->herelike())->get();
+    }
+
+    public function fetchByYearAndBranch()
+    {
+        return Section::where("code", "like", $this->herelike())->orderBy("code", "ASC");
     }
 
     public function fetchByDegree(string $d_code)
     {
         return Section::where("degree_code", $d_code)
             ->withCount("registers")
-            ->orderByDesc("code", "ASC")
+            ->orderBy("code", "ASC")
             ->get();
     }
 

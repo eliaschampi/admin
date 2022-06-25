@@ -10,12 +10,62 @@
         class="px-2"
         slot="rb"
       />
-
       <div class="d-flex">
         <my-section @done="fetchData" />
-        <m-button class="ml-auto align-self-center btn-sm" @pum="fetchData">
+        <m-button class="align-self-center ml-1 btn-sm" @pum="fetchData">
           Actualizar
         </m-button>
+      </div>
+      <div class="alert alert-info">
+        Los colores asignados a los docentes representan el curso que esta
+        dictando en esta sección o grupo.
+        <br />
+        ⚡Precione en la foto del docente para ver su horario
+        <br />
+        ⚡Presione en el icono <span class="icon ion-md-flower"></span>
+        para modificar [Docente - Curso]
+      </div>
+      <div class="d-flex">
+        <div
+          v-for="item in teachers"
+          :key="item.dni"
+          class="
+            d-flex
+            align-items-center
+            bg-light
+            rounded-md
+            p-2
+            ml-2
+            mr-2
+            mb-2
+          "
+        >
+          <router-link
+            class="avatar pointer"
+            tag="div"
+            :to="{
+              name: 't_schedule',
+              params: { dni: item.dni }
+            }"
+          >
+            <img
+              v-if="item.person.profile"
+              width="33"
+              :style="{
+                borderRadius: '50%',
+                border: `3px solid #${colors[item.dni]}`
+              }"
+              :src="`/default/${item.person.profile.image}`"
+            />
+            <img v-else src="/img/logo.png" />
+          </router-link>
+          <div class="info ml-1">
+            <div class="font-weight-medium">
+              {{ item.person.name }}
+              <span class="icon ion-md-flower pointer"></span>
+            </div>
+          </div>
+        </div>
       </div>
       <ul class="nav nav-pills">
         <li class="nav-item pointer" @click="day = 1">
@@ -36,43 +86,7 @@
       </ul>
       <hr />
       <div class="row">
-        <div class="col-md-3">
-          <div
-            v-for="item in teachers"
-            :key="item.dni"
-            class="d-flex align-items-center bg-light rounded-md p-2 mb-1"
-          >
-            <div class="avatar">
-              <img
-                v-if="item.person.profile"
-                width="30"
-                class="rounded"
-                :src="`/default/${item.person.profile.image}`"
-              />
-              <img v-else src="/img/logo.png" />
-            </div>
-            <div class="info ml-1">
-              <router-link
-                :to="{
-                  name: 't_schedule',
-                  params: { dni: item.dni }
-                }"
-              >
-                {{ item.person.name }}
-              </router-link>
-              <div class="d-flex align-items-center">
-                <span class="text-small d-block">Color</span>
-                <div
-                  class="boli ml-1"
-                  :style="{
-                    backgroundColor: `#${colors[item.dni]}`
-                  }"
-                ></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-9">
+        <div class="col-md-12">
           <m-table
             :columns="['#', 'Curso', 'Desde', 'Hasta', 'Acciones']"
             :data="filtered"
@@ -118,7 +132,6 @@ import { mapGetters } from "vuex";
 import days from "@/Data/weekDays.json";
 import { deleteSH } from "@/Mixins/utils";
 import AddItem from "../../Cycle/Schedule/AddItem";
-
 export default {
   name: "schedule",
   mixins: [deleteSH],
@@ -145,21 +158,25 @@ export default {
       this.schedule = { ...item };
       $("#newSchedule").modal("show");
     },
-    async fetchData() {
-      this.load = true;
-      const { code } = this;
-      const { data: onedata } = await t_api.fetchBySection(code);
-      this.teachers = onedata.values;
-      onedata.values.forEach(({ dni }) => {
-        this.colors[dni] = Math.floor(Math.random() * 16777215).toString(16);
-      });
-      const { data } = await sh_api.fetchMain(code);
+    async fetchSchedules() {
+      const { data } = await sh_api.fetchMain(this.code);
       this.schedules = data.values;
       this.load = false;
     },
+    async fetchData() {
+      this.load = true;
+      const { data } = await t_api.fetchBySection(this.code);
+      this.teachers = data.values;
+      data.values.forEach(({ dni }) => {
+        this.colors[dni] = (0x1000000 + Math.random() * 0xffffff)
+          .toString(16)
+          .substr(1, 6);
+      });
+      this.fetchSchedules();
+    },
     async save(schedule) {
       return await sh_api.update(schedule).then((r) => {
-        this.fetchData();
+        this.fetchSchedules();
         this.$snack.success(r.data);
         $("#newSchedule").modal("hide");
         this.schedule = null;

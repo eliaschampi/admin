@@ -460,15 +460,6 @@ const routes = [
             }
           },
           {
-            path: ":degree_code?/newschedule",
-            name: "new_schedule",
-            component: OpCreate,
-            meta: {
-              roles: "AS",
-              title: "Nuevo Horario"
-            }
-          },
-          {
             path: ":degree_code?/registrar_seccion",
             name: "new_section",
             component: NewSection,
@@ -486,8 +477,6 @@ const routes = [
               title: "Migración al nuevo Grado"
             }
           },
-
-          // p
           {
             path: ":degree_code?/asistencia_por_seccion",
             name: "main_attendance",
@@ -507,7 +496,6 @@ const routes = [
               title: "Asistencia del Estudiante"
             }
           },
-          // apoderados
           {
             path: ":degree_code?/apoderados",
             name: "main_family",
@@ -519,7 +507,15 @@ const routes = [
           }
         ]
       },
-
+      {
+        path: "/newschedule",
+        name: "new_schedule",
+        component: OpCreate,
+        meta: {
+          roles: "AS",
+          title: "Nuevo Horario"
+        }
+      },
       /**
        * incidencias
        */
