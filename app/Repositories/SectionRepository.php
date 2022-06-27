@@ -20,7 +20,7 @@ class SectionRepository extends BaseRepository
 
     public function fetchByYearAndBranch()
     {
-        return Section::where("code", "like", $this->herelike())->orderBy("code", "ASC");
+        return Section::where("code", "like", $this->herelike())->orderBy("code", "ASC")->get();
     }
 
     public function fetchByDegree(string $d_code)

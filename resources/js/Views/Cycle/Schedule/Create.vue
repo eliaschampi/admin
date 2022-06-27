@@ -39,6 +39,7 @@
               v-model="modality"
               @change="handleChangeModality"
             >
+              <option value="none">Selecciona una modalidad</option>
               <option value="all">Toda la institución</option>
               <option value="cycle">Ciclo o nivel académico</option>
               <option value="sts">Multiples secciones o grupos</option>
@@ -55,6 +56,31 @@
                 {{ item.full_name }}
               </option>
             </select>
+          </div>
+          <div class="form-group mt-4" v-else-if="modality === 'sts'">
+            <label for="degree_id">Agrega los grados</label>
+            <div class="d-flex">
+              <select class="form-control" id="degree_id">
+                <option
+                  :key="item.code"
+                  v-for="item in sections"
+                  :value="item.code"
+                >
+                  {{ item.code | full }}
+                </option>
+              </select>
+              <m-button
+                color="btn-icon btn-inverse-accent"
+                icon="icon ion-md-add"
+                @pum="handleAddCycle"
+              />
+            </div>
+            <ul style="list-style: none" class="mt-2">
+              <li class="text-primary" v-for="st in opT.sts" :key="st">
+                {{ st | full }}
+                <span class="icon ion-md-trash text-danger pointer"></span>
+              </li>
+            </ul>
           </div>
         </div>
         <div class="col-md-8" style="position: relative">
@@ -105,10 +131,11 @@
 import api from "@/Api/op";
 import AddItem from "./AddItem.vue";
 import days from "@/Data/weekDays.json";
-import courseApi from "../../../Api/course";
+import scApi from "@/Api/section";
 import cycleApi from "@/Api/cycle";
-import InputFinder from "../../../Components/Finder/InputFinder.vue";
-import { EventBus } from "../../../Helpers/bus";
+import courseApi from "@/Api/course";
+import InputFinder from "@/Components/Finder/InputFinder.vue";
+import { EventBus } from "@/Helpers/bus";
 export default {
   components: {
     AddItem,
@@ -118,8 +145,9 @@ export default {
     return {
       errorMessage: "",
       person_name: "",
-      modality: "sts",
+      modality: "none",
       cycles: [],
+      sections: [],
       courses: [],
       columns: ["#", "Día", "Desde", "Hasta", "Acciones"],
       days,
@@ -143,11 +171,25 @@ export default {
       $("#finderModal").modal("hide");
     },
     handleAddCycle(event) {
-      this.opT.sts = [event.target.value];
+      if (this.modality === "cycle") {
+        this.opT.sts = [event.target.value];
+      } else {
+        this.opT.sts.push(event.target.value);
+      }
     },
-    handleChangeModality(event) {
-      if (event.target.value === "cycle") {
+    handleChangeModality({ target: { value } }) {
+      if (value === "cycle") {
         this.fetchCycles();
+      } else if (value === "all") {
+        this.opT.sts = [value];
+      } else if (value === "sts") {
+        this.fetchSections();
+      }
+    },
+    async fetchSections() {
+      if (!this.sections.length) {
+        const { data } = await scApi.fetchByYearAndBranch();
+        this.sections = data.values;
       }
     },
     async fetchCourses() {
