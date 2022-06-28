@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Helpers\MainHelper;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Op extends Model
@@ -11,6 +13,13 @@ class Op extends Model
     protected $primaryKey = "code";
 
     public $timestamps = false;
+
+    protected function sts(): Attribute
+    {
+        return Attribute::make(
+            set:fn($value) => MainHelper::to_pg_array($value),
+        );
+    }
 
     protected $fillable = ["course_code", "teacher_dni", "sts"];
 

@@ -26,7 +26,9 @@
 }
 
 .vl {
-  border-right: 1px solid $text-muted;
+  @include media-breakpoint-up(md) {
+    border-right: 1px solid $text-muted;
+  }
 }
 
 .pointer {

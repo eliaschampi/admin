@@ -18,14 +18,14 @@ class ScheduleController extends Controller
     public function fetchMain(string $section_code)
     {
         return response()->json([
-            "values" => $this->instance->fetchMain($section_code)
+            "values" => $this->instance->fetchMain($section_code),
         ]);
     }
 
     public function fetchByTeacher(string $teacher_dni)
     {
         return response()->json([
-            "values" => $this->instance->fetchByTeacher($teacher_dni)
+            "values" => $this->instance->fetchByTeacher($teacher_dni),
         ]);
     }
 

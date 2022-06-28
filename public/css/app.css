@@ -12252,8 +12252,10 @@ dl li {
     display: block;
   }
 }
-.vl {
-  border-right: 1px solid rgba(167, 182, 199, 0.8745098039);
+@media (min-width: 768px) {
+  .vl {
+    border-right: 1px solid rgba(167, 182, 199, 0.8745098039);
+  }
 }
 
 .pointer {

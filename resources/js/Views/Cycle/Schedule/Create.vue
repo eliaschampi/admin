@@ -1,11 +1,6 @@
 <template>
   <section id="newAT">
-    <m-form
-      title="Nuevo Horario"
-      @save="save"
-      btn-name="Guardar"
-      :disabled="!opT.schedules.length"
-    >
+    <m-form title="Nuevo Horario" @save="save" btn-name="Guardar">
       <div class="row p-3">
         <div class="col-md-4 vl">
           <input-finder :fullname="person_name" who="teacher" />
@@ -13,10 +8,8 @@
             <label for="docselect">Curso</label>
             <select
               class="form-control"
-              name="curso"
               id="docselect"
               v-model="opT.course_code"
-              v-validate="'required'"
             >
               <option
                 :key="item.code"
@@ -26,12 +19,12 @@
                 {{ item.name }}
               </option>
             </select>
-            <span class="small text-danger" v-show="errors.has('curso')"
-              >{{ errors.first("curso") }}
-            </span>
           </div>
           <div class="form-group mt-4">
-            <label for="modality_id">Modalidad</label>
+            <alert :dismisable="false">
+              Selecciona el grado o grupo correspondiente al horario del docente
+              y curso
+            </alert>
             <select
               class="form-control"
               name="modality"
@@ -39,7 +32,9 @@
               v-model="modality"
               @change="handleChangeModality"
             >
-              <option value="none">Selecciona una modalidad</option>
+              <option value="" disabled selected hidden>
+                Selecciona una opción
+              </option>
               <option value="all">Toda la institución</option>
               <option value="cycle">Ciclo o nivel académico</option>
               <option value="sts">Multiples secciones o grupos</option>
@@ -72,13 +67,16 @@
               <m-button
                 color="btn-icon btn-inverse-accent"
                 icon="icon ion-md-add"
-                @pum="handleAddCycle"
+                @pum="handleAddSection"
               />
             </div>
             <ul style="list-style: none" class="mt-2">
-              <li class="text-primary" v-for="st in opT.sts" :key="st">
+              <li class="text-primary" v-for="(st, index) in opT.sts" :key="st">
                 {{ st | full }}
-                <span class="icon ion-md-trash text-danger pointer"></span>
+                <span
+                  class="icon ion-md-trash text-danger pointer"
+                  @click="handleRemoveSection(index)"
+                ></span>
               </li>
             </ul>
           </div>
@@ -100,7 +98,7 @@
                 <td>{{ item.to_time }}</td>
                 <td>
                   <m-action
-                    @action="delS(item)"
+                    @action="delS(index)"
                     icon="trash"
                     color="danger"
                     tool="Borrar"
@@ -119,7 +117,7 @@
               ></i>
               Evita duplicar el horario de un docente.
             </p>
-            <p class="text-accent">{{ errorMessage }}</p>
+            <p class="text-danger mt-4">{{ errorMessage }}</p>
           </alert>
         </div>
       </div>
@@ -145,7 +143,7 @@ export default {
     return {
       errorMessage: "",
       person_name: "",
-      modality: "none",
+      modality: "",
       cycles: [],
       sections: [],
       courses: [],
@@ -170,12 +168,17 @@ export default {
       this.opT.teacher_dni = dni;
       $("#finderModal").modal("hide");
     },
-    handleAddCycle(event) {
-      if (this.modality === "cycle") {
-        this.opT.sts = [event.target.value];
-      } else {
-        this.opT.sts.push(event.target.value);
+    handleAddCycle({ target: { value } }) {
+      this.opT.sts = [value];
+    },
+    handleAddSection() {
+      const { value } = document.getElementById("degree_id");
+      if (this.opT.sts.indexOf(value) === -1 && this.opT.sts.length < 5) {
+        this.opT.sts.push(value);
       }
+    },
+    handleRemoveSection(index) {
+      this.opT.sts.splice(index, 1);
     },
     handleChangeModality({ target: { value } }) {
       if (value === "cycle") {
@@ -183,6 +186,7 @@ export default {
       } else if (value === "all") {
         this.opT.sts = [value];
       } else if (value === "sts") {
+        this.opT.sts = [];
         this.fetchSections();
       }
     },
@@ -208,26 +212,36 @@ export default {
       }
     },
     save() {
-      this.$validator.validateAll().then((r) => {
-        if (r && this.opT.schedules.length > 0) {
-          this.$snack.show({
-            text: "El horario será registrado",
-            button: "continuar",
-            action: () => {
-              api
-                .store(this.opT)
-                .then(() => {
-                  this.$router.go(-1);
-                })
-                .catch((error) => {
-                  if (error.code === 422) {
-                    this.errorMessage = "Este horario ya ha sido registrado";
-                  }
-                });
-            }
-          });
-        }
-      });
+      if (!this.opT.teacher_dni) {
+        this.errorMessage = "Selecciona un docente";
+        return;
+      } else if (!this.opT.course_code) {
+        this.errorMessage = "Selecciona un curso";
+        return;
+      } else if (this.opT.sts.length === 0) {
+        this.errorMessage = "Selecciona una sección o grupo";
+        return;
+      } else if (this.opT.schedules.length === 0) {
+        this.errorMessage = "Establece un horario semanal";
+        return;
+      } else {
+        this.$snack.show({
+          text: "El horario será registrado",
+          button: "continuar",
+          action: () => {
+            api
+              .store(this.opT)
+              .then(() => {
+                this.$router.go(-1);
+              })
+              .catch((error) => {
+                if (error.code === 422) {
+                  this.errorMessage = "Este horario ya ha sido registrado";
+                }
+              });
+          }
+        });
+      }
     },
     add(schedule) {
       const self = {
@@ -239,22 +253,17 @@ export default {
         $("#newSchedule").modal("hide");
       }
     },
-    delS(item) {
-      this.opT.schedules.splice(this.opT.schedules.indexOf(item), 1);
+    delS(index) {
+      this.opT.schedules.splice(index, 1);
     },
-    addS(self) {
-      let poc = -1;
-      if (this.opT.schedules.length) {
-        this.opT.schedules.forEach((i, index) => {
-          if (i.day === self.day && i.from_time === self.from_time) {
-            poc = index;
-          }
-        });
+    addS(s) {
+      const yep = this.opT.schedules.some(
+        ({ day, from_time }) => day === s.day && from_time === s.from_time
+      );
+      if (yep) {
+        return 0;
       }
-      if (poc === -1) {
-        return this.opT.schedules.push(Object.assign({}, self));
-      }
-      return 0;
+      return this.opT.schedules.push(Object.assign({}, s));
     }
   }
 };

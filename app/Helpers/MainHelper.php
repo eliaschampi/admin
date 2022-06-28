@@ -79,4 +79,20 @@ class MainHelper
     public static function serializeYourModel(Model $model) {
         return $model->toArray();
     }
+
+    public static function to_pg_array($set) {
+        settype($set, 'array'); 
+        $result = array();
+        foreach ($set as $t) {
+            if (is_array($t)) {
+                $result[] = to_pg_array($t);
+            } else {
+                $t = str_replace('"', '\\"', $t); 
+                if (! is_numeric($t))
+                    $t = '"' . $t . '"';
+                $result[] = $t;
+            }
+        }
+        return '{' . implode(",", $result) . '}'; 
+    }
 }
