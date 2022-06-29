@@ -18,6 +18,8 @@ class OpController extends Controller
     public function store(OpRequest $request)
     {
         $this->instance->store($request->all());
-        return response()->json("Corectamente guardado");
+        return response()->json([
+            "message" => "Corectamente guardado"
+        ]);
     }
 }

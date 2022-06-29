@@ -108,13 +108,9 @@
             </template>
           </m-table>
           <alert :dismisable="false" type="alert-warning">
-            <p class="my-0">
-              <span class="alert-link">Sugerencias:</span>
-            </p>
-            <p class="my-0">
-              <i
-                class="icon ion-ios-information-circle icon-sm text-success"
-              ></i>
+            <p class="alert-link">IMPORTANTE:</p>
+            <p>
+              <i class="icon ion-md-information-circle text-success"></i>
               Evita duplicar el horario de un docente.
             </p>
             <p class="text-danger mt-4">{{ errorMessage }}</p>
@@ -227,18 +223,11 @@ export default {
       } else {
         this.$snack.show({
           text: "El horario será registrado",
-          button: "continuar",
-          action: () => {
-            api
-              .store(this.opT)
-              .then(() => {
-                this.$router.go(-1);
-              })
-              .catch((error) => {
-                if (error.code === 422) {
-                  this.errorMessage = "Este horario ya ha sido registrado";
-                }
-              });
+          button: "confirmar",
+          action: async () => {
+            const { data } = await api.store(this.opT);
+            this.$snack.success(data.message);
+            this.$router.go(-1);
           }
         });
       }

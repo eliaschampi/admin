@@ -13,4 +13,11 @@ class ConfigCache
             return $callback($cycle_code);
         });
     }
+
+    public static function manageSectionCache(int $branch_code, \Closure $callback)
+    {
+        return Cache::rememberForever("sc_$branch_code", function () use ($callback) {
+            return $callback();
+        });
+    }
 }

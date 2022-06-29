@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cache\ConfigCache;
 use App\Helpers\MainHelper;
 use App\Http\Requests\SectionRequest;
 use App\Repositories\SectionRepository;
@@ -26,8 +27,9 @@ class SectionController extends Controller
 
     public function create()
     {
+        $cv = ConfigCache::manageSectionCache(MainHelper::branchCode(), fn() => $this->instance->fetchByYearAndBranch());
         return response()->json([
-            "values" => $this->instance->fetchByYearAndBranch(),
+            "values" => $cv,
         ]);
     }
 

@@ -1,77 +1,76 @@
 <template>
   <section id="newRegister">
     <alert class="my-4" type="alert-warning" v-if="existsInCache">
-      Querido Usuario. No puede continuar porque hay una matrícula en proceso.
-      Para finalizar o cancelar dicha matricula
+      Querido Usuario. No puede continuar porque hay una matrícula o inscripción
+      en proceso. Para finalizar o cancelar dicha matricula
       <router-link to="/ingreso/create" class="alert-link text-primary">
-        Click aqui
+        Click aquí
       </router-link>
     </alert>
     <form v-else @submit.prevent="save" class="space-b1 mt-4">
       <h5 class="text-primary">
         {{ mode + " Matrícula " + $store.getters["fullyear"] }}
       </h5>
-      <m-check
-        v-if="mode === 'Modificar'"
-        id="advance"
-        text="Cambiar de grado"
-        v-model="advance"
-      />
-      <degree
-        v-show="advance || mode !== 'Modificar'"
-        @changed="fetchSections(code)"
-      />
-      <hr />
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label for="regsecid">Sección</label>
-          <select
-            class="form-control"
-            id="regsecid"
-            name="seccion"
-            v-validate="'required'"
-            v-model="register.section_code"
-          >
-            <option
-              :key="item.code"
-              v-for="item in sections"
-              :value="item.code"
-            >
-              {{ item.name }}
-            </option>
-          </select>
-          <span class="small text-danger" v-show="errors.has('seccion')">
-            {{ errors.first("seccion") }}
-          </span>
+      <div class="form-group">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            :disabled="mode !== 'Modificar'"
+            v-model="advance"
+            id="adv"
+          />
+          <label class="form-check-label" for="adv">
+            Establece el nivel, grado y la sección ó (ciclo/grupo)
+          </label>
         </div>
-        <m-input
-          class="col-md-6"
-          id="Mensualidad"
-          type="number"
-          label="Mensualidad"
-          v-validate="'required|max_value:1000|min_value:0'"
-          :error="errors.first('Mensualidad')"
-          v-model="register.monthly"
-        />
+
+        <select
+          class="form-control"
+          id="regsecid"
+          name="seccion"
+          v-validate="'required'"
+          :disabled="!advance"
+          v-model="register.section_code"
+        >
+          <option :key="item.code" v-for="item in sections" :value="item.code">
+            {{ item.code | full }}
+          </option>
+        </select>
+
+        <span class="small text-danger" v-show="errors.has('seccion')">
+          {{ errors.first("seccion") }}
+        </span>
       </div>
-      <div>
-        <m-switch
-          id="consV"
-          text="Generar Constancia de Vacancia (Nuevo estudiante)."
-          v-model="consV"
-        />
-        <m-switch
-          id="state"
-          text="Registrar estado como Activo"
-          v-model="state"
-        />
-        <m-switch
-          :dis="mode === 'Modificar'"
-          id="invoice"
-          text="Realizar también el pago de matricula"
-          v-model="invoicing"
-        />
-      </div>
+
+      <m-input
+        id="Mensualidad"
+        type="number"
+        label="Mensualidad"
+        v-validate="'required|max_value:1000|min_value:0'"
+        :error="errors.first('Mensualidad')"
+        v-model="register.monthly"
+      />
+
+      <m-switch
+        id="consV"
+        text="Generar Constancia de Vacancia (Nuevo estudiante)."
+        v-model="consV"
+      />
+
+      <m-switch
+        id="state"
+        text="Registrar estado como Activo"
+        v-model="state"
+      />
+
+      <m-switch
+        :dis="mode === 'Modificar'"
+        id="invoice"
+        text="Realizar también el pago de matricula"
+        v-model="invoicing"
+      />
+
       <div class="text-center">
         <m-submit :load="load" color="btn-primary">
           {{ invoicing ? "Ir a Ingresos" : "Registrar" }}
@@ -82,14 +81,14 @@
   </section>
 </template>
 <script>
-import { mapActions, mapState, mapGetters } from "vuex";
-import api from "@/Api/register";
-import Degree from "@/Components/Views/Degree";
+import { mapGetters } from "vuex";
+import api from "../../Api/register";
+import scApi from "../../Api/section";
 import Detail from "../Income/Detail";
 import { EventBus } from "../../Helpers/bus";
 import { hasDetailModal } from "../../Mixins/utils";
 export default {
-  components: { Degree, Detail },
+  components: { Detail },
   mixins: [hasDetailModal],
   data() {
     return {
@@ -97,6 +96,7 @@ export default {
       consV: false,
       load: false,
       state: true,
+      sections: [],
       register: {
         monthly: "300.00"
       },
@@ -113,49 +113,38 @@ export default {
     }
   },
   mounted() {
+    this.fetchSections();
     this.checkIfHasCache();
   },
   computed: {
-    ...mapState("section", ["sections"]),
-    ...mapGetters("student", ["dni", "fullname"]),
-    ...mapGetters("degree", ["code"])
+    ...mapGetters("student", ["dni", "fullname"])
   },
   methods: {
-    ...mapActions({
-      fetchDegree: "degree/fetch",
-      fetchSections: "section/fetchAll"
-    }),
+    async fetchSections() {
+      const { data } = await scApi.fetchByYearAndBranch();
+      this.sections = data.values;
+    },
 
-    async fetchData(regstated) {
+    async fetchData(rg) {
       this.consV = false;
-      const { section_code: sc, year } = regstated;
-      try {
-        if (parseInt(year) === new Date().getFullYear()) {
-          this.$store.commit("degree/SET_DEGREE", {});
-          this.$store.commit("section/FETCH_SECTIONS", { sections: [] });
-
-          await this.fetchDegree(sc.substr(0, 9));
-
-          await this.fetchSections(this.code);
-
-          this.register = regstated;
-
-          if (regstated.state === "p") {
-            this.invoicing = true;
-            this.mode = "Ratificar";
-          } else {
-            this.invoicing = false;
-            this.mode = "Modificar";
-          }
+      if (rg.state === "f" || parseInt(rg.year) !== new Date().getFullYear()) {
+        this.register = {
+          monthly: "0.00"
+        };
+        this.mode = "Nueva";
+        this.advance = true;
+      } else {
+        this.register = rg;
+        if (rg.state === "p") {
+          this.invoicing = true;
+          this.mode = "Ratificar";
         } else {
-          this.register = {};
-          this.mode = "Nueva";
+          this.invoicing = false;
+          this.mode = "Modificar";
         }
-      } catch (errormessage) {
-        this.$snack.warning(errormessage);
-        this.$router.push({ name: "home" });
       }
     },
+
     save() {
       if (this.invoicing) {
         let type = {
@@ -181,10 +170,9 @@ export default {
         this.store();
       }
     },
-    checkIfHasCache() {
-      api.hasOnCache().then(({ data }) => {
-        this.existsInCache = data;
-      });
+    async checkIfHasCache() {
+      const { data } = await api.hasOnCache();
+      this.existsInCache = data;
     },
     onStoredSuccefully(datafromapi) {
       if (this.consV) {
@@ -206,9 +194,7 @@ export default {
           if (this.mode === "Modificar") {
             this.register.invoicing = false;
           } else {
-            if (this.mode === "Nueva") {
-              this.register.student_dni = this.dni;
-            }
+            if (this.mode === "Nueva") this.register.student_dni = this.dni;
             this.register.invoicing = this.invoicing;
           }
 
@@ -225,7 +211,7 @@ export default {
                 this.$router.push({
                   name: "section_student",
                   params: {
-                    degree_code: this.code
+                    degree_code: this.register.section_code.substr(0, 9)
                   }
                 });
               }
