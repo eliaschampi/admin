@@ -136,7 +136,8 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::get("/register_asis/{section_code}/{priority}", [RegisterController::class, "fetchForAttendance"]);
 
     //teacher (usar index para imprimir)
-    Route::resource("/teacher", TeacherController::class)->except(["edit", "create", "destroy"]);
+    Route::resource("/teacher", TeacherController::class)->only(["show", "store", "update"]);
+    Route::get("/teacher/all/{state}",[TeacherController::class, "fetchByState"]);
     Route::get("/teacher/search/{name}", [TeacherController::class, "search"]);
     Route::get("/teacher/self/{dni}", [TeacherController::class, "self"]);
     Route::get("/teacher/section/{section_code}", [TeacherController::class, "fetchBySection"]);

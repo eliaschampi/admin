@@ -22,6 +22,12 @@
         class="col-md-12"
         v-model="buscado"
       >
+        <m-check
+          id="wistiki"
+          :text="`Docentes activos del año ${new Date().getFullYear()}`"
+          v-model="state"
+          @change="fetchAll(1)"
+        />
         <template slot="data">
           <tr :key="item.dni" v-for="item in filtered">
             <td>{{ item.dni }}</td>
@@ -34,14 +40,9 @@
               </span>
             </td>
             <td>
-              <div class="switch">
-                <input
-                  type="checkbox"
-                  disabled
-                  :id="'tg' + item.dni"
-                  :checked="item.state"
-                />
-                <label :for="'tg' + item.dni" class="success">Toggle</label>
+              <div class="d-flex">
+                <span class="icon ion-md-call text-info mr-2"></span>
+                <span class="font-weight-medium">{{ item.person.phone }}</span>
               </div>
             </td>
             <td>{{ specialties[item.specialty] }}</td>
@@ -76,15 +77,16 @@ import mainApi from "../..//Api/main";
 export default {
   data() {
     return {
-      teacher_dni: "",
+      state: true,
       buscado: "",
+      teacher_dni: "",
       specialties: [],
       teachers: [],
       pagination: [],
       columns: [
         "DNI",
         "Apellidos y Nombre",
-        "Acceso",
+        "Celular",
         "Especialidad",
         "Acciones"
       ]
@@ -112,7 +114,7 @@ export default {
       });
     },
     async fetchAll(page = 1) {
-      const { data } = await api.fetchAll(page);
+      const { data } = await api.fetchByState(this.state, page);
       const all = data.values;
       this.teachers = [...all.data];
       delete all.data;

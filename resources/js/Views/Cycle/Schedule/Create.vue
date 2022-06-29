@@ -210,16 +210,12 @@ export default {
     save() {
       if (!this.opT.teacher_dni) {
         this.errorMessage = "Selecciona un docente";
-        return;
       } else if (!this.opT.course_code) {
         this.errorMessage = "Selecciona un curso";
-        return;
       } else if (this.opT.sts.length === 0) {
         this.errorMessage = "Selecciona una sección o grupo";
-        return;
       } else if (this.opT.schedules.length === 0) {
         this.errorMessage = "Establece un horario semanal";
-        return;
       } else {
         this.$snack.show({
           text: "El horario será registrado",

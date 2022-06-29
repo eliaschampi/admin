@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\DB;
 class TeacherRepository extends BaseRepository
 {
 
-    public function fetchAllWithPagination()
+    public function fetchByState(bool $state)
     {
-        return Teacher::with("person")->paginate($this->paginateNumber());
+        return Teacher::with("person")
+            ->whereState($state)
+            ->paginate($this->paginateNumber());
     }
 
     public function self(string $dni)

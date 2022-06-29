@@ -182,7 +182,7 @@ export default {
     this.attention.created_at = now.format("YYYY-MM-DDTHH:mm");
   },
   methods: {
-    addPerson({dni, name, lastname }) {
+    addPerson({ dni, name, lastname }) {
       this.person_name = `${name} ${lastname}`;
       this.attention.entity_identifier = dni;
       $("#finderModal").modal("hide");

@@ -16,10 +16,10 @@ class TeacherController extends Controller
         $this->instance = $instance;
     }
 
-    public function index()
+    public function fetchByState(string $state)
     {
         return response()->json([
-            "values" => $this->instance->fetchAllWithPagination(),
+            "values" => $this->instance->fetchByState($state === "true"),
         ]);
     }
 

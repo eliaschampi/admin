@@ -168,6 +168,7 @@ export default {
       const { data } = await t_api.fetchBySection(this.code);
       this.teachers = data.values;
       data.values.forEach(({ dni }) => {
+        //eslint-disable-next-line
         this.colors[dni] = (0x1000000 + Math.random() * 0xffffff)
           .toString(16)
           .substr(1, 6);
