@@ -27,7 +27,7 @@
           enctype="multipart/form-data"
           method="POST"
           v-if="withForm"
-          v-on:submit.prevent="$emit('sub')"
+          v-on:submit.prevent="handleSub"
         >
           <div :class="{ 'form-material': mt }" class="modal-body">
             <slot></slot>
@@ -103,6 +103,12 @@ export default {
     $(`#${this.id}`).on("show.bs.modal", () => {
       self.$emit("opened");
     });
+  },
+  methods: {
+    handleSub() {
+      if (this.disabled) return;
+      this.$emit("sub");
+    }
   }
 };
 </script>

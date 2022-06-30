@@ -13,7 +13,7 @@
           placeholder="Buscar"
           issm
           icon="icon ion-md-refresh"
-          @onBtn="ref"
+          @onbtn="ref"
         />
       </div>
     </div>

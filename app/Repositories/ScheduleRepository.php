@@ -19,7 +19,7 @@ class ScheduleRepository extends BaseRepository
         return Schedule::with(["op", "op.course"])
             ->whereHas("op", function ($query) use ($teacher_dni) {
                 return $query->where("teacher_dni", $teacher_dni)
-                             ->whereRaw("'2022|all' ~* any(sts)");
+                    ->whereRaw("'2022|PRI|SEC|GE5|OP1|OP2|OR1|OR2|all' ~* any(sts)");
             })->orderBy("day")->get();
     }
 
@@ -47,5 +47,12 @@ class ScheduleRepository extends BaseRepository
             return $op->delete();
         }
         return $deleted;
+    }
+
+    public function destroyByTeacher(string $dni)
+    {
+        return Schedule::whereHas("op", function ($query) use ($dni) {
+            $query->where("teacher_dni", $dni);
+        })->delete();
     }
 }

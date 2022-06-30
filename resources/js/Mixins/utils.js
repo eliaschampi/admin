@@ -51,7 +51,19 @@ export const saveAsImage = {
   }
 };
 
-export const deleteSH = {
+export const OPSH = {
+  data() {
+    return {
+      day: 1,
+      schedules: [],
+      schedule: null
+    };
+  },
+  computed: {
+    fdays() {
+      return Object.values(this.days).slice(1, 7);
+    }
+  },
   methods: {
     deleteSh(item) {
       shApi.del(item.code).then((r) => {

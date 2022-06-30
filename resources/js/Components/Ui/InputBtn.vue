@@ -18,7 +18,7 @@
       />
       <div class="input-group-append">
         <m-button
-          @pum="$emit('onBtn')"
+          @pum="$emit('onbtn')"
           color="btn-primary"
           :size="issm ? 'btn-sm' : 'btn-md'"
           :icon="icon"

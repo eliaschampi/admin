@@ -93,7 +93,7 @@
             :readonly="true"
             v-model="person.district"
             v-validate="'required'"
-            @onBtn="showM"
+            @onbtn="showM"
             :error="errors.first('Distrito')"
           />
           <m-input

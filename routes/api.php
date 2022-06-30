@@ -137,7 +137,7 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
 
     //teacher (usar index para imprimir)
     Route::resource("/teacher", TeacherController::class)->only(["show", "store", "update"]);
-    Route::get("/teacher/all/{state}",[TeacherController::class, "fetchByState"]);
+    Route::get("/teacher/all/{state}", [TeacherController::class, "fetchByState"]);
     Route::get("/teacher/search/{name}", [TeacherController::class, "search"]);
     Route::get("/teacher/self/{dni}", [TeacherController::class, "self"]);
     Route::get("/teacher/section/{section_code}", [TeacherController::class, "fetchBySection"]);
@@ -173,7 +173,7 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::delete("/family_s/{family_dni}/{student_dni}", [FamilyController::class, "removeStudent"]);
 
     //op
-    Route::post("/op", [OpController::class, "store"]);
+    Route::resource("/op", OpController::class)->except(["index", "edit", "create"]);
 
     //schedule
     Route::resource("/schedule", ScheduleController::class)->only(["store", "update", "destroy"]);

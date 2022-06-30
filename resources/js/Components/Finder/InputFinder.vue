@@ -7,7 +7,7 @@
       readonly
       :placeholder="placeholder"
       icon="icon ion-md-search"
-      @onBtn="handleShowModal"
+      @onbtn="handleShowModal"
     />
   </div>
 </template>

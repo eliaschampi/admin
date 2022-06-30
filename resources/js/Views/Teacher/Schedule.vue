@@ -1,20 +1,15 @@
 <template>
   <div class="mt-3">
     <ul class="nav nav-pills">
-      <li class="nav-item pointer" @click="day = 1">
-        <div class="nav-link" :class="{ active: day === 1 }">Lunes</div>
-      </li>
-      <li class="nav-item pointer" @click="day = 2">
-        <div class="nav-link" :class="{ active: day === 2 }">Martes</div>
-      </li>
-      <li class="nav-item pointer" @click="day = 3">
-        <div class="nav-link" :class="{ active: day === 3 }">Miercoles</div>
-      </li>
-      <li class="nav-item pointer" @click="day = 4">
-        <div class="nav-link" :class="{ active: day === 4 }">Jueves</div>
-      </li>
-      <li class="nav-item pointer" @click="day = 5">
-        <div class="nav-link" :class="{ active: day === 5 }">Viernes</div>
+      <li
+        class="nav-item pointer"
+        v-for="d in fdays"
+        :key="d.code"
+        @click="day = d.code"
+      >
+        <div class="nav-link" :class="{ active: day === d.code }">
+          {{ d.day }}
+        </div>
       </li>
     </ul>
     <hr />
@@ -22,7 +17,7 @@
       <template slot="data">
         <tr :key="item.code" v-for="item in filtered">
           <td>
-            {{ item.op.section_code | full }}
+            {{ item.op.sts }}
           </td>
           <td>{{ item.op.course.name }}</td>
           <td>{{ item.from_time }}</td>
@@ -57,25 +52,24 @@ import { mapState } from "vuex";
 import api from "../../Api/schedule";
 import days from "../../Data/weekDays.json";
 import { fetchData } from "../../Mixins";
-import { deleteSH } from "../../Mixins/utils";
+import { OPSH } from "../../Mixins/utils";
 import AddItem from "../Cycle/Schedule/AddItem.vue";
 export default {
   name: "ScheduleTeacher",
   components: { AddItem },
-  mixins: [fetchData, deleteSH],
+  mixins: [fetchData, OPSH],
   data() {
     return {
       columns: ["Grado y Sec.", "Curso", "Desde", "Hasta", "Acciones"],
-      day: 1,
-      schedules: [],
-      schedule: null,
       days
     };
   },
   computed: {
     ...mapState("teacher", ["teacher"]),
     filtered() {
-      return this.schedules.filter((item) => item.day === this.day);
+      return this.schedules.filter(
+        (item) => item.day === this.day || item.day === 0
+      );
     }
   },
   methods: {

@@ -62,7 +62,7 @@
               <td>
                 <template v-if="item.inspection_type === 'p'">
                   <span v-show="item.additional">
-                    {{ new Date(item.additional).toLocaleDateString() }}
+                    {{ item.additional | month }}
                     <i>(para {{ item.extra || "1" }} dias)</i>
                   </span>
                 </template>
@@ -188,15 +188,15 @@ export default {
       const sel_type = this.decorated_types[this.i_type].substr(0, 7);
       const sel_inspection = {
         code: item.code,
+        state: item.state,
+        extra: item.extra,
         description: item.description,
         additional: item.additional,
         inspection_type: this.i_type,
         entity_type: item.entity_type,
         entity_identifier: item.entity_identifier,
         update_person_phone: item.update_person_phone,
-        state: item.state,
-        created_at: item.created_at,
-        extra: item.extra
+        created_at: item.created_at
       };
       this.$refs["updatemodal"].showModal(
         sel_type,
