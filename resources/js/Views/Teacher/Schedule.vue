@@ -71,8 +71,8 @@ export default {
     }
   },
   methods: {
-    fetchData() {
-      const decorators = {
+    async fetchData() {
+      const decs = {
         all: "Toda la institución",
         PRI: "Primaria",
         SEC: "Secundaria",
@@ -84,30 +84,27 @@ export default {
         IN1: "Intensivo",
         IN2: "Intensivo"
       };
-      api.fetchByTeacher(this.teacher.dni).then(({ data }) => {
-        this.schedules = data.values.map((item) => {
-          const stv = item.op.sts.split(/[{}]|,/g).slice(1, -1);
-          const st = stv[0];
-          let stext = "";
-          if (st.length === 10) {
-            stext = `${st.substr(-2)} de ${decorators[st.substr(4, 3)]}`;
-          } else {
-            stext = decorators[st];
-          }
-
-          if (stv.length > 1) {
-            stext += " y otros";
-          }
-
-          return {
-            code: item.code,
-            day: item.day,
-            from_time: item.from_time,
-            to_time: item.to_time,
-            course: item.op.course.name,
-            stext
-          };
-        });
+      const dni = this.$route.params.dni;
+      const { data } = await api.fetchByTeacher(dni);
+      this.schedules = data.values.map((item) => {
+        const stv = item.op.sts.split(/[{}]|,/g).slice(1, -1);
+        const st = stv[0];
+        let stext = "";
+        stext =
+          st.length === 10
+            ? `${st.substr(-2)} de ${decs[st.substr(4, 3)]}`
+            : decs[st];
+        if (stv.length > 1) {
+          stext += " y otros";
+        }
+        return {
+          code: item.code,
+          day: item.day,
+          from_time: item.from_time,
+          to_time: item.to_time,
+          course: item.op.course.name,
+          stext
+        };
       });
     },
     edit(item) {
