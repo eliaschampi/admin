@@ -16,7 +16,6 @@
           <input
             class="form-check-input"
             type="checkbox"
-            :disabled="mode !== 'Modificar'"
             v-model="advance"
             id="adv"
           />
