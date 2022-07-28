@@ -11,7 +11,7 @@
     </div>
     <template slot="profile-foot">
       <m-button
-        v-can="'APY'"
+        v-can="'AY'"
         color="btn-inverse-primary"
         @pum="reAuthenticate"
         size="btn-sm"
@@ -134,7 +134,12 @@ export default {
       $("#udmodal").modal("show");
     },
     async handleChangeBranch() {
-      const { code, name } = this.branch;
+      const { code, name, is_academy } = this.branch;
+
+      if (/(48804769|44837900)/.test(this.user.dni)) {
+        if (!is_academy) return;
+      }
+
       const { data } = await api.changeBranch(code);
       this.$snack.success(data);
       this.$store.dispatch("updateUserCachedProps", {

@@ -2,10 +2,7 @@
   <div class="row">
     <div class="col-lg-4 col-md-5 col-xlg-3">
       <div class="card profile-card mb-5" v-if="store_pid">
-        <img
-          alt="Portada"
-          :src="`/img/background/user-info${branch_code}.jpg`"
-        />
+        <img alt="Portada" :src="`/default/user-info${branch_code}.jpg`" />
         <div class="avatar mx-auto">
           <img :src="image" alt="avatar" class="rounded-circle" />
           <m-button
