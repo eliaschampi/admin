@@ -19,10 +19,26 @@
       <div class="row">
         <div class="col-md-4">
           <vue-qr-reader
+            v-show="is_qr"
             :responsive="true"
             :stop-on-scanned="false"
             v-on:code-scanned="onDecode"
             v-on:error-captured="errorCaptured"
+          />
+          <input
+            v-if="!is_qr"
+            id="barcodeinput"
+            minlength="8"
+            maxlength="8"
+            class="form-control"
+            placeholder="DNI"
+            @keypress.enter="handleInputEnter"
+          />
+          <m-check
+            class="ml-1"
+            v-model="is_qr"
+            id="reader_type"
+            text="Escaner qr"
           />
         </div>
         <div class="col-md-8 text-center space-b">
@@ -86,7 +102,8 @@ export default {
       person: {},
       cycle: "",
       priority: 1,
-      isStudent: true
+      isStudent: true,
+      is_qr: true
     };
   },
   created() {
@@ -98,6 +115,15 @@ export default {
     afterEvent({ dni }) {
       $("#finderModal").modal("hide");
       this.save(dni);
+    },
+    handleInputEnter(event) {
+      const { value } = event.target;
+      if (value && /^[0-9]{8,8}$/.test(value)) {
+        this.save(value);
+        setTimeout(() => {
+          document.getElementById("barcodeinput").value = "";
+        }, 1000);
+      }
     },
     handleChangePriority() {
       this.priority = this.priority < 3 ? this.priority + 1 : 1;

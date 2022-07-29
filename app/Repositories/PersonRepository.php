@@ -31,7 +31,7 @@ class PersonRepository extends BaseRepository
         )->get();
     }
 
-    public function fetchSingle(string $dni): Person
+    public function fetchSingle(string $dni): ?Person 
     {
         return Person::select("dni", "name", "lastname")
             ->with(["profile" => function ($query) {
