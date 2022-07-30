@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\MainHelper;
 use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model

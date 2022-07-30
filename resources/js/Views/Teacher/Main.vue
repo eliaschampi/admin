@@ -41,7 +41,7 @@
           :dni="dni"
         />
         <nav-item
-          v-can="'NP'"
+          v-show="attendanceShowable"
           icon="ion-ios-checkmark-circle-outline"
           title="Asistencia"
           route="t_attendance"
@@ -85,7 +85,11 @@ export default {
     this.fetchTeacher();
   },
   computed: {
-    ...mapGetters("teacher", ["dni"])
+    ...mapGetters("teacher", ["dni"]),
+    attendanceShowable() {
+      const { branch_code, rol_code } = this.$store.state.user.user;
+      return this.teacher.branch_code === branch_code && rol_code !== "S";
+    }
   },
   methods: {
     async fetchTeacher() {

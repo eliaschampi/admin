@@ -12,6 +12,7 @@ class TeacherRepository extends BaseRepository
     {
         return Teacher::with("person")
             ->whereState($state)
+            ->whereBranchCode($this->branch_code)
             ->paginate($this->paginateNumber());
     }
 
@@ -44,6 +45,7 @@ class TeacherRepository extends BaseRepository
         return DB::transaction(function () use ($teacher) {
             $personRepository = new PersonRepository();
             $personRepository->store($teacher);
+            $teacher["branch_code"] = $this->branch_code;
             return Teacher::create($teacher["sub"]);
         });
     }
