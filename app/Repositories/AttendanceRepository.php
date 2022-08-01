@@ -146,9 +146,10 @@ class AttendanceRepository extends BaseRepository
             ]);
     }
 
-    public function destroyInspecteds(string $dni, string $from_date, string $days) : bool
+    public function destroyInspecteds(string $dni, string $from_date, string | null $days): bool
     {
-        $to_date = date("Y-m-d", strtotime("$from_date + $days days"));
+        $d = empty($days) ? "1" : $days;
+        $to_date = date("Y-m-d", strtotime("$from_date + $d days"));
         return Attendance::where("entity_identifier", $dni)
             ->whereDate("created_at", ">=", now()->format("Y-m-d"))
             ->whereDate("created_at", "<=", $to_date)
