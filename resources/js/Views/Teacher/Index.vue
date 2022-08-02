@@ -1,11 +1,6 @@
 <template>
   <card title="Registro general de Docentes">
     <template slot="rb">
-      <m-button
-        @pum="cards"
-        color="btn-inverse-accent btn-icon"
-        icon="icon ion-md-cloud-download"
-      />
       <m-router
         :to="{ name: 'new_t' }"
         color="btn-inverse-accent btn-icon"
@@ -120,11 +115,6 @@ export default {
       delete all.data;
       this.pagination = all;
     },
-    cards() {
-      mainApi.printCardT().then((r) => {
-        this.$downl(r.data, "Carnet de docentes", ".pdf");
-      });
-    }
   }
 };
 </script>
