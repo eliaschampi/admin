@@ -8,6 +8,10 @@ use App\Models\RegisterIncome;
 class RegisterRepository extends BaseRepository
 {
 
+    public function fetchByCode(string $code) {
+        return Register::find($code);
+    }
+
     public function fetch(string $dni, array $states, $mod = "current_register")
     {
         $modelRegister = Register::where("student_dni", $dni)->whereIn("state", $states);
@@ -130,7 +134,7 @@ class RegisterRepository extends BaseRepository
                 );
             }
             \DB::commit();
-        } catch (\Exception$ex) {
+        } catch (\Exception $ex) {
             \DB::rollBack();
             throw new \Exception($ex->getMessage());
         }

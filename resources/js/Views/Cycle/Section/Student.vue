@@ -34,6 +34,7 @@
             />
           </td>
           <td>{{ item.student_dni }}</td>
+          <td>{{ item.code }}</td>
           <td>
             <router-link
               :to="{
@@ -81,6 +82,7 @@ export default {
       columns: [
         "#",
         "DNI",
+        "Código",
         "Nombre y Apellidos",
         "Estado",
         "Mensualidad",

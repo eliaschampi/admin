@@ -62,14 +62,14 @@
       @save="handleCloseModal"
     >
       <m-table
-        :columns="['Año', 'Nivel y grado', 'Mes', 'Estado']"
+        :columns="['Codígo', 'Nivel y grado', 'Mes', 'Estado']"
         :data="registers"
         :head="false"
         class="overflownone"
       >
         <template slot="data">
           <tr :key="item.code" v-for="item in registers">
-            <td>{{ item.year }}</td>
+            <td>{{ item.code }}</td>
             <td>{{ item.section_code | full }}</td>
             <td>{{ item.monthly | currency }}</td>
             <td>
@@ -140,14 +140,12 @@ export default {
       }
     },
     printCard() {
-      mainapi
-        .printCard(this.register.student_dni, this.register.section_code)
-        .then((r) => {
-          this.$downl(
-            r.data,
-            `carnet ${this.$store.getters["student/fullname"]}`
-          );
-        });
+      mainapi.printCard(this.register.code, "student").then((r) => {
+        this.$downl(
+          r.data,
+          `carnet ${this.$store.getters["student/fullname"]}`
+        );
+      });
     },
     delR() {
       this.$snack.show({
