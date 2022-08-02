@@ -52,22 +52,25 @@ class RegisterRepository extends BaseRepository
     public function fetchForAttendance(string $section_code, int $priority)
     {
         return Register::where("state", "a")->where("section_code", $section_code)
-            ->whereDoesntHave("student.person.attendances", function ($query) use($priority) {
+            ->whereDoesntHave("student.person.attendances", function ($query) use ($priority) {
                 $query->whereDate("created_at", now())->where("priority", $priority);
             })->get();
     }
 
     public function store(string $section_code, string $monthly, string $dni, string $state = "a")
     {
-        $register = new Register();
-        $code = "M" . substr(date('Y'), -2);
-        $code .= $this->branch_code . rand(100000, 999999);
-        $register->code = $code;
-        $register->section_code = $section_code;
-        $register->monthly = $monthly;
-        $register->state = $state;
-        $register->student_dni = $dni;
-        return $register->save() ? $code : false;
+        $year = "M" . date('Y');
+        $last = Register::selectRaw("lpad((max(substring(code, 7,4))::int + 1)::text,4, '0') as m")
+            ->where('code', 'like', "$year-%")
+            ->first();
+        $reg = Register::create([
+            "code" => $year . "-" . (empty($last->m) ? "0001" : $last->m),
+            "section_code" => $section_code,
+            "monthly" => $monthly,
+            "state" => $state,
+            "student_dni" => $dni,
+        ]);
+        return $reg->code;
     }
 
     public function update(array $data, string $code)
@@ -127,7 +130,7 @@ class RegisterRepository extends BaseRepository
                 );
             }
             \DB::commit();
-        } catch (\Exception $ex) {
+        } catch (\Exception$ex) {
             \DB::rollBack();
             throw new \Exception($ex->getMessage());
         }
