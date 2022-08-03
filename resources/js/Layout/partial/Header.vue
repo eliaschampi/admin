@@ -21,7 +21,7 @@
           ><img src="/img/carrion.svg" alt="logo" />
         </router-link>
       </div>
-      <h5 class="font-weight-medium mb-0 d-none d-md-block mt-1">
+      <h5 class="font-weight-medium mb-0 mt-1">
         {{ title }}
       </h5>
       <ul class="navbar-nav navbar-nav-right">
@@ -161,7 +161,7 @@ export default {
     title() {
       const branch = this.$store.getters["user/branch"];
       const user_year = this.$store.getters["fullyear"];
-      return `Sede ${branch} - ${user_year}`;
+      return `${branch} - ${user_year}`;
     }
   },
   methods: {

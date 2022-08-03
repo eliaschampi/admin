@@ -28,10 +28,5 @@ export default {
   printCardS: (section_code) =>
     request.get(`/card/${section_code}`, {
       responseType: "blob"
-    }),
-
-  printCardT: () =>
-    request.get("/card", {
-      responseType: "blob"
     })
 };

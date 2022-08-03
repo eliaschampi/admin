@@ -136,8 +136,11 @@ export default {
     async handleChangeBranch() {
       const { code, name, is_academy } = this.branch;
 
-      if (/(48804769|44837900)/.test(this.user.dni)) {
-        if (!is_academy) return;
+      if (this.user.only_academy) {
+        if (!is_academy) {
+          this.$snack.show("Se ha restringido el acceso a esta sede");
+          return;
+        }
       }
 
       const { data } = await api.changeBranch(code);

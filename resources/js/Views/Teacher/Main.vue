@@ -1,5 +1,5 @@
 <template>
-  <main-wrapper ptype="teacher" @dw_fu="print">
+  <main-wrapper ptype="teacher">
     <div slot="profile-info" class="border-rounded p-3 mx-auto mt-3">
       <div class="font-weight-medium text-primary title">
         <template v-if="['ADM', 'MIX'].indexOf(teacher.specialty) === -1">
@@ -60,6 +60,16 @@
         </div>
       </div>
     </div>
+    <template slot="profile-foot">
+      <m-button
+        :disabled="$store.getters['can']('P') || loadP"
+        color="btn-inverse-warning"
+        @pum="printCard"
+        size="btn-sm"
+      >
+        Imprimir carnet
+      </m-button>
+    </template>
   </main-wrapper>
 </template>
 <script>
@@ -104,10 +114,10 @@ export default {
       const { data } = await api.changeState(this.dni);
       this.$snack.success(data.message);
     },
-    print() {
+    printCard() {
       if (this.loadP) return;
       this.loadP = true;
-      api
+      configApi
         .printInfo(this.dni)
         .then(({ data }) => {
           this.$downl(

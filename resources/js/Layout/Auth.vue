@@ -12,7 +12,7 @@
             <p
               class="text-white font-weight-medium text-center flex-grow align-self-end"
             >
-              Copyright &copy; Aeduca 2021 todos los derechos reservados.
+              Copyright &copy; Aeduca 2022 todos los derechos reservados.
             </p>
           </div>
         </div>
