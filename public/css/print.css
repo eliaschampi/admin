@@ -90,7 +90,6 @@ table.printable {
   margin         : 0;
   padding        : 0;
   width          : 100%;
-  /*table-layout : fixed;*/
 }
 
 .text-table-title {
@@ -127,8 +126,4 @@ table.printable th {
 
 table.printable tr:nth-child(even) {
   background-color: #f1f8fe;
-}
-
-.bg-info {
-  /* background-color: #14d9eb; */
 }

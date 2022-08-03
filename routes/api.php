@@ -93,9 +93,8 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::get("/distritos", [SystemController::class, "ubigeo"]);
     Route::post("/soporte", [SystemController::class, "support"]);
     Route::post("/imagen", [SystemController::class, "upload"]);
-    Route::get("/card", [SystemController::class, "printCardT"]);
-    Route::get("/card/{dni}/{section_code}", [SystemController::class, "printCard"]);
-    Route::get("/card/{section_code}", [SystemController::class, "printCardS"]);
+    Route::get("/card/{section_code}", [SystemController::class, "printCards"]);
+    Route::get("/card/{id}/{type}", [SystemController::class, "printCard"]);
 
     //user
     Route::resource("/usuario", UserController::class)->except(["create", "edit"]);

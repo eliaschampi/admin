@@ -19,7 +19,7 @@
       </p>
       <p>
         <span class="font-weight-bold">Fecha de actualización:</span>
-        30 de Julio del 2022 a las 8:30 p.m.
+        02 de Agosto del 2022 a las 8:30 p.m.
       </p>
       <p>
         <span class="font-weight-bold">Desarrollador:</span>

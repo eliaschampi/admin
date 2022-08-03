@@ -24,7 +24,9 @@
 }
 
 .carnet .qr-wrapper img {
-    width: 100%;
+    width: 85%;
+    margin-left: 2mm;
+    margin-top: 2mm;
 }
 
 .carnet .user {
@@ -51,7 +53,7 @@
     font-size: 13px;
     color: #0B1C2E;
     margin-left: 0.2cm;
-    margin-top: 2.5cm;
+    margin-top: 2.6cm;
     transform: rotate(90deg);
     letter-spacing: 1mm;
 }
@@ -60,14 +62,28 @@
     width: 3.7cm;
     height: 2cm;
     overflow: hidden;
-    margin-top: -0.4cm;
+    margin-top: -0.2cm;
     margin-left: 4.85cm;
-    color: #0B1C2E;
-    font-size: 3mm;
     text-align: center;
 }
 
-.carnet .data span {
+.carnet .data span.name {
+    display: block;
+    color: #223e9c;
+    font-size: 3mm;
+}
+
+.carnet .data .title {
+    margin-top: 1mm;
     color: #de6134;
     font-size: 2.5mm;
+}
+
+.carnet .data i.acode {
+    margin-top: 1mm;
+    display: block;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2mm;
+    color: #4e4e4e;
+    letter-spacing: 1mm;
 }
