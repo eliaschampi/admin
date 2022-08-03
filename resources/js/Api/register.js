@@ -13,11 +13,10 @@ export default {
   fetch: (data) =>
     request.get(`/register/${data.dni}/${data.states}/${data.mod}`),
 
-  export: () => {
-    return request.get("/register_excel", {
+  exportToExcel: (section_code) =>
+    request.get(`/register_etx/${section_code}`, {
       responseType: "blob"
-    });
-  },
+    }),
 
   fetchForAttendance: (code, priority) =>
     request.get(`/register_asis/${code}/${priority}`),
@@ -27,7 +26,6 @@ export default {
 
   fetchGroupedByBranch: () => request.get("/register_branch"),
 
-  // data is register data will be created
   set: (data) =>
     request.post("/register", data, data.consV ? { responseType: "blob" } : {}),
 

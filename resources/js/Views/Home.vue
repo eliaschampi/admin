@@ -3,7 +3,7 @@
     <alert :title="username" type="alert-warning">
       <b>¡Bienvenido a {{ $store.getters["myapp"] }}</b> Descubre la nueva
       versión con grandes e importantes cambios de seguridad, rendimiento,
-      velocidad y una nueva interfaz de usuario. 
+      velocidad y una nueva interfaz de usuario.
     </alert>
     <div class="mygrid gcard mt-4">
       <div class="px-4 py-1 bg-white shadow-sm rounded-md">

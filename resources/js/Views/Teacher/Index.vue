@@ -114,7 +114,7 @@ export default {
       this.teachers = [...all.data];
       delete all.data;
       this.pagination = all;
-    },
+    }
   }
 };
 </script>

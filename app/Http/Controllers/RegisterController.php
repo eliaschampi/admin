@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cache\RegisterCache;
+use App\Exports\RegisterExport;
 use App\Helpers\RegisterHelper;
 use App\Http\Requests\RegisterRequest;
 use App\Repositories\RegisterRepository;
@@ -102,5 +103,10 @@ class RegisterController extends Controller
         return response()->json([
             "message" => "Correctamente eliminado",
         ]);
+    }
+
+    public function exportToExcel(string $section_code)
+    {
+        return new RegisterExport($section_code);
     }
 }

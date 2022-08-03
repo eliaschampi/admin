@@ -118,11 +118,11 @@ export default {
       if (this.loadP) return;
       this.loadP = true;
       configApi
-        .printInfo(this.dni)
+        .printCard(this.dni, "teacher")
         .then(({ data }) => {
           this.$downl(
             data,
-            `Docente ${this.$store.getters["teacher/fullname"]}`,
+            `Carnet ${this.$store.getters["teacher/fullname"]}`,
             ".pdf"
           );
         })

@@ -47,10 +47,6 @@ export default {
           resolve(data.message);
         });
       });
-    },
-    //eslint-disable-next-line
-    async exportBySection(_, section_code) {
-      return await register.exportBySection(section_code);
     }
   }
 };

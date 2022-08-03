@@ -1,8 +1,8 @@
 <template>
   <card title="Estudiantes por Sección">
     <m-button
-      @pum="printCard"
-      :disabled="inactives"
+      @pum="exportToExcel"
+      :disabled="inactives || loadP"
       icon="icon ion-md-cloud-download icon-md"
       color="btn-inverse-accent btn-icon"
       size="btn-sm"
@@ -73,7 +73,7 @@
 import { mapState, mapActions } from "vuex";
 import { states } from "@/Mixins";
 import mySection from "@/Components/Views/mySection";
-import mainapi from "@/Api/main";
+import api from "@/Api/register";
 export default {
   components: { mySection },
   mixins: [states],
@@ -91,7 +91,8 @@ export default {
       ],
       buscado: "",
       inactives: false,
-      load: false
+      load: false,
+      loadP: false
     };
   },
   computed: {
@@ -112,11 +113,20 @@ export default {
         this.load = false;
       });
     },
-    printCard() {
-      const section_code = this.$store.getters["section/code"];
-      mainapi.printCardS(section_code).then((r) => {
-        this.$downl(r.data, `Carnet de ${section_code}`);
-      });
+    exportToExcel() {
+      this.loadP = true;
+      api
+        .exportToExcel(this.$store.getters["section/code"])
+        .then((r) => {
+          this.$downl(
+            r.data,
+            `Registro-${this.$store.getters["section/code"]}`,
+            ".xlsx"
+          );
+        })
+        .finally(() => {
+          this.loadP = false;
+        });
     },
     handleInactivesChange(ischecked) {
       this.inactives = ischecked;

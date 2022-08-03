@@ -60,13 +60,14 @@ class AttendanceRepository extends BaseRepository
     public function fetchForChart()
     {
         $year = $this->current_year;
+        $branch = $this->branch_code;
         $now = now();
         $full = Carbon::create($year, $now->month, $now->day);
         $date = $now->month > 3 ? $full->subMonths(3)->format("Y-m-d") : $year . "-01-01";
-        return Attendance::select(DB::raw("created_at::date as mday, count(*)"))
-            ->havingRaw("entity_type = 's' and created_at::date >= '$date'")
+        return Attendance::select(DB::raw("created_at::date as mday, count(*) as count"))
+            ->havingRaw("entity_type = 's' and created_at::date >= '$date' and branch_code = $branch")
             ->orderByDesc("mday")
-            ->groupBy("mday", "entity_type")->get();
+            ->groupBy("mday", "entity_type", "branch_code")->get();
     }
 
     public function absences(string $date, int $priority)

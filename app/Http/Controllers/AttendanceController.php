@@ -55,8 +55,10 @@ class AttendanceController extends Controller
         $days = [];
         $count = [];
         foreach ($data as $value) {
-            array_push($days, $value->mday);
-            array_push($count, $value->count);
+            if (intval($value->count) > 20) {
+                array_push($days, $value->mday);
+                array_push($count, $value->count);
+            }
         }
         return response()->json([
             "days" => $days,

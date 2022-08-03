@@ -93,7 +93,6 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::get("/distritos", [SystemController::class, "ubigeo"]);
     Route::post("/soporte", [SystemController::class, "support"]);
     Route::post("/imagen", [SystemController::class, "upload"]);
-    Route::get("/card/{section_code}", [SystemController::class, "printCards"]);
     Route::get("/card/{id}/{type}", [SystemController::class, "printCard"]);
 
     //user
@@ -127,9 +126,10 @@ Route::group(["middleware" => ["jwt.auth"]], function () {
     Route::get("/register/{section_code}/{inactives}", [RegisterController::class, "fetchBySection"]);
     Route::get("/register/{dni}/{states}/{mod}", [RegisterController::class, "fetch"]);
     Route::get("/register_has_cache", [RegisterController::class, "hasOnCache"]);
-    Route::post("/register", [RegisterController::class, "store"]);
+    Route::get("/register_etx/{section_code}", [RegisterController::class, "exportToExcel"]);
     Route::delete("/register/{code}", [RegisterController::class, "destroy"]);
     Route::post("/register_m", [RegisterController::class, "storeMany"]);
+    Route::post("/register", [RegisterController::class, "store"]);
 
     //attendace
     Route::get("/register_asis/{section_code}/{priority}", [RegisterController::class, "fetchForAttendance"]);
